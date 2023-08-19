@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root']);
+Route::get('hotel-room-type', [App\Http\Controllers\HotelController::class, 'HotelRoomType']);
+
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 //Language Translation
@@ -25,3 +27,9 @@ Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('index/{locale}', [App\Http\Controllers\HomeController::class, 'lang']);
 
 Route::post('/formsubmit', [App\Http\Controllers\HomeController::class, 'FormSubmit'])->name('FormSubmit');
+
+
+
+
+
+

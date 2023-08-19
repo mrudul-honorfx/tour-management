@@ -69,6 +69,19 @@
                         </li>
                     </ul>
                 </li>
+                <li class="menu-title">Admin Settings</li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-store"></i>
+                        <span>Hotel</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="hotel-add"><i class="uil-book-medical"></i> Add Hotel</a></li>
+                        <li><a href="hotel-room-type"><i class="uil-home"></i> Room Types</a></li>
+                        <li><a href="hotel-food-type"><i class="mdi mdi-food"></i>Food Types</a></li>
+                        <li><a href="hotel-view-type"><i class="uil-map-pin-alt"></i>View Types</a></li> 
+                    </ul>
+                </li>
 
                 <li class="menu-title">@lang('translation.Apps')</li>
 

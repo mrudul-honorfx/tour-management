@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\HRoomType;
 use App\Models\HFoodType;
 use App\Models\HFoodItems;
+use App\Models\HViewType;
+
 
 use Illuminate\Http\Request;
 
@@ -244,9 +246,35 @@ class HotelController extends Controller
     
         return redirect()->back()->with('success', 'Food item updated successfully.');
     }
+    public function addFoodItem(Request $request) {
+
+
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'category' => 'required|in:0,1', // Assuming you're using 0 for Veg and 1 for Non-Veg
+            'description' => 'required',
+            // Add validation rules for other fields if needed
+        ]);
+
+        // Create a new FoodItem instance and save it to the database
+        $item = HFoodItems::create([
+            
+            'name' => $request->input('name'),
+            'food_type_id'=> $request->input('food_type_id'),
+            'category' => $request->input('category'),
+            'description' =>$request->input('description'),
+           
+        ]);
+       
+      
+    
+        return response()->json(['message' => 'Food item added successfully']);
+    }
     public function deleteFoodItem($id)
     {
+       
         try {
+
             // Find the food item
             $foodItem = HFoodItems::findOrFail($id);
             
@@ -258,5 +286,84 @@ class HotelController extends Controller
             return response()->json(['error' => 'An error occurred while deleting the food item'], 500);
         }
     }
+    public function HotelViewType()
+    {
+
+        $view_types = HViewType::all(); 
+        return view('pages.hotel.hotel_view_type_listing',compact('view_types'));
+    }
+    public function addViewTypes(Request $request)
+    {
+
+           
+            $validatedData = $request->validate([
+                
+                'view_type_name' => 'required',
+                'description' => 'required',
+            ]);
+
+
+            $view = HViewType::create([
+             
+                'view_type_name' => $request->input('view_type_name'),
+                'description' =>$request->input('description'),
+               
+            ]);
+
+         return back()->with('success', 'Hotel Room Type Added Successfully');
+
+
+
+    }
+    public function updateViewType(Request $request)
+    {
+
+            $view_typeTd = $request->input('view_id');
+
+            $validatedData = $request->validate([
+                'view_type_name' => 'required',
+                'description' => 'required',
+            ]);
+
+            $view = HViewType::find($view_typeTd);
+
+            if (!$view) {
+                return redirect()->back()->with('error', 'View not found.');
+            }
+
+            
+            $view->view_type_name = $request->input('view_type_name');
+            $view->description = $request->input('description');
+
+
+
+            // Convert image URLs to JSON
+            
+            $view->save();
+
+         return back()->with('success', 'View Type Updated Successfully');
+
+        /* return back()->with('error',  'Something went wrong'); */
+
+    }
+    public function deleteViewType($id)
+    {
+
+        $view = HViewType::find($id);
+        if (!$view) {
+            return redirect()->back()->with('error', 'View Type not found.');
+        }
+        $view->delete();
+        return redirect()->back()->with('success', 'View Type deleted successfully.');
+
+
+    }
+    public function HotelList()
+    {
+
+       
+        return view('pages.hotel.hotel_listing');
+    }
+
 
 }

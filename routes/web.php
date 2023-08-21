@@ -48,13 +48,36 @@ Route::group(['prefix' => 'hotel'], function(){
 
 Route::group(['prefix' => 'hotel'], function(){
     Route::get('/get_food_items', [App\Http\Controllers\HotelController::class, 'GetFoodItems']);
-    Route::post('addFoodItem', [App\Http\Controllers\HotelController::class, 'addFoodItem'])->name('addFoodItem');
+    Route::post('addFoodItem', [App\Http\Controllers\HotelController::class, 'addFoodItem'])->name('addFoodItem.store');
     Route::get('edit_food_item/{id}', [App\Http\Controllers\HotelController::class, 'editFoodItem']);
     Route::post('update_food_item', [App\Http\Controllers\HotelController::class, 'updateFoodItem']);
-    Route::delete('delete_food_item/{id}', [App\Http\Controllers\HotelController::class, 'deleteFoodItem']);
+    Route::get('deleteFoodItem/{id}', [App\Http\Controllers\HotelController::class, 'deleteFoodItem'])->name('deleteFoodItem');
 
 });
 ###############################################################################################################################################
+
+##################################### HOTEL VIEW TYPES CRUD  ####################################################################################
+
+Route::group(['prefix' => 'hotel'], function(){
+    Route::get('/hotel_view_type', [App\Http\Controllers\HotelController::class, 'HotelViewType']);
+    Route::post('addViewTypes', [App\Http\Controllers\HotelController::class, 'addViewTypes'])->name('addViewTypes.store');
+    Route::post('updateViewType', [App\Http\Controllers\HotelController::class, 'updateViewType'])->name('updateViewType');
+    Route::delete('deleteViewType/{id}', [App\Http\Controllers\HotelController::class, 'deleteViewType'])->name('deleteViewType'); 
+
+});
+###############################################################################################################################################
+
+##################################### HOTEL CRUD  ####################################################################################
+
+Route::group(['prefix' => 'hotel'], function(){
+    Route::get('/hotel_list', [App\Http\Controllers\HotelController::class, 'HotelList']);
+    Route::post('addViewTypes', [App\Http\Controllers\HotelController::class, 'addViewTypes'])->name('addViewTypes.store');
+    Route::post('updateViewType', [App\Http\Controllers\HotelController::class, 'updateViewType'])->name('updateViewType');
+    Route::delete('deleteViewType/{id}', [App\Http\Controllers\HotelController::class, 'deleteViewType'])->name('deleteViewType'); 
+
+});
+###############################################################################################################################################
+
 
 
 

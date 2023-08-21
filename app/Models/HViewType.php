@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class HViewType extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id',  'view_type_name', 'description',
+    ];
 }

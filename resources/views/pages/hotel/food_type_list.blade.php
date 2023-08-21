@@ -221,7 +221,7 @@
                                 <div class="card-body">
                                     <ul class="list-group">
                                         @foreach ($food_types as $index => $foodType)
-                                            <li class="list-group-item cursor-pointer @if($index === 0) active @endif" data-food-type="{{ $foodType->id }}">
+                                            <li class="list-group-item cursor-pointer @if($index === 0) active @endif" data-food-type="{{ $foodType->id }}">{{$index+1}}.
                                                 {{ $foodType->food_type_name }}
                                             </li>
                                         @endforeach
@@ -262,7 +262,7 @@
                     <form id="editForm">
                         @csrf
                         <input type="hidden" name="food_item_id" id="foodItemId">
-                        <input type="hidden" name="food_item_id" id="foodTypeId">
+                        <input type="hidden" name="food_type_id" id="foodTypeId">
                         <div class="mb-3">
                             <label class="form-label" for="editName">Name</label>
                             <input type="text" class="form-control" name="name" id="editName" required>
@@ -270,6 +270,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="editCategory">Category</label>
                             <select class="form-select" name="category" id="editCategory" required>
+                                <option value="" disabled>Select Category</option>
                                 <option value="0">Veg</option>
                                 <option value="1">Non-Veg</option>
                             </select>
@@ -294,6 +295,7 @@
                     <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Delete</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
+                <input type="hidden" name="food_type_id" id="delfoodTypeId">
                 <div class="modal-body">
                     Are you sure you want to delete this food item?
                 </div>
@@ -312,16 +314,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addFoodItemForm">
-                        @csrf
-                       
+                  
+                        <form id="addFoodItemForm"  class="needs-validation " novalidate >
+                            @csrf
+                      
+                            <input type="hidden" name="food_type_id" id="addfoodTypeId">
                         <div class="mb-3">
-                            <label class="form-label" for="addName">Name</label>
+                            <label class="form-label" for="addName">Item Name</label>
                             <input type="text" class="form-control" name="name" id="addName" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="addCategory">Category</label>
                             <select class="form-select" name="category" id="addCategory" required>
+                                <option value="" >Select Category</option>
                                 <option value="0">Veg</option>
                                 <option value="1">Non-Veg</option>
                             </select>
@@ -335,7 +340,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="saveAddBtn">Save</button>
+                    <button type="submit" class="btn btn-primary" id="saveAddBtn">Add Food Item</button>
                 </div>
             </div>
         </div>
@@ -354,8 +359,9 @@
         $(this).addClass('active'); // Add active class to the clicked item
 
         const foodTypeId = $(this).data('food-type');
+        $('#addfoodTypeId').val(foodTypeId);
         
-
+          
 // Show the "Add Food Item" button
       $('#addFoodItemButton').show();
         
@@ -373,7 +379,7 @@
                                 <button type="button" class="btn btn-outline-secondary btn-sm"  data-food-item-id="${item.id}" onclick="editFoodItem(${item.id})">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button ctype="button" class="btn btn-outline-secondary btn-sm"  data-food-item-id="${item.id}" onclick="deleteFoodItem(${item.id})">
+                                <button ctype="button" class="btn btn-outline-secondary btn-sm"  data-food-item-id="${item.id}" onclick="deleteFoodItem(${item.id},${item.food_type_id})">
                                     <i class="fas fa-trash"></i>
                                 </button>
 
@@ -409,6 +415,37 @@
 
     // Trigger the click event on the first food type to load its food items initially
     $('.list-group-item.active').trigger('click');
+
+    $('#saveAddBtn').click(function (e) {
+            e.preventDefault();
+
+            var form = $('#addFoodItemForm');
+            var formData = form.serialize();
+
+            $.ajax({
+                url: '{{ route('addFoodItem.store') }}',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Handle success, e.g., show a success message
+                   
+                    // Close the modal if needed
+                    $('#addFoodItemModal').modal('hide');
+                    // Clear the form fields
+                    form[0].reset();
+                    const foodTypeId = $('#addfoodTypeId').val();
+                     refreshFoodItemsTable(foodTypeId);
+
+                },
+                error: function (error) {
+                    // Handle error, e.g., show validation errors
+                    var errors = error.responseJSON.errors;
+                    $.each(errors, function (key, value) {
+                        alert(value[0]);
+                    });
+                }
+            });
+        });
 });
 function editFoodItem(foodItemId) {
             
@@ -438,9 +475,11 @@ function editFoodItem(foodItemId) {
         }
     });
         }
-        function deleteFoodItem(foodItemId) {
+        function deleteFoodItem(foodItemId,typeId) {
     // Store the food item id to be deleted in the variable
     deleteFoodItemId = foodItemId;
+        $('#delfoodTypeId').val(typeId);
+
 
     // Show the delete confirmation modal
     $('#deleteConfirmationModal').modal('show');
@@ -451,14 +490,16 @@ $('#confirmDeleteBtn').click(function () {
     if (deleteFoodItemId !== null) {
         // Perform the delete request using Ajax
         $.ajax({
-            url: `/hotel/delete_food_item/${deleteFoodItemId}`,
-            method: 'DELETE',
+            url: `/hotel/deleteFoodItem/${deleteFoodItemId}`,
+            method: 'GET',
+            
             success: function () {
                 // Hide the delete confirmation modal
                 $('#deleteConfirmationModal').modal('hide');
 
                 // Refresh the food items table for the current food type
-                const foodTypeId = $('#foodTypeId').val();
+                const foodTypeId = $('#delfoodTypeId').val();
+                
                 refreshFoodItemsTable(foodTypeId);
                 
             },

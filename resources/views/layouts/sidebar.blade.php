@@ -44,10 +44,16 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-window-section"></i>
-                        <span>@lang('translation.Layouts')</span>
+                        <span>Packages</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
+                            <a href="{{url('/package/add')}}">
+                                <i class="mdi mdi-plus"></i>
+                                <span>Add New Package</span>
+                            </a>
+                        </li>
+                        {{-- <li>
                             <a href="javascript: void(0);" class="has-arrow">@lang('translation.Vertical')</a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="layouts-dark-sidebar">@lang('translation.Dark_Sidebar')</a></li>
@@ -57,8 +63,8 @@
                                 <li><a href="layouts-preloader">@lang('translation.Preloader')</a></li>
                                 <li><a href="layouts-colored-sidebar">@lang('translation.Colored_Sidebar')</a></li>
                             </ul>
-                        </li>
-                        <li>
+                        </li> --}}
+                        {{-- <li>
                             <a href="javascript: void(0);" class="has-arrow">@lang('translation.Horizontal')</a>
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="layouts-horizontal">@lang('translation.Horizontal')</a></li>
@@ -66,7 +72,7 @@
                                 <li><a href="layouts-hori-boxed-width">@lang('translation.Boxed_Width')</a></li>
                                 <li><a href="layouts-hori-preloader">@lang('translation.Preloader')</a></li>
                             </ul>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
                 <li class="menu-title">Admin Settings</li>
@@ -83,7 +89,48 @@
                     </ul>
                 </li>
 
-                <li class="menu-title">@lang('translation.Apps')</li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-store"></i>
+                        <span>Airline</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ url('/hotel/hotel_list') }}"><i class="uil-book-medical"></i> Add Airline</a></li>
+                        <li><a href="{{ url('/hotel/hotel_room_type') }}"><i class="uil-home"></i> Room Types</a></li>
+                        <li><a href="{{ url('/hotel/hotel_food_type') }}"><i class="mdi mdi-food"></i>Food Types</a></li>
+                        <li><a href="{{ url('/hotel/hotel_view_type') }}"><i class="uil-map-pin-alt"></i>View Types</a></li> 
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-store"></i>
+                        <span>Trasportation</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ url('/hotel/hotel_list') }}"><i class="uil-book-medical"></i> Add Hotel</a></li>
+                        <li><a href="{{ url('/hotel/hotel_room_type') }}"><i class="uil-home"></i> Room Types</a></li>
+                        <li><a href="{{ url('/hotel/hotel_food_type') }}"><i class="mdi mdi-food"></i>Food Types</a></li>
+                        <li><a href="{{ url('/hotel/hotel_view_type') }}"><i class="uil-map-pin-alt"></i>View Types</a></li> 
+                    </ul>
+                </li>
+
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-store"></i>
+                        <span>Settings</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ url('/hotel/hotel_list') }}"><i class="uil-book-medical"></i> Add Hotel</a></li>
+                        <li><a href="{{ url('/hotel/hotel_room_type') }}"><i class="uil-home"></i> Room Types</a></li>
+                        <li><a href="{{ url('/hotel/hotel_food_type') }}"><i class="mdi mdi-food"></i>Food Types</a></li>
+                        <li><a href="{{ url('/hotel/hotel_view_type') }}"><i class="uil-map-pin-alt"></i>View Types</a></li> 
+                    </ul>
+                </li>
+
+                {{-- <li class="menu-title">@lang('translation.Apps')</li>
 
                 <li>
                     <a href="calendar" class="waves-effect">
@@ -311,7 +358,7 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
             </ul>
         </div>

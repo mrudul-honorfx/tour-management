@@ -28,9 +28,27 @@ Route::group(['prefix' => 'hotel'], function(){
     Route::post('addRoomTypes', [App\Http\Controllers\HotelController::class, 'addRoomTypes'])->name('addRoomTypes.store');
     Route::post('updateRoomType', [App\Http\Controllers\HotelController::class, 'updateRoomType'])->name('updateRoomType');
     Route::delete('deleteRoomType/{id}', [App\Http\Controllers\HotelController::class, 'deleteRoomType'])->name('deleteRoomType'); 
+    Route::get('/hotels', [App\Http\Controllers\HotelController::class, 'viewHotelsList']);
+    Route::post('addHotel', [App\Http\Controllers\HotelController::class, 'addHotel'])->name('addHotel.store');
 
 });
 ###############################################################################################################################################
+
+##################################### HOTEL ROOM TYPES CRUD  ####################################################################################
+
+Route::group(['prefix' => 'package'], function(){
+    Route::get('/add', [App\Http\Controllers\PackageController::class, 'index'])->name('addPackage');
+    // Route::post('addRoomTypes', [App\Http\Controllers\HotelController::class, 'addRoomTypes'])->name('addRoomTypes.store');
+    // Route::post('updateRoomType', [App\Http\Controllers\HotelController::class, 'updateRoomType'])->name('updateRoomType');
+    // Route::delete('deleteRoomType/{id}', [App\Http\Controllers\HotelController::class, 'deleteRoomType'])->name('deleteRoomType'); 
+    // Route::get('/hotels', [App\Http\Controllers\HotelController::class, 'viewHotelsList']);
+    // Route::post('addHotel', [App\Http\Controllers\HotelController::class, 'addHotel'])->name('addHotel.store');
+
+});
+###############################################################################################################################################
+
+
+
 
 
 ##################################### HOTEL FOOD TYPES CRUD  ####################################################################################

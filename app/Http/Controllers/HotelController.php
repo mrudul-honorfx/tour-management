@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\HRoomType;
 use App\Models\HFoodType;
 use App\Models\HFoodItems;
+use App\Models\Hotel;
 use App\Models\HViewType;
 
 
@@ -19,6 +20,7 @@ class HotelController extends Controller
         $room_types = HRoomType::all(); 
         return view('pages.hotel.room_type_list',compact('room_types'));
     }
+
     public function addRoomTypes(Request $request)
     {
 
@@ -58,9 +60,8 @@ class HotelController extends Controller
 
          return back()->with('success', 'Hotel Room Type Added Successfully');
 
-
-
     }
+
     public function updateRoomType(Request $request)
     {
 
@@ -358,11 +359,48 @@ class HotelController extends Controller
 
 
     }
-    public function HotelList()
+
+    public function addHotel(Request $request)
     {
 
-       
+           try {
+
+            $validatedData = $request->validate([
+                'hotel_name' => 'required',
+                'address' => 'required',
+                'contact_number' => 'required',
+                'rating' => 'required',
+                'description' => 'required'
+            ]);
+
+            $hotel = Hotel::create([ 
+                'hotel_name' => $request->input('hotel_name'),
+                'address' => $request->input('address'),
+                'contact_number' =>$request->input('contact_number'),
+                'rating' =>$request->input('rating'),
+                'description' =>$request->input('description'),
+               
+            ]);
+
+         return back()->with('success', 'Hotel Added Type Added Successfully');
+        }
+        catch(\Exception $e)
+        {
+            return back()->with('failed', $e->getMessage());
+        }
+
+    }
+
+
+    public function HotelList()
+    {
         return view('pages.hotel.hotel_listing');
+    }
+    public function viewHotelsList()
+    {
+        $hotels = Hotel::all(); 
+
+        return view('pages.hotel.hotel-list',compact('hotels'));
     }
 
 

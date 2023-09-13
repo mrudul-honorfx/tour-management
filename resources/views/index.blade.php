@@ -7,6 +7,9 @@
 @endcomponent
 
 <div class="row">
+    @component('common-components.upcommingPackage')
+        
+    @endcomponent
     <div class="col-md-6 col-xl-3">
         <div class="card">
             <div class="card-body">

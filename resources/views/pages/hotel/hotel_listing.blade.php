@@ -30,7 +30,7 @@ Hotel List
                                 </div>
                             </div>
                             <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="font-size-16 mb-1">Hotel Info</h5>
+                                <h5 class="font-size-16 mb-1">Basic Hotel Info</h5>
                                 <p class="text-muted text-truncate mb-0">Fill all information below</p>
                             </div>
                             <div class="flex-shrink-0">
@@ -44,70 +44,76 @@ Hotel List
 
                 <div id="addproduct-billinginfo-collapse" class="collapse show" data-bs-parent="#addproduct-accordion">
                     <div class="p-4 border-top">
-                        <form>
-                            <div class="mb-3">
-                                <label class="form-label" for="productname">Product Name</label>
-                                <input id="productname" name="productname" type="text" class="form-control" placeholder="Enter your Product Name">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
                             </div>
+                        @endif
+                
+                        @if(session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        <form class="needs-validation " novalidate action="{{ route('addHotel.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
 
                                     <div class="mb-3">
-                                        <label class="form-label" for="manufacturername">Manufacturer Name</label>
-                                        <input id="manufacturername" name="manufacturername" type="text" class="form-control" placeholder="Enter your Manufacturer Name">
+                                         <label class="form-label" for="productname">Hotel Name</label>
+                                <input id="hotel_name" name="hotel_name" type="text" class="form-control" placeholder="Enter your Hotel Name">
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
 
                                     <div class="mb-3">
-                                        <label class="form-label" for="manufacturerbrand">Manufacturer Brand</label>
-                                        <input id="manufacturerbrand" name="manufacturerbrand" type="text" class="form-control" placeholder="Enter your Manufacturer Brand">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="price">Price</label>
-                                        <input id="price" name="price" type="text" class="form-control" placeholder="Enter your Price">
+                                        <label class="form-label" for="productname">Address</label>
+                                        <input id="address" name="address" type="text" class="form-control" placeholder="address">
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
+
                                     <div class="mb-3">
-                                        <label class="form-label" class="control-label">Category</label>
-                                        <select class="form-control select2">
+                                        <label class="form-label" for="manufacturername">Contact Number</label>
+                                        <input id="contact_number" name="contact_number" type="text" class="form-control" placeholder="Enter Contact">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="manufacturerbrand">Rating</label>
+                                        <select name="rating" id="rating" class="form-select">
                                             <option>Select</option>
-                                            <option value="EL">Electronic</option>
-                                            <option value="FA">Fashion</option>
-                                            <option value="FI">Fitness</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label" class="control-label">Specifications</label>
-
-                                        <select class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
-                                            <option value="HI" selected>High Quality</option>
-                                            <option value="LE" selected>Leather</option>
-                                            <option value="NO">Notifications</option>
-                                            <option value="SI">Sizes</option>
-                                            <option value="DI">Different Color</option>
+                                            <option value="1">1 Star</option>
+                                            <option value="2">2 Star</option>
+                                            <option value="3">3 Star</option>
+                                            <option value="4">4 Star</option>
+                                            <option value="5">5 Star</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
+                            
 
                             <div class="mb-0">
-                                <label class="form-label" for="productdesc">Product Description</label>
-                                <textarea class="form-control" id="productdesc" rows="4" placeholder="Enter your Product Description"></textarea>
+                                <label class="form-label" for="description">Hotel Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter Hotel Description"></textarea>
                             </div>
+
+                            <div class="d-flex flex-reverse flex-wrap gap-2 py-5">
+                                <button class="btn btn-success" type="submit"> <i class="uil uil-file-alt"></i>Add Hotel</button>
+                            </div>
+
                         </form>
                     </div>
                 </div>
             </div>
 
-            <div class="card">
+            {{-- <div class="card">
                 <a href="#addproduct-img-collapse" class="text-dark collapsed" data-bs-toggle="collapse" aria-haspopup="true" aria-expanded="false" aria-haspopup="true" aria-controls="addproduct-img-collapse">
                     <div class="p-4">
 
@@ -202,7 +208,7 @@ Hotel List
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
@@ -211,8 +217,7 @@ Hotel List
 <div class="row mb-4">
     <div class="col ms-auto">
         <div class="d-flex flex-reverse flex-wrap gap-2">
-            <a href="#" class="btn btn-danger"> <i class="uil uil-times"></i> Cancel </a>
-            <a href="#" class="btn btn-success"> <i class="uil uil-file-alt"></i> Save </a>
+            <button class="btn btn-success" type="submit"> <i class="uil uil-file-alt"></i>Add Hotel</button>
         </div>
     </div> <!-- end col -->
 </div> <!-- end row-->

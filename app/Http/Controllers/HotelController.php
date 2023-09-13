@@ -394,7 +394,9 @@ class HotelController extends Controller
 
     public function HotelList()
     {
-        return view('pages.hotel.hotel_listing');
+
+        $room_types = HRoomType::all(); 
+        return view('pages.hotel.hotel_listing',compact('room_types'));
     }
     public function viewHotelsList()
     {

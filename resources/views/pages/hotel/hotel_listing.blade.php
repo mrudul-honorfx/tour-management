@@ -6,6 +6,7 @@ Hotel List
 <!-- DataTables -->
 <link href="{{ URL::asset('/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('/assets/libs/dropzone/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
+
 @endsection
 
 @section('content')
@@ -45,63 +46,60 @@ Hotel List
                 <div id="addproduct-billinginfo-collapse" class="collapse show" data-bs-parent="#addproduct-accordion">
                     <div class="p-4 border-top">
                         <form>
+                            
+                            <div class="row">
+                                <div class="col-lg-6">
                             <div class="mb-3">
-                                <label class="form-label" for="productname">Product Name</label>
-                                <input id="productname" name="productname" type="text" class="form-control" placeholder="Enter your Product Name">
+                                <label class="form-label" for="productname">Hotel Name</label>
+                                <input id="hotelname" name="hotel_name" type="text" class="form-control" placeholder="Enter Hotel Name">
                             </div>
-                            <div class="row">
-                                <div class="col-lg-4">
+                                </div>
+                                <div class="col-lg-6">
 
                                     <div class="mb-3">
-                                        <label class="form-label" for="manufacturername">Manufacturer Name</label>
-                                        <input id="manufacturername" name="manufacturername" type="text" class="form-control" placeholder="Enter your Manufacturer Name">
+                                        <label class="form-label" for="manufacturername">Address</label>
+                                        <input id="address" name="address" type="text" class="form-control" placeholder="Enter Hotel Address">
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
 
                                     <div class="mb-3">
-                                        <label class="form-label" for="manufacturerbrand">Manufacturer Brand</label>
-                                        <input id="manufacturerbrand" name="manufacturerbrand" type="text" class="form-control" placeholder="Enter your Manufacturer Brand">
+                                        <label class="form-label" for="manufacturerbrand">Contact Number</label>
+                                        <input id="manufacturerbrand" name="contact_number" type="text" class="form-control" placeholder="Enter Contact Number">
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="mb-3">
-                                        <label class="form-label" for="price">Price</label>
-                                        <input id="price" name="price" type="text" class="form-control" placeholder="Enter your Price">
+                                        <label class="form-label" for="price">Rating</label>
+                                        <input id="price" name="rating" type="text" class="form-control" placeholder="Enter Rating">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="productdesc">Hotel Description</label>
+                                        <textarea class="form-control" id="productdesc" name="description" rows="4" placeholder="Enter Hotel Description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                          {{--  <div class="row">
+                                
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label" class="control-label">Category</label>
-                                        <select class="form-control select2">
-                                            <option>Select</option>
-                                            <option value="EL">Electronic</option>
-                                            <option value="FA">Fashion</option>
-                                            <option value="FI">Fitness</option>
+                                        <label class="form-label" class="control-label">Room Types</label>
+
+                                        <select class="select2 form-control select2-multiple" name="room_types[]" multiple="multiple" data-placeholder="Choose ...">
+                                            @foreach($room_types as $index => $room_type)
+                                            <option value="{{ $room_type->id }}" >{{ $room_type->room_type_name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label" class="control-label">Specifications</label>
+                            </div> --}}
 
-                                        <select class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose ...">
-                                            <option value="HI" selected>High Quality</option>
-                                            <option value="LE" selected>Leather</option>
-                                            <option value="NO">Notifications</option>
-                                            <option value="SI">Sizes</option>
-                                            <option value="DI">Different Color</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-0">
-                                <label class="form-label" for="productdesc">Product Description</label>
-                                <textarea class="form-control" id="productdesc" rows="4" placeholder="Enter your Product Description"></textarea>
-                            </div>
+                            
                         </form>
                     </div>
                 </div>
@@ -120,7 +118,7 @@ Hotel List
                                 </div>
                             </div>
                             <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="font-size-16 mb-1">Hotel Specifications</h5>
+                                <h5 class="font-size-16 mb-1">Hotel Images</h5>
                                 <p class="text-muted text-truncate mb-0">Fill all information below</p>
                             </div>
                             <div class="flex-shrink-0">
@@ -134,36 +132,38 @@ Hotel List
 
                 <div id="addproduct-img-collapse" class="collapse" data-bs-parent="#addproduct-accordion">
                     <div class="p-4 border-top">
-                        <form action="#" class="dropzone">
-                            <div class="fallback">
-                                <input name="file" type="file" multiple="multiple">
-                            </div>
-                            <div class="dz-message needsclick">
-                                <div class="mb-3">
-                                    <i class="display-4 text-muted uil uil-cloud-upload"></i>
-                                </div>
+                        
 
-                                <h4>Drop files here or click to upload.</h4>
+                        
+                        <div class="row">
+                            
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                   
+                                <label class="form-label" for="images">Images</label>
+                                <input type="file" class="form-control" name="images[]" id="images" multiple accept=".jpeg, .jpg, .png, .gif">
                             </div>
-                        </form>
+                            <div id="image-previews"></div>
+                        </div>
+                        </div> 
+                    
                     </div>
                 </div>
             </div>
-
             <div class="card">
-                <a href="#addproduct-metadata-collapse" class="text-dark collapsed" data-bs-toggle="collapse" aria-haspopup="true" aria-expanded="false" aria-haspopup="true" aria-controls="addproduct-metadata-collapse">
+                <a href="#addproduct-billinginfo-collapse1" class="text-dark" data-bs-toggle="collapse" aria-expanded="true" aria-controls="addproduct-billinginfo-collapse1">
                     <div class="p-4">
 
                         <div class="d-flex align-items-center">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar-xs">
                                     <div class="avatar-title rounded-circle bg-soft-primary text-primary">
-                                        03
+                                        02
                                     </div>
                                 </div>
                             </div>
                             <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="font-size-16 mb-1">Food Details</h5>
+                                <h5 class="font-size-16 mb-1">Hotel Mapping</h5>
                                 <p class="text-muted text-truncate mb-0">Fill all information below</p>
                             </div>
                             <div class="flex-shrink-0">
@@ -175,34 +175,60 @@ Hotel List
                     </div>
                 </a>
 
-                <div id="addproduct-metadata-collapse" class="collapse" data-bs-parent="#addproduct-accordion">
+                <div id="addproduct-billinginfo-collapse1" class="collapse" data-bs-parent="#addproduct-accordion1">
                     <div class="p-4 border-top">
                         <form>
+                            
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="mb-3">
-                                        <label class="form-label" for="metatitle">Meta title</label>
-                                        <input id="metatitle" name="metatitle" type="text" class="form-control" placeholder="Enter your Meta title">
-                                    </div>
-
+                                <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="productname">Hotel Name</label>
+                                <input id="hotelname" name="hotel_name" type="text" class="form-control" placeholder="Enter Hotel Name">
+                            </div>
                                 </div>
+                                <div class="col-lg-6">
 
-                                <div class="col-sm-6">
                                     <div class="mb-3">
-                                        <label class="form-label" for="metakeywords">Meta Keywords</label>
-                                        <input id="metakeywords" name="metakeywords" type="text" class="form-control" placeholder="Enter your Meta Keywords">
+                                        <label class="form-label" for="manufacturername">Address</label>
+                                        <input id="address" name="address" type="text" class="form-control" placeholder="Enter Hotel Address">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="manufacturerbrand">Contact Number</label>
+                                        <input id="manufacturerbrand" name="contact_number" type="text" class="form-control" placeholder="Enter Contact Number">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="price">Rating</label>
+                                        <input id="price" name="rating" type="text" class="form-control" placeholder="Enter Rating">
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label" class="control-label">Room Types</label>
 
-                            <div class="mb-0">
-                                <label class="form-label" for="metadescription">Meta Description</label>
-                                <textarea class="form-control" id="metadescription" rows="4" placeholder="Enter your Meta Description"></textarea>
-                            </div>
+                                        <select class="select2 form-control select2-multiple" name="room_types[]" multiple="multiple" data-placeholder="Choose ...">
+                                            @foreach($room_types as $index => $room_type)
+                                            <option value="{{ $room_type->id }}" >{{ $room_type->room_type_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                            </div> 
+
+                            
                         </form>
                     </div>
                 </div>
             </div>
+           
         </div>
     </div>
 </div>
@@ -219,7 +245,23 @@ Hotel List
 
 
 @endsection
+
 @section('script')
+<script>
+    document.getElementById('images').addEventListener('change', function (event) {
+        var imagePreviews = document.getElementById('image-previews');
+        imagePreviews.innerHTML = ''; // Clear existing previews
+
+        for (var i = 0; i < event.target.files.length; i++) {
+            var img = document.createElement('img');
+            img.src = URL.createObjectURL(event.target.files[i]);
+            img.className = 'img-thumbnail mr-2 mb-2';
+            img.style.maxWidth = '300px';
+            img.style.maxHeight = '300px';
+            imagePreviews.appendChild(img);
+        }
+    });
+</script>
 <script src="{{ URL::asset('/assets/libs/select2/select2.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/libs/dropzone/dropzone.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/pages/ecommerce-add-product.init.js') }}"></script>

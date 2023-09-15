@@ -14,7 +14,7 @@
         <div class="card">
 
             <div class="card-body">
-                <h5 class="mb-3 font-size-18 text-center">Hex : #5b73e8</h5>
+                <h5 class="mb-3 font-size-18 text-center">Hex : #383838</h5>
                 <div class="row">
 
                     <div class="col-lg-4">

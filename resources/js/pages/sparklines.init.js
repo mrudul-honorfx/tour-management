@@ -41,7 +41,7 @@ $(document).ready(function() {
         type: 'pie',
         height: '200',
         resize: true,
-        sliceColors: ['#f1b44c', '#5b73e8', '#e9ecef']
+        sliceColors: ['#f1b44c', '#383838', '#e9ecef']
       });
     }
     
@@ -65,7 +65,7 @@ $(document).ready(function() {
         barWidth: '10',
         resize: true,
         barSpacing: '7',
-        barColor: '#5b73e8'
+        barColor: '#383838'
       });
 
       $('#sparkline3').sparkline([5, 6, 2, 9, 4, 7, 10, 12,4,7,10], {
@@ -86,9 +86,9 @@ $(document).ready(function() {
         type: 'line',
         width: '100%',
         height: '200',
-        lineColor: '#5b73e8',
+        lineColor: '#383838',
         fillColor: 'transparent',
-        spotColor: '#5b73e8',
+        spotColor: '#383838',
         lineWidth: 2,
         minSpotColor: undefined,
         maxSpotColor: undefined,
@@ -105,7 +105,7 @@ $(document).ready(function() {
         height: '200',
         chartRangeMax: 50,
         resize: true,
-        lineColor: '#5b73e8',
+        lineColor: '#383838',
         fillColor: 'rgba(91, 140, 232, 0.3)',
         highlightLineColor: 'rgba(0,0,0,.1)',
         highlightSpotColor: 'rgba(0,0,0,.2)',
@@ -141,7 +141,7 @@ $(document).ready(function() {
         type: 'bullet',
         width: '280',
         height: '80',
-        targetColor: '#5b73e8',
+        targetColor: '#383838',
         performanceColor: '#f1b44c'
       });
     }

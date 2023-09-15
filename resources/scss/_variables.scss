@@ -117,7 +117,7 @@ $grays: (
 // scss-docs-end gray-colors-map
 // fusv-enable
 // scss-docs-start color-variables
-$blue:    #5b73e8;
+$blue:    #565861;
 $indigo:  #564ab1;
 $purple:  #6f42c1;
 $pink:    #e83e8c;
@@ -149,9 +149,9 @@ $colors: (
 // scss-docs-end colors-map
 
 // scss-docs-start theme-color-variables
-$primary:       $blue;
+$primary:       $red;
 $secondary:     $gray-600;
-$success:       $green;
+$success:       $red;
 $info:          $cyan;
 $warning:       $yellow;
 $danger:        $red;

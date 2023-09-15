@@ -39,8 +39,8 @@
   --#{$variable-prefix}sidebar-menu-item-color: #898fa9;
   --#{$variable-prefix}sidebar-menu-sub-item-color: #7b8198;
   --#{$variable-prefix}sidebar-menu-item-icon-color: #666b7f;
-  --#{$variable-prefix}sidebar-menu-item-hover-color: #5b73e8;
-  --#{$variable-prefix}sidebar-menu-item-active-color: #5b73e8;
+  --#{$variable-prefix}sidebar-menu-item-hover-color: #383838;
+  --#{$variable-prefix}sidebar-menu-item-active-color: #383838;
   --#{$variable-prefix}sidebar-menu-item-active-bg-color: #34415d;
   --#{$variable-prefix}sidebar-menu-item-active-bg-color-dark: #343747;
 
@@ -57,7 +57,7 @@
   --#{$variable-prefix}header-item-color: #a6b0cf;
 
   // Topbar - Dark
-  --#{$variable-prefix}header-dark-bg: #5b73e8;
+  --#{$variable-prefix}header-dark-bg: #383838;
   --#{$variable-prefix}header-dark-item-color: #e9ecef;
 
   // Footer
@@ -68,7 +68,7 @@
   --#{$variable-prefix}topnav-bg:   #2d313e;
 
   --#{$variable-prefix}menu-item-color: #898fa9;
-  --#{$variable-prefix}menu-item-active-color: #5b73e8;
+  --#{$variable-prefix}menu-item-active-color: #383838;
 
   // body
   --#{$variable-prefix}body-bg : #22252f;

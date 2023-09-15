@@ -291,7 +291,7 @@
                         <div class="col-lg-6">
                             <div class="mt-3 mt-lg-0 mb-3">
                                 <label class="form-label">Toggle Palette Only</label>
-                                <input type="text" class="form-control" id="colorpicker-togglepaletteonly" value="#5b73e8">
+                                <input type="text" class="form-control" id="colorpicker-togglepaletteonly" value="#383838">
                             </div>
 
                             <div class="mb-3">

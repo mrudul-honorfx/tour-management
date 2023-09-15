@@ -115,7 +115,7 @@ File: Vector Maps init Js File
 			backgroundColor : 'transparent',
 			regionStyle : {
 				initial : {
-					fill : '#5b73e8'
+					fill : '#383838'
 				}
 			}
     });
@@ -125,7 +125,7 @@ File: Vector Maps init Js File
 			backgroundColor : 'transparent',
 			regionStyle : {
 				initial : {
-					fill : '#5b73e8'
+					fill : '#383838'
 				}
 			}
     });
@@ -135,7 +135,7 @@ File: Vector Maps init Js File
 			backgroundColor : 'transparent',
 			regionStyle : {
 				initial : {
-					fill : '#5b73e8'
+					fill : '#383838'
 				}
 			}
     });
@@ -145,7 +145,7 @@ File: Vector Maps init Js File
 			backgroundColor : 'transparent',
 			regionStyle : {
 				initial : {
-					fill : '#5b73e8'
+					fill : '#383838'
 				}
 			}
     });
@@ -155,7 +155,7 @@ File: Vector Maps init Js File
 			backgroundColor : 'transparent',
 			regionStyle : {
 				initial : {
-					fill : '#5b73e8'
+					fill : '#383838'
 				}
 			}
 		});
@@ -165,7 +165,7 @@ File: Vector Maps init Js File
 			backgroundColor : 'transparent',
 			regionStyle : {
 				initial : {
-					fill : '#5b73e8'
+					fill : '#383838'
 				}
 			}
     });

@@ -93,7 +93,7 @@
                 <div class="mb-3 row">
                     <label for="example-color-input" class="col-md-2 col-form-label">Color picker</label>
                     <div class="col-md-10">
-                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#5b73e8" title="Choose your color">
+                        <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#383838" title="Choose your color">
                     </div>
                 </div>
                 <div class="mb-3 row">

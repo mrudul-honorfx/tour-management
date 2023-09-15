@@ -26,4 +26,16 @@ class AirlineController extends Controller
         return $airlineProviders;
     }
 
+    public function airlineProviderList()
+    {
+        $airlineProviders = AirlineProviders::all();
+        return view('pages.airline.airline_list', compact('airlineProviders'));
+    }
+
+    public function airportDestinationList()
+    {
+        $airportLocations = AirportLocations::all();
+        return view('pages.airline.airport_list', compact('airportLocations'));
+    }
+
 }

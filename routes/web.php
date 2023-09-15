@@ -34,10 +34,26 @@ Route::group(['prefix' => 'hotel'], function(){
 });
 ###############################################################################################################################################
 
-##################################### HOTEL ROOM TYPES CRUD  ####################################################################################
+##################################### Package CRUD  ####################################################################################
 
 Route::group(['prefix' => 'package'], function(){
     Route::get('/add', [App\Http\Controllers\PackageController::class, 'index'])->name('addPackage');
+    Route::post('/savePackage', [App\Http\Controllers\PackageController::class, 'createTourPackage'])->name('addPackage.store');
+    Route::get('/all', [App\Http\Controllers\PackageController::class, 'viewPackages']);
+    // Route::post('updateRoomType', [App\Http\Controllers\HotelController::class, 'updateRoomType'])->name('updateRoomType');
+    // Route::delete('deleteRoomType/{id}', [App\Http\Controllers\HotelController::class, 'deleteRoomType'])->name('deleteRoomType'); 
+    
+    // Route::post('addHotel', [App\Http\Controllers\HotelController::class, 'addHotel'])->name('addHotel.store');
+
+});
+###############################################################################################################################################
+
+
+##################################### Airline CRUD  ####################################################################################
+
+Route::group(['prefix' => 'airline'], function(){
+    Route::get('/addProvider', [App\Http\Controllers\AirlineController::class, 'airlineProviderList'])->name('listAirlines');
+    Route::get('/addAirport', [App\Http\Controllers\AirlineController::class, 'airportDestinationList'])->name('listAirports');
     // Route::post('addRoomTypes', [App\Http\Controllers\HotelController::class, 'addRoomTypes'])->name('addRoomTypes.store');
     // Route::post('updateRoomType', [App\Http\Controllers\HotelController::class, 'updateRoomType'])->name('updateRoomType');
     // Route::delete('deleteRoomType/{id}', [App\Http\Controllers\HotelController::class, 'deleteRoomType'])->name('deleteRoomType'); 
@@ -46,7 +62,6 @@ Route::group(['prefix' => 'package'], function(){
 
 });
 ###############################################################################################################################################
-
 
 
 
@@ -95,6 +110,8 @@ Route::group(['prefix' => 'hotel'], function(){
 
 });
 ###############################################################################################################################################
+
+
 
 
 

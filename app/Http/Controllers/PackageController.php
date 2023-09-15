@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\HFoodType;
 use App\Models\HRoomType;
+use App\Models\HViewType;
 use App\Models\TourPackage;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use App\Models\AirlineProviders;
 use App\Models\AirportLocations;
-use App\Models\HViewType;
+use App\Models\TourPackageHotel;
 
 class PackageController extends Controller
 {
@@ -80,6 +81,7 @@ class PackageController extends Controller
             'tour_start_date' => 'required',
             'tour_end_date' => 'required',
             'departure_destination' => 'required',
+            'arrival_destination' => 'required',
             'total_slots' => 'required',
         ]);
 
@@ -89,23 +91,49 @@ class PackageController extends Controller
             'tour_start_date' => $request->tour_start_date,
             'tour_end_date' => $request->tour_end_date,
             'departure_destination' => $request->departure_destination,
+            'arrival_destination' => $request->arrival_destination,
             'total_slots' => $request->total_slots,
         ]);
 
         // Store the airline information of the package
-        $package->tourPackageAirlines()->createMany($request->airlines);
+        $package->tourPackageAirlines()->createMany($request->airline);
 
-        // Store the hotel information of the package
-        $package->tourPackageHotels()->createMany($request->hotels);
+        $data = [
+            'hotel_id' => $request->input('hotel_id'),
+            'tour_package_id' => $package->id,
+            'room_type_id' => json_encode($request->input('room_type')),
+            'food_type_id' => json_encode($request->input('food_type')),
+            'room_view_id' => json_encode($request->input('room_view_id')),
+            'available_rooms' => 10, // You need to specify how you want to set this value
+        ];
+    
+        // Create a new TourPackageHotel instance and save it to the database
+        $tourPackageHotel = TourPackageHotel::create($data);
 
-        // Store the transfer information of the package
-        $package->tourPackageTransfers()->createMany($request->transfers);
+        // // Store the transfer information of the package
+        // $package->tourPackageTransfers()->createMany($request->transfers);
 
         // Return the package information
-        return response()->json([
-            'package' => $package
-        ]);
+        return back()->with('success', 'Package Added Successfully');
        
+    }
+
+    // function to return the packages that are not expired. The expiery of packages are based on the tour start date
+    // the function will return the following information
+    // 1. tour start date
+    // 2. tour end date
+    // 3. departure destination
+    // 4. arrival destination
+    // 5. total slots
+    // 7. Hotel Name
+    public function viewPackages()
+    {
+        // sql query to get the packages that are not expired along with the hotel informations and the associated airline information
+        $packages = TourPackage::where('tour_start_date', '>=', date('Y-m-d'))->with('tourPackageHotels')->with('tourPackageAirlines')->get();
+        
+        //$packages = TourPackage::all();
+        return $packages;
+        // return view('pages.package.viewPackages', compact('packages'));
     }
 
 }

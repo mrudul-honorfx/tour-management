@@ -31,7 +31,7 @@ Hotel List
                                 </div>
                             </div>
                             <div class="flex-grow-1 overflow-hidden">
-                                <h5 class="font-size-16 mb-1">Basic Hotel Info</h5>
+                                <h5 class="font-size-16 mb-1">Hotel Info</h5>
                                 <p class="text-muted text-truncate mb-0">Fill all information below</p>
                             </div>
                             <div class="flex-shrink-0">
@@ -71,11 +71,17 @@ Hotel List
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label" for="price">Rating</label>
-                                        <input id="price" name="rating" type="text" class="form-control" placeholder="Enter Rating">
+                                        <select id="rating" name="rating" type="text" class="form-control" >
+                                            {{-- // set hotel sar rating values from one star to 5 star --}}
+                                            <option value="1">1 Star</option>
+                                            <option value="2">2 Star</option>
+                                            <option value="3">3 Star</option>
+                                            <option value="4">4 Star</option>
+                                            <option value="5">5 Star</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
@@ -84,7 +90,6 @@ Hotel List
                                     </div>
                                 </div>
                             </div>
-                            
 
                           {{--  <div class="row">
                                 
@@ -151,8 +156,8 @@ Hotel List
                     
                     </div>
                 </div>
-            </div>
-            <div class="card">
+            </div> --}}
+            {{-- <div class="card">
                 <a href="#addproduct-billinginfo-collapse1" class="text-dark" data-bs-toggle="collapse" aria-expanded="true" aria-controls="addproduct-billinginfo-collapse1">
                     <div class="p-4">
 
@@ -229,7 +234,7 @@ Hotel List
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
            
         </div>
     </div>
@@ -239,7 +244,8 @@ Hotel List
 <div class="row mb-4">
     <div class="col ms-auto">
         <div class="d-flex flex-reverse flex-wrap gap-2">
-            <button class="btn btn-success" type="submit"> <i class="uil uil-file-alt"></i>Add Hotel</button>
+            <a href="#" class="btn btn-danger"> <i class="uil uil-times"></i> Cancel </a>
+            <a href="#" class="btn btn-success"> <i class="uil uil-file-alt"></i> Save </a>
         </div>
     </div> <!-- end col -->
 </div> <!-- end row-->

@@ -75,7 +75,22 @@
                         </li> --}}
                     </ul>
                 </li>
-                <li class="menu-title">Admin Settings</li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-window-section"></i>
+                        <span>Bookings</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li>
+                            <a href="{{url('/package/add')}}">
+                                <i class="mdi mdi-plus"></i>
+                                <span>View Bookings</span>
+                            </a>
+                        </li>
+                       
+                    </ul>
+                </li>
+                <li class="menu-title">Package Settings</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-store"></i>
@@ -96,10 +111,9 @@
                         <span>Airline</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ url('/hotel/hotel_list') }}"><i class="uil-book-medical"></i> Add Airline</a></li>
-                        <li><a href="{{ url('/hotel/hotel_room_type') }}"><i class="uil-home"></i> Room Types</a></li>
-                        <li><a href="{{ url('/hotel/hotel_food_type') }}"><i class="mdi mdi-food"></i>Food Types</a></li>
-                        <li><a href="{{ url('/hotel/hotel_view_type') }}"><i class="uil-map-pin-alt"></i>View Types</a></li> 
+                        <li><a href="{{ url('/airline/addProvider') }}"><i class="uil-book-medical"></i> Airline Providers</a></li>
+                        <li><a href="{{ url('/airline/addAirportphp') }}"><i class="uil-home"></i>Destinations</a></li>
+                       
                     </ul>
                 </li>
 
@@ -109,24 +123,22 @@
                         <span>Trasportation</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ url('/hotel/hotel_list') }}"><i class="uil-book-medical"></i> Add Hotel</a></li>
-                        <li><a href="{{ url('/hotel/hotel_room_type') }}"><i class="uil-home"></i> Room Types</a></li>
-                        <li><a href="{{ url('/hotel/hotel_food_type') }}"><i class="mdi mdi-food"></i>Food Types</a></li>
-                        <li><a href="{{ url('/hotel/hotel_view_type') }}"><i class="uil-map-pin-alt"></i>View Types</a></li> 
+                        <li><a href="{{ url('/hotel/hotel_list') }}"><i class="uil-book-medical"></i> New Vehicle Type</a></li>
+                       
                     </ul>
                 </li>
 
+                <li class="menu-title">Settings</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="uil-store"></i>
-                        <span>Settings</span>
+                        <span>Staff</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ url('/hotel/hotel_list') }}"><i class="uil-book-medical"></i> Add Hotel</a></li>
-                        <li><a href="{{ url('/hotel/hotel_room_type') }}"><i class="uil-home"></i> Room Types</a></li>
-                        <li><a href="{{ url('/hotel/hotel_food_type') }}"><i class="mdi mdi-food"></i>Food Types</a></li>
-                        <li><a href="{{ url('/hotel/hotel_view_type') }}"><i class="uil-map-pin-alt"></i>View Types</a></li> 
+                        <li><a href="{{ url('/hotel/hotel_list') }}"><i class="uil-book-medical"></i>Staff Groups</a></li>
+                        <li><a href="{{ url('/hotel/hotel_room_type') }}"><i class="uil-home"></i>Staff List</a></li>
+                        <li><a href="{{ url('/hotel/hotel_food_type') }}"><i class="mdi mdi-food"></i>Permissions</a></li>
                     </ul>
                 </li>
 

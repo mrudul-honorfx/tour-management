@@ -20,7 +20,7 @@ File: Sweetalert Js File
             Swal.fire(
                 {
                     title: 'Any fool can use a computer',
-                    confirmButtonColor: '#5b73e8',
+                    confirmButtonColor: '#383838',
                 }
             )
         });
@@ -32,7 +32,7 @@ File: Sweetalert Js File
                     title: "The Internet?",
                     text: 'That thing is still around?',
                     icon: 'question',
-                    confirmButtonColor: '#5b73e8'
+                    confirmButtonColor: '#383838'
                 }
             )
         });
@@ -45,7 +45,7 @@ File: Sweetalert Js File
                     text: 'You clicked the button!',
                     icon: 'success',
                     showCancelButton: true,
-                    confirmButtonColor: '#5b73e8',
+                    confirmButtonColor: '#383838',
                     cancelButtonColor: "#f46a6a"
                 }
             )
@@ -108,7 +108,7 @@ File: Sweetalert Js File
                 text: 'Modal with a custom image.',
                 imageUrl: 'assets/images/logo-dark.png',
                 imageHeight: 20,
-                confirmButtonColor: "#5b73e8",
+                confirmButtonColor: "#383838",
                 animation: false
             })
         });
@@ -120,7 +120,7 @@ File: Sweetalert Js File
             title: 'Auto close alert!',
             html: 'I will close in <strong></strong> seconds.',
             timer: 2000,
-            confirmButtonColor: "#5b73e8",
+            confirmButtonColor: "#383838",
             onBeforeOpen:function () {
                 Swal.showLoading()
                 timerInterval = setInterval(function() {
@@ -179,7 +179,7 @@ File: Sweetalert Js File
                 title: 'Custom width, padding, background.',
                 width: 600,
                 padding: 100,
-                confirmButtonColor: "#5b73e8",
+                confirmButtonColor: "#383838",
                 background: '#fff url(//subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/geometry.png)'
             })
         });
@@ -193,7 +193,7 @@ File: Sweetalert Js File
                 showCancelButton: true,
                 confirmButtonText: 'Submit',
                 showLoaderOnConfirm: true,
-                confirmButtonColor: "#5b73e8",
+                confirmButtonColor: "#383838",
                 cancelButtonColor: "#f46a6a",
                 preConfirm: function (email) {
                     return new Promise(function (resolve, reject) {
@@ -224,7 +224,7 @@ File: Sweetalert Js File
                 confirmButtonText: 'Next &rarr;',
                 inputPlaceholder: "Enter your Question",
                 showCancelButton: true,
-                confirmButtonColor: "#5b73e8",
+                confirmButtonColor: "#383838",
                 cancelButtonColor: "#74788d",
                 progressSteps: ['1', '2', '3']
               }).queue([
@@ -253,7 +253,7 @@ File: Sweetalert Js File
         $('#dynamic-alert').click(function () {
             swal.queue([{
                 title: 'Your public IP',
-                confirmButtonColor: "#5b73e8",
+                confirmButtonColor: "#383838",
                 confirmButtonText: 'Show my public IP',
                 text: 'Your public IP will be received ' +
                 'via AJAX request',

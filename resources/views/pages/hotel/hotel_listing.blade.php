@@ -91,7 +91,7 @@ Hotel List
                                 </div>
                             </div>
 
-                          {{--  <div class="row">
+                           <div class="row">
                                 
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -104,7 +104,7 @@ Hotel List
                                         </select>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div> 
 
                             
                         </form>
@@ -112,7 +112,7 @@ Hotel List
                 </div>
             </div>
 
-            {{-- <div class="card">
+            <div class="card">
                 <a href="#addproduct-img-collapse" class="text-dark collapsed" data-bs-toggle="collapse" aria-haspopup="true" aria-expanded="false" aria-haspopup="true" aria-controls="addproduct-img-collapse">
                     <div class="p-4">
 

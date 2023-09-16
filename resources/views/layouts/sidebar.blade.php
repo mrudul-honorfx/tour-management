@@ -35,7 +35,7 @@
                 <li class="menu-title">@lang('translation.Menu')</li>
 
                 <li>
-                    <a href="{{url('index')}}">
+                    <a href="{{url('dashboard')}}">
                         <i class="uil-home-alt"></i><span class="badge rounded-pill bg-primary float-end">01</span>
                         <span>@lang('translation.Dashboard')</span>
                     </a>
@@ -51,6 +51,13 @@
                             <a href="{{url('/package/add')}}">
                                 <i class="mdi mdi-plus"></i>
                                 <span>Add New Package</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{url('/package/plisting')}}">
+                                <i class="mdi mdi-format-list-checkbox
+                                "></i>
+                                <span>Package List</span>
                             </a>
                         </li>
                         {{-- <li>

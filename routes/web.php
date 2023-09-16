@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root']);
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'root']);
+
 
 
 
@@ -40,6 +42,9 @@ Route::group(['prefix' => 'package'], function(){
     Route::get('/add', [App\Http\Controllers\PackageController::class, 'index'])->name('addPackage');
     Route::post('/savePackage', [App\Http\Controllers\PackageController::class, 'createTourPackage'])->name('addPackage.store');
     Route::get('/all', [App\Http\Controllers\PackageController::class, 'viewPackages']);
+    Route::get('/plisting', [App\Http\Controllers\PackageController::class, 'getPackageList']);
+    Route::get('/plisting1', [App\Http\Controllers\PackageController::class, 'getFilteredPackageList']);
+
     // Route::post('updateRoomType', [App\Http\Controllers\HotelController::class, 'updateRoomType'])->name('updateRoomType');
     // Route::delete('deleteRoomType/{id}', [App\Http\Controllers\HotelController::class, 'deleteRoomType'])->name('deleteRoomType'); 
     

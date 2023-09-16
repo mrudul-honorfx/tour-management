@@ -36,6 +36,7 @@ class HomeController extends Controller
 
     public function root()
     {
+       
         $tourPackages = DB::table('tour_packages as tp')
             ->select('tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots')
             ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')

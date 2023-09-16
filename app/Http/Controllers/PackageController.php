@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\AirlineProviders;
 use App\Models\AirportLocations;
 use App\Models\TourPackageHotel;
+use Illuminate\Support\Facades\DB;
 
 class PackageController extends Controller
 {
@@ -134,6 +135,74 @@ class PackageController extends Controller
         //$packages = TourPackage::all();
         return $packages;
         // return view('pages.package.viewPackages', compact('packages'));
+    }
+    public function getPackageList(Request $request)
+    {
+        $tourPackages = DB::table('tour_packages as tp')
+        ->select('tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots')
+        ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+        ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+        ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+        ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+        ->where('tp.tour_start_date', '>=', DB::raw('CURDATE()'))
+        ->orderBy('tp.tour_start_date', 'asc')
+        ->limit(12)
+        ->get();
+
+        $airportLocations = AirportLocations::all();
+        $airlineProviders = AirlineProviders::all();
+
+
+
+    return view('pages.package.packageListing',compact('tourPackages','airportLocations','airlineProviders'));
+    }
+  
+    public function getFilteredPackageList(Request $request)
+    {  
+
+        $startDate = $request['date_range'];
+        $endDate = $request['date_range'];
+
+        // Check if a date range is provided
+        if (strpos($request['date_range'], ' to ') !== false) {
+            // Split the "date_range" parameter into start and end dates for a range
+            $dateRange = explode(" to ", $request['date_range']);
+            $startDate = $dateRange[0];
+            $endDate = $dateRange[1];
+        }
+
+        $tourPackagesQuery = DB::table('tour_packages as tp')
+        ->select('tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots')
+        ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+        ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+        ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+        ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+        ->where(function ($query) use ($startDate, $endDate) {
+            $query->where('tp.tour_start_date', '>=', $startDate)
+                  ->where('tp.tour_end_date', '<=', $endDate);
+        })
+        ->orderBy('tp.tour_start_date', 'asc');
+        
+        // Apply additional filters based on other request parameters
+        if ($request['departure_airport'] != 'Select') {
+            $tourPackagesQuery->where('tp.departure_destination', $request['departure_airport']);
+        }
+
+        if ($request['arrival'] != 'Select') {
+            $tourPackagesQuery->where('tp.arrival_destination', $request['arrival']);
+        }
+
+        if ($request['airline'] != 'Select') {
+            $tourPackagesQuery->where('ap.id', $request['airline']);
+        }
+
+        // Execute the query and get the results
+        $tourPackages = $tourPackagesQuery->get();
+
+
+       
+
+        return response()->json($tourPackages);
     }
 
 }

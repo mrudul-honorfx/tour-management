@@ -45,11 +45,14 @@ Route::group(['prefix' => 'package'], function(){
     Route::get('/plisting', [App\Http\Controllers\PackageController::class, 'getPackageList'])->name('package.plisting');
     Route::post('/plisting', [App\Http\Controllers\PackageController::class, 'getFilteredPackageList'])->name('fliterListing');
 
-    // Route::post('updateRoomType', [App\Http\Controllers\HotelController::class, 'updateRoomType'])->name('updateRoomType');
-    // Route::delete('deleteRoomType/{id}', [App\Http\Controllers\HotelController::class, 'deleteRoomType'])->name('deleteRoomType'); 
-    
-    // Route::post('addHotel', [App\Http\Controllers\HotelController::class, 'addHotel'])->name('addHotel.store');
+});
+###############################################################################################################################################
+##################################### Booking CRUD  ####################################################################################
 
+Route::group(['prefix' => 'booking'], function(){
+    Route::get('/addbooking', [App\Http\Controllers\BookingController::class, 'addbooking'])->name('addbooking');
+    Route::post('/submitBooking', [App\Http\Controllers\BookingController::class, 'createBooking'])->name('submitBooking');
+  
 });
 ###############################################################################################################################################
 

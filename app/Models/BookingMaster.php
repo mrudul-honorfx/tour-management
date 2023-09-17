@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\BookingMaster;
 
 class BookingMaster extends Model
 {
@@ -18,7 +19,7 @@ class BookingMaster extends Model
         7. Return Date
     */
     use HasFactory;
-    protected $table = 'booking_master';
+    protected $table = 'booking_masters';
     protected $fillable = [
         'booking_date',
         'primary_traveller',
@@ -27,6 +28,7 @@ class BookingMaster extends Model
         'total_passengers',
         'departure_date',
         'return_date',
+        'booking_status'
     ];
 
     public function bookingDetails()

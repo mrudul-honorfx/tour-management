@@ -156,7 +156,7 @@ Hotel List
                     
                     </div>
                 </div>
-            </div> --}}
+            </div> 
             {{-- <div class="card">
                 <a href="#addproduct-billinginfo-collapse1" class="text-dark" data-bs-toggle="collapse" aria-expanded="true" aria-controls="addproduct-billinginfo-collapse1">
                     <div class="p-4">

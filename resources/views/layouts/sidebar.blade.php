@@ -74,7 +74,7 @@
                         {{-- <li>
                             <a href="javascript: void(0);" class="has-arrow">@lang('translation.Horizontal')</a>
                             <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="layouts-horizontal">@lang('translation.Horizontal')</a></li>
+                                <li><a href="layouts-horizontal">booking@lang('translation.Horizontal')</a></li>
                                 <li><a href="layouts-hori-topbar-dark">@lang('translation.Dark_Topbar')</a></li>
                                 <li><a href="layouts-hori-boxed-width">@lang('translation.Boxed_Width')</a></li>
                                 <li><a href="layouts-hori-preloader">@lang('translation.Preloader')</a></li>
@@ -89,9 +89,9 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="{{url('/package/add')}}">
+                            <a href="{{url('/booking/addbooking')}}">
                                 <i class="mdi mdi-plus"></i>
-                                <span>View Bookings</span>
+                                <span>Add Bookings</span>
                             </a>
                         </li>
                        

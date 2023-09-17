@@ -20,13 +20,12 @@
     @endcomponent --}}
     <h4>Packages</h4>
     <div class="row">
-        <div class="col-lg-12 ">
-            <div class="card " id="">
+        <div class="col-lg-12">
+            <div class="card" id="">
                 <div class="card-header">
                     <h4 class="card-title">Package Filter</h4>
                 </div>
                 <div class="card-body">
-                  
                     <form id="filter-form" action="{{ route('fliterListing') }}" method="post">
                         @csrf
                         <div class="d-flex align-items-end">
@@ -43,7 +42,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="mb-3">
-                                            <label class="form-label" for="productname">Depature Airport</label>
+                                            <label class="form-label" for="productname">Departure Airport</label>
                                             <select name="departure_airport" id="departure_destination" class="form-select">
                                                 <option>Select</option>
                                                 @foreach ($airportLocations as $index => $airports)
@@ -87,7 +86,12 @@
                             </div>
                         </div>
                     </form>
-                    
+                    <form id="clear-filter-form" action="{{ route('package.plisting') }}" method="get">
+                        @csrf
+                        <div class="ms-3">
+                            <button type="submit" class="btn btn-warning"> <i class="mdi mdi-filter-variant"></i> Clear Filters</button>
+                        </div>
+                    </form>
                 </div>
                 <!-- end card body -->
             </div>
@@ -95,6 +99,7 @@
         </div>
         <!-- end col -->
     </div>
+    
 <div class="row">
    
     @foreach($tourPackages as $index => $package)

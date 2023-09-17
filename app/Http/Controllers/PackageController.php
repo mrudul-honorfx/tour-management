@@ -199,10 +199,15 @@ class PackageController extends Controller
         // Execute the query and get the results
         $tourPackages = $tourPackagesQuery->get();
 
+        $airportLocations = AirportLocations::all();
+        $airlineProviders = AirlineProviders::all();
+        $dateRange = $request['date_range'];
+        $departureAirport= $request['departure_airport'];
+        $arrivalAirport= $request['arrival'];
+        $flight= $request['airline'];
+         
+        return view('pages.package.packageListing',compact('tourPackages','flight','arrivalAirport','dateRange','departureAirport','airportLocations','airlineProviders'));
 
-       
-
-        return response()->json($tourPackages);
     }
 
 }

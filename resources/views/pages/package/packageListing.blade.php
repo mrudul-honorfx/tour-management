@@ -20,63 +20,74 @@
     @endcomponent --}}
     <h4>Packages</h4>
     <div class="row">
-        <div class="col-lg-12 package-cards-container">
+        <div class="col-lg-12 ">
             <div class="card " id="">
                 <div class="card-header">
                     <h4 class="card-title">Package Filter</h4>
                 </div>
                 <div class="card-body">
-    
-                    <form id="filter-form">
+                  
+                    <form id="filter-form" action="{{ route('fliterListing') }}" method="post">
                         @csrf
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div>
-                                    <label class="form-label">Range</label>
-                                    <input type="text" name=date_range class="form-control" id="datepicker-range">
+                        <div class="d-flex align-items-end">
+                            <div class="flex-grow-1">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div>
+                                            <label class="form-label">Range</label>
+                                            <input type="text" name="date_range" class="form-control" id="datepicker-range" value="">
+                                            @if(isset($dateRange))
+                                                <p>selected range : {{$dateRange }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="productname">Depature Airport</label>
+                                            <select name="departure_airport" id="departure_destination" class="form-select">
+                                                <option>Select</option>
+                                                @foreach ($airportLocations as $index => $airports)
+                                                    <option value="{{ $airports->id }}" {{ isset($departureAirport) && $departureAirport  == $airports->id ? 'selected' : '' }}>
+                                                        {{ $airports->airport_name }} ({{ $airports->iata_code }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="productname">Arrival Airport</label>
+                                            <select name="arrival" id="departure_destination" class="form-select">
+                                                <option>Select</option>
+                                                @foreach ($airportLocations as $index => $airport)
+                                                    <option value={{ $airport->id }} {{ isset($arrivalAirport) && $arrivalAirport == $airport->id ? 'selected' : '' }}> {{ $airport->airport_name }}
+                                                        ({{ $airport->iata_code }})
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="productname">Airline</label>
+                                            <select name="airline" id="airline_id" class="form-select">
+                                                <option>Select</option>
+                                                @foreach ($airlineProviders as $index => $airline)
+                                                    <option value={{ $airline->id }} {{ isset($flight) && $flight == $airline->id ? 'selected' : '' }}>
+                                                        {{ $airline->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
-
-                            <div class="mb-3">
-                                <label class="form-label" for="productname">Depature Airport</label>
-                                <select name="departure_airport" id="departure_destination"
-                                    class="form-select">
-                                    <option>Select</option>
-                                    @foreach ($airportLocations as $index => $airports)
-                                        <option value={{ $airports->id }}> {{ $airports->airport_name }}
-                                            ({{ $airports->iata_code }})</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="mb-3">
-                                    <label class="form-label" for="productname">Arrival Airport</label>
-                                    <select name="arrival" id="departure_destination"
-                                        class="form-select">
-                                        <option>Select</option>
-                                        @foreach ($airportLocations as $index => $airports)
-                                            <option value={{ $airports->id }}> {{ $airports->airport_name }}
-                                                ({{ $airports->iata_code }})</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                             </div>
-                             <div class="col-lg-4">
-    
-                                <div class="mb-3">
-                                    <label class="form-label" for="productname">Airline</label>
-                                    <select name="airline" id="airline_id" class="form-select">
-                                        <option>Select</option>
-                                        @foreach ($airlineProviders as $index => $airline)
-                                            <option value={{ $airline->id }}>{{ $airline->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                            <div class="ms-3">
+                                <button type="submit" class="btn btn-primary"> <i class="mdi mdi-filter-variant"></i> Apply Filters</button>
                             </div>
                         </div>
                     </form>
+                    
                 </div>
                 <!-- end card body -->
             </div>
@@ -97,7 +108,7 @@
             $formattedEndDate = $endDate->format('d M');
         @endphp
         <div class="col-md-6 col-xl-4">
-            <div class="card" data-package-id="{{ $package->package_id }}">
+            <div class="card package-cards-container" data-package-id="{{ $package->package_id }}">
                 <div class="card-body">
                    
                     <div>
@@ -145,67 +156,7 @@
 <script src="{{ URL::asset('/assets/libs/datepicker/datepicker.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
 <script src="{{ URL::asset('/assets/js/pages/form-advanced.init.js') }}"></script>
-<script>
-    $(document).ready(function () {
-        // Function to fetch filtered data via Ajax and replace existing data
-        function fetchAndReplaceData() {
-            var formData = $('#filter-form').serialize();
 
-            $.ajax({
-                url: '/package/plisting1',
-                type: 'GET',
-                data: formData,
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-                    
-                    // Remove existing cards
-                    $('#package-cards-container').empty();
-
-                    // Iterate over the received data and create new cards
-                    data.forEach(function (package) {
-                        
-                        // Create a new card element
-                        var $card = $('<div class="col-md-6 col-xl-4">' +
-                            '<div class="card" data-package-id="' + package.package_id + '">' +
-                            '<div class="card-body">' +
-                            '<div>' +
-                            '<h4 class="mb-1 mt-1">' + package.formatted_dates + '</h4>' +
-                            '<div class="row">' +
-                            '<div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-airplane-takeoff" style="padding-right:10px;"></i>' + package.departure_destination + '</p></div>' +
-                            '<div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-airplane-landing" style="padding-right:10px;"></i>' + package.arrival_destination + '</p></div>' +
-                            '<div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-airplane" style="padding-right:10px;"></i>' + package.airline_name + '</p></div>'+
-
-                       '<div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-office-building" style="padding-right:10px;"></i>' + package.hotel_name + '</p></div>'+
-                        
-                        '<div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-timer-sand" style="padding-right:10px;"></i>' + package.total_slots + ' SLOTS LEFT</p></div>' +
-                            '</div>' +
-                            '</div>' +
-                            '<div class="float-start mt-3">' +
-                            '<button type="button" class="btn btn-outline-primary waves-effect waves-light">Add Booking</button>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>');
-
-                        // Append the new card to the container
-                        $('#package-cards-container').append($card);
-                    });
-                },
-                error: function () {
-                    alert('Error fetching filtered data.');
-                }
-            });
-        }
-
-        // Check for changes in form elements
-        $('#filter-form input, #filter-form select').on('change', function () {
-            fetchAndReplaceData();
-        });
-
-        // Initial data load (only if form has been modified)
-        //fetchAndReplaceData();
-    });
-</script>
 
 
 

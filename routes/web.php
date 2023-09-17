@@ -43,7 +43,7 @@ Route::group(['prefix' => 'package'], function(){
     Route::post('/savePackage', [App\Http\Controllers\PackageController::class, 'createTourPackage'])->name('addPackage.store');
     Route::get('/all', [App\Http\Controllers\PackageController::class, 'viewPackages']);
     Route::get('/plisting', [App\Http\Controllers\PackageController::class, 'getPackageList']);
-    Route::get('/plisting1', [App\Http\Controllers\PackageController::class, 'getFilteredPackageList']);
+    Route::post('/plisting', [App\Http\Controllers\PackageController::class, 'getFilteredPackageList'])->name('fliterListing');
 
     // Route::post('updateRoomType', [App\Http\Controllers\HotelController::class, 'updateRoomType'])->name('updateRoomType');
     // Route::delete('deleteRoomType/{id}', [App\Http\Controllers\HotelController::class, 'deleteRoomType'])->name('deleteRoomType'); 

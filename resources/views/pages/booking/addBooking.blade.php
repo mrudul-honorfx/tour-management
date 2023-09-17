@@ -156,19 +156,128 @@
                                                 </select>
                                            
                                         </div>
-            
+                                       
                                         <div class="col-lg-2 mt-1">
                                             <label class="form-label" for="gender">Action</label>
                                             <div class="d-flex">
                                                 <input data-repeater-delete type="button" class="btn btn-primary" value="Delete" />
-                                                <input data-repeater-create type="button" class="btn btn-success ms-2" value="Add" />
+                                               
                                             </div>
                                         </div>
                                        
                            
                         </div>
                     </div>
-                    <div class="col-lg-2 mt-1">
+                    <input data-repeater-create type="button" class="btn btn-success ms-2" value="Add Co–Passenger" />
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="flex-shrink-0 me-3">
+                            <div class="avatar-xs">
+                                <div class="avatar-title rounded-circle bg-soft-primary text-primary">
+                                    02
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 overflow-hidden">
+                            <h5 class="font-size-16 mb-1">Itenary Details</h5>
+                            <p class="text-muted text-truncate mb-0">Fill all information below</p>
+                        </div>
+                        <div class="flex-shrink-0">
+                            <i class="mdi mdi-chevron-up accor-down-icon font-size-24"></i>
+                        </div>
+
+                    </div>
+                         <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="metatitle">Hotel</label>
+                                                <select name="hotel_id" id="hotel_id" class="form-select">
+                                                    <option>Select</option>
+                                                    @foreach ($hotelList as $index => $hotel)
+                                                        <option value={{ $hotel->id }}>{{ $hotel->hotel_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+
+                                                <div class="row">
+                                                    
+                                                    <div>
+                                                        <label class="form-label" for="metatitle">Room View</label>
+                                                        <select name="room_view_id[]" id="room_view_id"
+                                                            class="form-select" multiple multiselect-select-all="true" multiselect-search="true" >
+                                                            @foreach ($roomViewList as $index => $roomView)
+                                                                <option value={{ $roomView->id }}>
+                                                                    {{ $roomView->view_type_name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="metatitle">Food Offerings</label>       
+                                                <select name="food_type[]" id="food_type"
+                                                    class="form-select" multiple multiselect-select-all="true" multiselect-search="true" >
+                                                    @foreach ($foodTypeList as $index => $foodType)
+                                                        <option value={{ $foodType->id }}>
+                                                            {{ $foodType->food_type_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                   
+                                                
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="metatitle">Room Type</label>
+                                                <select name="room_type[]" id="room_type"
+                                                    class="form-select" multiple multiselect-select-all="true" multiselect-search="true" >
+                                                    @foreach ($roomTypeList as $index => $roomType)
+                                                        <option value={{ $roomType->id  }}>
+                                                            {{ $roomType->room_type_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                        </div>
+                      
+                                        <div class="col-lg-4">
+
+                                            <div class="mb-3">
+                                                <label class="form-label" for="manufacturername">Check In Date</label>
+                                                <input class="form-control" type="date" value=""
+                                            
+                                                    id="tour_start_date" name="check_in_data">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+    
+                                            <div class="mb-3">
+                                                <label class="form-label" for="manufacturername">Check Out Date</label>
+                                                <input class="form-control" type="date" value=""
+                                                    id="return_date" name="check_out_data">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 col-lg-4">
+                                            <label class="form-label" for="subject"> Number Of Rooms</label>
+                                            <input type="text" id="subject" name="number_of_rooms" class="form-control" placeholder="Enter your number_of_rooms " />
+                                        </div>
+                                        <div class="mb-3 col-lg-4">
+                                            <label class="form-label" for="subject"> Flight Class</label>
+                                            <input type="text" id="subject" name="flightclass" class="form-control" placeholder="Enter your Flight Class " />
+                                        </div>
+            
+                    <div class="col-lg-2 mt-4">
                         <input type="submit" class="btn btn-primary" value="Submit Booking" />   
                         </div> 
                </form>

@@ -31,7 +31,7 @@ class BookingController extends Controller
         $hotelList = Hotel::all();
         $roomTypeList = HRoomType::all();
         $foodTypeList = HFoodType::all();
-        $roomViewList = HViewType::all(); */
+        $roomViewList = HViewType::all();
 
         // fetch the package information from the package id
         

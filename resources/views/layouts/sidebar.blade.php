@@ -89,7 +89,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li>
-                            <a href="{{url('/booking/addbooking')}}">
+                            <a href="{{url('/package/plisting')}}">
                                 <i class="mdi mdi-plus"></i>
                                 <span>Add Bookings</span>
                             </a>

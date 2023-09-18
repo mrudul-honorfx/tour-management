@@ -136,7 +136,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturername">Return Date</label>
-                                            <input class="form-control" type="date" 
+                                            <input class="form-control" type="date" disabled
                                                 value={{ date_format(date_create($package->tour_end_date), 'Y-m-d') }}
                                                 id="return_date" name="return_date">
                                         </div>

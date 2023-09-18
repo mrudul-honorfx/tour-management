@@ -22,64 +22,48 @@
 
                     <div class="table-responsive">
                         <table class="table mb-0">
-                            <thead>
+                            <thead class="table-light">
                                 <tr>
-                                    <th>#</th>
                                     <th>Booking ID</th>
-                                    <th>Booking Date</th>
-                                    <th>Primary Traveller</th>
-                                    <th>Contact Number</th>
-                                    <th>Email</th>
+                                    <th>Package</th>
+                                    <th>Primary Contact</th>
+                                    <th>From</th>
+                                    <th>To</th>
                                     <th>Total Passengers</th>
-                                    <th>Departure Date</th>
-                                    <th>Return Date</th>
-                                    <th>Hotel Name</th>
-                                    <th>Address</th>
-                                    <th>Co-Passenger</th> {{-- Single header for Co-Passenger --}}
+                                    <th>Staff</th>
+                                    <th>View Details</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($bookings as $index => $booking)
-                                    <tr>
-                                        <th scope="row">{{ $index + 1 }}</th>
-                                        <td>{{ $booking->booking_id }}</td>
-                                        <td>{{ $booking->booking_date }}</td>
-                                        <td>{{ $booking->primary_traveller }}</td>
-                                        <td>{{ $booking->primary_traveller_contact_number }}</td>
-                                        <td>{{ $booking->primary_traveller_email }}</td>
-                                        <td>{{ $booking->total_passengers }}</td>
-                                        <td>{{ $booking->departure_date }}</td>
-                                        <td>{{ $booking->return_date }}</td>
-                                        <td>{{ $booking->hotel_name }}</td>
-                                        <td>{{ $booking->address }}</td>
-                                        <td> {{-- Co-Passenger listing --}}
-                                            @if ($booking->traveller_details->isNotEmpty())
-                                               
-                                                    <table class="table">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>First Name</th>
-                                                                <th>Last Name</th>
-                                                                <th>Gender</th>
-                                                                <th>Ticket Number</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($booking->traveller_details as $traveller)
-                                                            <tr>
-                                                                <td>{{ $traveller->first_name }}</td>
-                                                                <td>{{ $traveller->last_name }}</td>
-                                                                <td>{{ $traveller->gender }}</td>
-                                                                <td>{{ $traveller->ticket_number }}</td>
-                                                            </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
-                                               
-                                            @endif
-                                        </td>
-                                    </tr>
+                                @foreach($bookings as $booking)
+                                <tr>
+                                   
+                                    <td><a href="javascript: void(0);" class="text-body fw-bold">#{{$booking->booking_id}}</a> </td>
+                                    <td><p>{{$booking->departure_destination}} - {{$booking->arrival_destination}}</p>
+                                        <small><span>{{$booking->airline_name}} - {{$booking->hotel_name}}</span></small></td>
+                                    <td>{{$booking->primary_traveller}}</td>
+                                    <td>
+                                        {{$booking->tour_start_date}}
+                                    </td>
+                                    <td>
+                                        {{$booking->tour_end_date}}
+                                    </td>
+                                    <td>
+                                        {{$booking->total_passengers}}
+                                    </td>
+                                    <td>
+                                        {{$booking->staff_name}}
+                                   
+                                    
+                                    <td>
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                            View Details
+                                        </button>
+                                    </td>
+                                </tr>
                                 @endforeach
+                                
                             </tbody>
                         </table>
                     </div>

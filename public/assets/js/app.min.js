@@ -26,8 +26,8 @@ File: Main Js File
             });
 
             if (window.innerWidth >= 1024 && window.innerWidth <= 1366) {
-                document.body.setAttribute('data-sidebar-size', 'sm');
-                updateRadio('sidebar-size-small')
+                document.body.setAttribute('data-sidebar-size', 'lg');
+                updateRadio('sidebar-size-large')
             }
         });
 

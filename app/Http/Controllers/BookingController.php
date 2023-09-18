@@ -26,9 +26,8 @@ class BookingController extends Controller
 
     public function addbooking($packageId)
     {
-        /* $airlineProviders = AirlineProviders::all();
-        $airportLocations = AirportLocations::all();
-        $vehicleTypes = VehicleType::all();
+        
+        
         $hotelList = Hotel::all();
         $roomTypeList = HRoomType::all();
         $foodTypeList = HFoodType::all();
@@ -165,6 +164,30 @@ class BookingController extends Controller
         {
             dd($e->getMessage());
         }
+        
+    }
+    public function blisting()
+    {
+        $bookings = DB::table('booking_masters as bm')
+                    ->select('bm.id as booking_id','bm.booking_date','bm.primary_traveller','bm.primary_traveller_contact_number',
+                     'bm.primary_traveller_email', 'bm.total_passengers', 'bm.departure_date','bm.return_date','bm.departure_date',
+                     'h.hotel_name', 'h.address')
+                    ->leftJoin('booking_details as bd', 'bd.booking_id', '=', 'bm.id')
+                    ->leftJoin('hotels as h', 'bd.hotel_id', '=', 'h.id')
+                    ->orderBy('bm.departure_date', 'asc')
+                    ->get();
+                    $bookings = $bookings->map(function ($booking) {
+                        $booking->traveller_details = DB::table('traveller_details')
+                        ->select('first_name', 'last_name', 'gender','ticket_number')
+                            ->where('booking_id', $booking->booking_id)
+                            ->get();
+                    
+                        return $booking;
+                    });
+                    
+       
+        
+        return view('pages.booking.bookingList',compact('bookings'));
         
     }
 

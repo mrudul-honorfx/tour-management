@@ -253,7 +253,9 @@
                     </div>
                 </div>
             </div>
-
+            @if(auth()->check())
+            
+      
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" src="{{ URL::asset('/assets/images/users/avatar-4.jpg') }}" alt="Header Avatar">
@@ -272,7 +274,9 @@
                     </form>
                 </div>
             </div>
-
+            @else
+            <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+            @endif
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
                     <i class="uil-cog"></i>

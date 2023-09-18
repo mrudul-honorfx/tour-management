@@ -94,6 +94,13 @@
                                 <span>Add Bookings</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{url('/booking/blisting')}}">
+                                <i class="mdi mdi-format-list-checkbox
+                                "></i>
+                                <span>Booking List</span>
+                            </a>
+                        </li>
                        
                     </ul>
                 </li>

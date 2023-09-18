@@ -52,7 +52,8 @@ Route::group(['prefix' => 'package'], function(){
 Route::group(['prefix' => 'booking'], function(){
     Route::get('/new/{packageId}', [App\Http\Controllers\BookingController::class, 'addbooking'])->name('addbooking');
     Route::post('/submitBooking', [App\Http\Controllers\BookingController::class, 'createBooking'])->name('submitBooking');
-  
+    Route::get('/blisting', [App\Http\Controllers\BookingController::class, 'blisting'])->name('blisting');
+
 });
 ###############################################################################################################################################
 

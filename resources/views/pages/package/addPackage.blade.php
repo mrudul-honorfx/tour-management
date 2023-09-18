@@ -148,7 +148,7 @@
                             <div id="airlineFormset">
                                 <div class="p-4 border-top border-dashed">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
     
                                             <div class="mb-3">
                                                 <label class="form-label" for="productname">Airline</label>
@@ -161,11 +161,18 @@
                                             </div>
                                         </div>
     
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="mb-3">
                                                 <label class="form-label" for="productname">Flight Number</label>
                                                 <input id="flight_number" name="airline[0][flight_number]" type="text"
                                                     class="form-control" placeholder="E1098">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="productname">PNR Number</label>
+                                                <input id="flight_number" name="airline[0][pnr]" type="text"
+                                                    class="form-control" placeholder="PNR#93749">
                                             </div>
                                         </div>
                                     </div>

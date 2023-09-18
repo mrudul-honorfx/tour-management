@@ -28,7 +28,10 @@ class BookingMaster extends Model
         'total_passengers',
         'departure_date',
         'return_date',
-        'booking_status'
+        'booking_status',
+        'staff_id',
+        'package_id'
+
     ];
 
     public function bookingDetails()

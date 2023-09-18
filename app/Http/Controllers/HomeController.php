@@ -38,7 +38,8 @@ class HomeController extends Controller
     {
        
         $tourPackages = DB::table('tour_packages as tp')
-            ->select('tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots')
+            ->select('tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots',
+            DB::raw('(SELECT SUM(total_passengers) FROM booking_masters WHERE package_id = tp.id) as total_booking'))
             ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
             ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
             ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
@@ -48,7 +49,22 @@ class HomeController extends Controller
             ->limit(12)
             ->get();
 
-        return view('index',compact('tourPackages'));
+        
+
+        $latestBooking = DB::table('booking_masters as bm')
+            ->select('bm.id as booking_id', 'bm.booking_date','bm.primary_traveller','bm.total_passengers', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots','s.name as staff_name')
+            ->leftJoin('tour_packages as tp', 'bm.package_id', '=', 'tp.id')
+            ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+            ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+            ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+            ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+            ->leftJoin('users as s', 'bm.staff_id', '=', 's.id')
+            ->where('bm.booking_date', '>=', DB::raw('CURDATE()'))
+            ->orderBy('bm.booking_date', 'asc')
+            ->limit(12)
+            ->get();
+
+        return view('index',compact('tourPackages', 'latestBooking'));
     }
 
     /*Language Translation*/

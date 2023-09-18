@@ -50,7 +50,7 @@ Route::group(['prefix' => 'package'], function(){
 ##################################### Booking CRUD  ####################################################################################
 
 Route::group(['prefix' => 'booking'], function(){
-    Route::get('/addbooking', [App\Http\Controllers\BookingController::class, 'addbooking'])->name('addbooking');
+    Route::get('/new/{packageId}', [App\Http\Controllers\BookingController::class, 'addbooking'])->name('addbooking');
     Route::post('/submitBooking', [App\Http\Controllers\BookingController::class, 'createBooking'])->name('submitBooking');
   
 });

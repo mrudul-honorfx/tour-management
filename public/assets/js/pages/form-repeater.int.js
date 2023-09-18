@@ -25,7 +25,11 @@ $(document).ready(function () {
       $(this).slideDown();
     },
     hide: function hide(deleteElement) {
-      if (confirm('Are you sure you want to delete this element?')) {
+      var $repeaterList = $(this).closest('[data-repeater-list]');
+      var $repeaterItems = $repeaterList.find('[data-repeater-item]');
+      console.log($repeaterItems.length);
+
+      if ($repeaterItems.length > 1 && confirm('Are you sure you want to delete this element?')) {
         $(this).slideUp(deleteElement);
       }
     },

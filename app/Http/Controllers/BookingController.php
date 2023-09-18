@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\BookingMaster;
 use App\Models\TravellerDetails;
 use App\Models\Hotel;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\HRoomType;
 
@@ -86,7 +87,7 @@ class BookingController extends Controller
             'check_in_date' => $request->input('check_in_data'),
             'check_out_date' => $request->input('check_out_data'),
             'number_of_rooms' => $request->input('number_of_rooms'),
-            'flight_class' => $request->input('return_date'),
+            'flight_class' => $request->input('flightclass'),
             'booking_id'=>$master->id
            
 
@@ -95,6 +96,30 @@ class BookingController extends Controller
 
 
         return back()->with('success', 'Booking Added Successfully');
+        
+    }
+    public function blisting()
+    {
+        $bookings = DB::table('booking_masters as bm')
+                    ->select('bm.id as booking_id','bm.booking_date','bm.primary_traveller','bm.primary_traveller_contact_number',
+                     'bm.primary_traveller_email', 'bm.total_passengers', 'bm.departure_date','bm.return_date','bm.departure_date',
+                     'h.hotel_name', 'h.address')
+                    ->leftJoin('booking_details as bd', 'bd.booking_id', '=', 'bm.id')
+                    ->leftJoin('hotels as h', 'bd.hotel_id', '=', 'h.id')
+                    ->orderBy('bm.departure_date', 'asc')
+                    ->get();
+                    $bookings = $bookings->map(function ($booking) {
+                        $booking->traveller_details = DB::table('traveller_details')
+                        ->select('first_name', 'last_name', 'gender','ticket_number')
+                            ->where('booking_id', $booking->booking_id)
+                            ->get();
+                    
+                        return $booking;
+                    });
+                    
+       
+        
+        return view('pages.booking.bookingList',compact('bookings'));
         
     }
 

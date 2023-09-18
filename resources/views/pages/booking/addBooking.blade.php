@@ -270,7 +270,7 @@
                                         </div>
                                         <div class="mb-3 col-lg-4">
                                             <label class="form-label" for="subject"> Number Of Rooms</label>
-                                            <input type="text" id="subject" name="number_of_rooms" class="form-control" placeholder="Enter your number_of_rooms " />
+                                            <input type="text" id="subject" name="number_of_rooms" class="form-control" placeholder="Enter number of rooms " />
                                         </div>
                                         <div class="mb-3 col-lg-4">
                                             <label class="form-label" for="subject"> Flight Class</label>

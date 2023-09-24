@@ -36,18 +36,33 @@ class HomeController extends Controller
 
     public function root()
     {
-       
+
         $tourPackages = DB::table('tour_packages as tp')
-            ->select('tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots',
-            DB::raw('(SELECT SUM(total_passengers) FROM booking_masters WHERE package_id = tp.id) as total_booking'))
-            ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
-            ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
-            ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+            ->select('tp.package_name','tp.departure_destination', 'tpa.airline_id', 'ap.name as airline_name', 'tph.hotel_id', 'h.hotel_name', DB::raw('COUNT(tp.id) as package_count'))
+            ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+            ->join('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+            ->join('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
             ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
-            ->where('tp.tour_start_date', '>=', DB::raw('CURDATE()'))
-            ->orderBy('tp.tour_start_date', 'asc')
-            ->limit(12)
+            ->where('tp.tour_start_date', '>=', now()->toDateString())
+            ->groupBy('tp.departure_destination', 'tph.hotel_id', 'ap.id',  'tpa.airline_id','tp.package_name')
+            ->orderBy('tp.departure_destination')
+            ->orderBy('tph.hotel_id')
+            ->orderBy('tpa.airline_id')
             ->get();
+
+        
+       
+        // $tourPackages = DB::table('tour_packages as tp')
+        //     ->select('tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots',
+        //     DB::raw('(SELECT SUM(total_passengers) FROM booking_masters WHERE package_id = tp.id) as total_booking'))
+        //     ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+        //     ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+        //     ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+        //     ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+        //     ->where('tp.tour_start_date', '>=', DB::raw('CURDATE()'))
+        //     ->orderBy('tp.tour_start_date', 'asc')
+        //     ->limit(12)
+        //     ->get();
 
         
 
@@ -65,6 +80,27 @@ class HomeController extends Controller
             ->get();
 
         return view('index',compact('tourPackages', 'latestBooking'));
+    }
+    
+
+    public function getPackageByFilters()
+    {
+        $tourPackages = DB::table('tour_packages as tp')
+            ->select('tp.package_name','tp.departure_destination', 'tpa.airline_id', 'ap.name as airline_name', 'tph.hotel_id', 'h.hotel_name', DB::raw('COUNT(tp.id) as package_count'))
+            ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+            ->join('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+            ->join('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+            ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+            ->where('tp.tour_start_date', '>=', now()->toDateString())
+            ->groupBy('tp.departure_destination', 'tph.hotel_id', 'ap.id',  'tpa.airline_id','tp.package_name')
+            ->orderBy('tp.departure_destination')
+            ->orderBy('tph.hotel_id')
+            ->orderBy('tpa.airline_id')
+            ->get();
+        
+
+        return $tourPackages;
+    
     }
 
     /*Language Translation*/

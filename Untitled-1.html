@@ -1,0 +1,24 @@
+
+<VirtualHost 127.0.0.1:80 _default_:80>
+  ServerAlias *
+  DocumentRoot /opt/bitnami/apache2/htdocs/tour-management/public
+  <Directory "/opt/bitnami/apache2/htdocs/tour-management/public">
+    Options -Indexes +FollowSymLinks -MultiViews
+    AllowOverride All
+    Require all granted
+  </Directory>
+</VirtualHost>
+
+
+<VirtualHost 127.0.0.1:443 _default_:443>
+    ServerAlias *
+    DocumentRoot /opt/bitnami/apache2/htdocs/tour-management/public
+    SSLEngine on
+    SSLCertificateFile "/opt/bitnami/apache2/conf/bitnami/certs/server.crt"
+    SSLCertificateKeyFile "/opt/bitnami/apache2/conf/bitnami/certs/server.key"
+    <Directory "/opt/bitnami/apache2/htdocs/tour-management/public">
+      Options -Indexes +FollowSymLinks -MultiViews
+      AllowOverride All
+      Require all granted
+    </Directory>
+  </VirtualHost>

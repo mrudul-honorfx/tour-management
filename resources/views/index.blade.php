@@ -12,44 +12,27 @@
     @endcomponent --}}
     <h4>Upcomming Packages</h4>
    
-<div class="row">
-    @foreach($tourPackages as $index => $package)
-        @php
-            // Parse the tour_start_date and tour_end_date as Carbon objects
-            $startDate = \Carbon\Carbon::parse($package->tour_start_date);
-            $endDate = \Carbon\Carbon::parse($package->tour_end_date);
-
-            // Format the dates as "day Month" (e.g., "17 Aug")
-            $formattedStartDate = $startDate->format('d M');
-            $formattedEndDate = $endDate->format('d M');
-        @endphp
-        <div class="col-md-6 col-xl-4">
-            <div class="card">
-                <div class="card-body">
-                    
-                    <div>
-                        <h4 class="mb-1 mt-1">{{ $formattedStartDate }} - {{ $formattedEndDate }}</h4>
-                        <div class="row">
-                            <div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-airplane-takeoff" style="padding-right:10px;"></i>{{$package->departure_destination}}</p></div>
-                            <div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-airplane-landing" style="padding-right:10px;"></i>{{$package->arrival_destination}}</p></div>
-                            <div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-airplane" style="padding-right:10px;"></i>{{$package->airline_name}}</p></div>
-                            {{-- // do a null check and then display --}}
-                            @if($package->hotel_name != null)
-                            <div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-office-building" style="padding-right:10px;"></i>{{$package->hotel_name}}</p></div>
-                           @endif
-                            <div class="col-md-12 col-xl-6 py-2"><p class="text-muted mb-0"><i class="mdi mdi-timer-sand" style="padding-right:10px;"></i>{{$package->total_booking}} SLOTS LEFT</p></div>
+    <div class="row">
+        @foreach($tourPackages as $index => $package)
+            <div class="col-md-12 col-xl-12">
+                <div class="card justify-center">
+                    <div class="card-body">
+                        
+                        <div>
+                            <h5 class="mb-1 mt-1">{{$package->package_name}}</h5>
+                            <p>{{$package->airline_name}} Airlines - {{$package->hotel_name}} - {{$package->departure_destination}}</p>
+                           
                         </div>
+                        
+                        <div class="float-end  mt-3">
+                            <a href="package/list/{{$package->departure_destination}}/{{$package->airline_id}}/{{$package->hotel_id}}" type="button" class="btn btn-outline-primary waves-effect waves-light">Add Booking</a>
+                        </div>
+    
                     </div>
-                    
-                    <div class="float-start mt-3">
-                        <a href="booking/new/{{$package->package_id}}" type="button" class="btn btn-outline-primary waves-effect waves-light">Add Booking</a>
-                    </div>
-
                 </div>
-            </div>
-        </div> 
-    @endforeach   
-</div>
+            </div> 
+        @endforeach   
+    </div>
     {{-- <div class="col-md-6 col-xl-3">
         <div class="card">
             <div class="card-body">
@@ -261,7 +244,7 @@
     </div> <!-- end Col -->
 </div> <!-- end row--> --}}
 
-{{-- <div class="row">
+<div class="row">
     <div class="col-xl-4">
         <div class="card">
             <div class="card-body">
@@ -486,7 +469,7 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>
 <!-- end row -->
 
 <div class="row">

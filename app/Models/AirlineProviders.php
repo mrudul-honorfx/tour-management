@@ -11,6 +11,6 @@ class AirlineProviders extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name','iata_code'
+        'name','iata_code','status'
     ];
 }

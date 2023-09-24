@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AirlineProviders;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'root']);
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'root']);
 
 
+
+Route::get('/filterView', [App\Http\Controllers\HomeController::class, 'getPackageByFilters'])->name('filterView');
 
 
 ##################################### HOTEL ROOM TYPES CRUD  ####################################################################################

@@ -1,48 +1,40 @@
-  /* *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
-  /////////////////   Down Load Button Function   /////////////////
-  *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** */
- 
-(function ($) {
-  'use strict';
+const handleExportPDF = async () => {
+  const data = document.getElementById('pdf-content');
+  const pageHeight = 295; // Set the desired height of each page in the PDF (A4 height in mm)
+  
+  // Initialize jsPDF and get its width
+  const doc = new jsPDF('p', 'mm');
+  const docWidth = doc.internal.pageSize.getWidth();
 
-  $('#tm_download_btn').on('click', function () {
-    var downloadSection = $('#tm_download_section');
-    var cWidth = downloadSection.width();
-    var cHeight = downloadSection.height();
-    var topLeftMargin = 0;
-    var pdfWidth = cWidth + topLeftMargin * 2;
-    var pdfHeight = pdfWidth * 1.5 + topLeftMargin * 2;
-    var canvasImageWidth = cWidth;
-    var canvasImageHeight = cHeight;
-    var totalPDFPages = Math.ceil(cHeight / pdfHeight) - 1;
+  let positionY = 0;
+  let currentPage = 1;
 
-    html2canvas(downloadSection[0], { allowTaint: true }).then(function (
-      canvas
-    ) {
-      canvas.getContext('2d');
-      var imgData = canvas.toDataURL('image/png', 1.0);
-      var pdf = new jsPDF('p', 'pt', [pdfWidth, pdfHeight]);
-      pdf.addImage(
-        imgData,
-        'PNG',
-        topLeftMargin,
-        topLeftMargin,
-        canvasImageWidth,
-        canvasImageHeight
-      );
-      for (var i = 1; i <= totalPDFPages; i++) {
-        pdf.addPage(pdfWidth, pdfHeight);
-        pdf.addImage(
-          imgData,
-          'PNG',
-          topLeftMargin,
-          -(pdfHeight * i) + topLeftMargin * 0,
-          canvasImageWidth,
-          canvasImageHeight
-        );
-      }
-      pdf.save('download.pdf');
-    });
-  });
+  const addNewPage = () => {
+    doc.addPage();
+    positionY = 0;
+    currentPage++;
+  };
 
-})(jQuery);
+  const renderContent = async (child) => {
+    const canvas = await html2canvas(child, { scale: 1 }); // Capture content as a canvas
+    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    const imgHeight = (canvas.height * docWidth) / canvas.width;
+
+    if (positionY + imgHeight > pageHeight) {
+      addNewPage();
+    }
+
+    doc.addImage(imgData, 'JPEG', 0, positionY, docWidth, imgHeight);
+    positionY += imgHeight;
+  };
+
+  const children = Array.from(data.children);
+
+  for (let i = 0; i < children.length; i++) {
+    const child = children[i];
+
+    await renderContent(child);
+  }
+
+  doc.save('Download.pdf');
+};

@@ -47,6 +47,8 @@ Route::group(['prefix' => 'package'], function(){
     Route::get('/all', [App\Http\Controllers\PackageController::class, 'viewPackages']);
     Route::get('/plisting', [App\Http\Controllers\PackageController::class, 'getPackageList'])->name('package.plisting');
     Route::post('/plisting', [App\Http\Controllers\PackageController::class, 'getFilteredPackageList'])->name('fliterListing');
+    Route::post('/filtered-packages', [App\Http\Controllers\PackageController::class, 'getFilteredPackage'])->name('filtered-packages');
+
 
 });
 ###############################################################################################################################################

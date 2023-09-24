@@ -38,18 +38,27 @@ class HomeController extends Controller
     {
 
         $tourPackages = DB::table('tour_packages as tp')
-            ->select('tp.package_name','tp.departure_destination', 'tpa.airline_id', 'ap.name as airline_name', 'tph.hotel_id', 'h.hotel_name', DB::raw('COUNT(tp.id) as package_count'))
-            ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
-            ->join('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
-            ->join('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
-            ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
-            ->where('tp.tour_start_date', '>=', now()->toDateString())
-            ->groupBy('tp.departure_destination', 'tph.hotel_id', 'ap.id',  'tpa.airline_id','tp.package_name')
-            ->orderBy('tp.departure_destination')
-            ->orderBy('tph.hotel_id')
-            ->orderBy('tpa.airline_id')
-            ->get();
-
+                        ->select(
+                            'tp.package_name',
+                            'tp.departure_destination',
+                            'tpa.airline_id',
+                            'ap.name as airline_name',
+                            'tph.hotel_id',
+                            'h.hotel_name',
+                            DB::raw('COUNT(tp.id) as package_count')
+                        )
+                        ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+                        ->join('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+                        ->leftjoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+                        ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+                       // ->where('tp.tour_start_date', '>=', now()->toDateString())
+                        ->groupBy('tp.package_name', 'tp.departure_destination', 'tpa.airline_id', 'ap.name', 'tph.hotel_id', 'h.hotel_name')
+                        ->orderBy('tp.departure_destination')
+                        ->orderBy('tph.hotel_id')
+                        ->orderBy('tpa.airline_id')
+                        ->orderBy('tp.tour_start_date', 'asc')
+                        ->get();
+                // dd($tourPackages);
         
        
         // $tourPackages = DB::table('tour_packages as tp')

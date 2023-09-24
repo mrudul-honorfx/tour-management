@@ -25,8 +25,16 @@
                         </div>
                         
                         <div class="float-end  mt-3">
-                            <a href="package/list/{{$package->departure_destination}}/{{$package->airline_id}}/{{$package->hotel_id}}" type="button" class="btn btn-outline-primary waves-effect waves-light">Add Booking</a>
-                        </div>
+{{--                             <a href="package/list/{{$package->departure_destination}}/{{$package->airline_id}}/{{$package->hotel_id}}" type="button" class="btn btn-outline-primary waves-effect waves-light">Add Booking</a>
+ --}}                    <form action="{{ route('filtered-packages') }}" method="POST">
+    @csrf
+    <input type="hidden" name="departure_destination" value="{{ $package->departure_destination }}">
+    <input type="hidden" name="airline_id" value="{{ $package->airline_id }}">
+    <input type="hidden" name="hotel_id" value="{{ $package->hotel_id }}">
+    <button type="submit" class="btn btn-outline-primary waves-effect waves-light">Add Booking</button>
+</form>
+    
+                          </div>
     
                     </div>
                 </div>

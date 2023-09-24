@@ -210,4 +210,50 @@ class PackageController extends Controller
 
     }
 
+    public function getFilteredPackage(Request $request)
+    {  
+       
+        $tourPackagesQuery = DB::table('tour_packages as tp')
+        ->select(
+            'tp.package_name',
+            'tp.departure_destination',
+            'tpa.airline_id',
+            'ap.name as airline_name',
+            'tph.hotel_id',
+            'h.hotel_name',
+          
+        )
+        ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+        ->join('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+        ->leftjoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+        ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+        ->orderBy('tp.departure_destination')
+        ->orderBy('tph.hotel_id')
+        ->orderBy('tpa.airline_id')
+        ->orderBy('tp.tour_start_date', 'asc');
+       
+        
+        
+        if ($request['departure_destination']) {
+            
+            $tourPackagesQuery->where('tp.departure_destination', '=','Dubai');
+            
+        }
+      
+        if ($request['airline_id']) {
+            $tourPackagesQuery->where('ap.id', $request['airline_id']);
+        }
+        if ($request['hotel_id']) {
+            $tourPackagesQuery->where('tph.hotel_id', $request['hotel_id']);
+        }
+
+        // Execute the query and get the results
+        $tourPackages = $tourPackagesQuery->get();
+
+        return view('pages.dashboard.filteredList',compact('tourPackages'));
+
+         
+
+    }
+
 }

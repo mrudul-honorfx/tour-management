@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Carbon\Carbon;
 use App\Models\Hotel;
 use App\Models\TourPackage;
@@ -13,6 +14,8 @@ use App\Models\TourPackageHotel;
 use App\Models\TravellerDetails;
 use App\Models\TourPackageAirline;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -21,20 +24,11 @@ class BookingController extends Controller
     //
 
     // the model works on three models BookingMaster, BookingDetails and TravelerDetails
-   
+
     //create new booking function
 
     public function addbooking($packageId)
     {
-        
-        
-        // $hotelList = Hotel::all();
-        // $roomTypeList = HRoomType::all();
-        // $foodTypeList = HFoodType::all();
-        // $roomViewList = HViewType::all();
-
-        // fetch the package information from the package id
-        
 
         try {
             $package = TourPackage::find($packageId);
@@ -58,9 +52,9 @@ class BookingController extends Controller
                                 ->join('airport_locations AS ad', 'tpa.arrival_destination', '=', 'ad.id')
                                 ->where('tpa.tour_package_id', '=', $packageId)
                                 ->get();
-        
+
             $packageHotel = TourPackageHotel::where('tour_package_id', '=', $packageId)->get();
-        
+
             // create new array to store the hotel information
             $hotelInfo = array();
 
@@ -77,61 +71,55 @@ class BookingController extends Controller
                     'food' => DB::table('h_food_types')->select('id','food_type_name')->whereIn('id', json_decode($hotel->food_type_id, true, 512, JSON_NUMERIC_CHECK))->get(),
                     'view' => DB::table('h_view_types')->select('id','view_type_name')->whereIn('id', json_decode($hotel->room_view_id, true, 512, JSON_NUMERIC_CHECK))->get(),
                 ];
-                
+
             }
 
             // find number of slots available for the package
             $bookedSlots = BookingMaster::where('id', '=', $packageId)->where('booking_status', '=', 1)->sum('total_passengers');
             $availableSlots = $package->total_slots - $bookedSlots;
             return view('pages.booking.addbooking', compact('package','packageAirline','hotelInfo','availableSlots','availableSlots'));
-            
+
         } catch (\Exception $e) {
             dd($e->getMessage());
         }
-        
-       
+
+
     }
 
 
     public function createBooking(Request $request)
     {
        
-        $validatedData = $request->validate([
-                
+
+        $rules = [
             'p_traveller' => 'required',
             'email' => 'required',
             'contact_no' => 'required',
             'total_passenger' => 'required',
             'tour_start_date' => 'required',
             'return_date' => 'required',
-            //check for bdetails array individually
-            'b_details.hotel_id' => 'required',
-            'b_details.room_type_id' => 'required',
-            'b_details.food_type_id' => 'required',
-            'b_details.view_type_id' => 'required',
-            'b_details.no_of_rooms' => 'required',
-            'b_details.check_in_date' => 'required',
-            'b_details.check_out_date' => 'required',
 
-            
-        ]);
+        ];
+      
+        $validator = Validator::make($request->all(), $rules);
 
         
 
         try{
             $master = BookingMaster::create([
-            
+
                 'primary_traveller' => $request->input('p_traveller'),
                 'booking_date' =>  Carbon::now(),
                 'primary_traveller_contact_number' =>$request->input('contact_no'),
                 'primary_traveller_email' => $request->input('email'),
                 'total_passengers' => $request->input('total_passenger'),
-                
+
                 'departure_date' => $request->input('tour_start_date'),
                 'return_date' => $request->input('return_date'),
-                'booking_status' => 1, 
+                'booking_status' => 1,
                 'staff_id' => Auth::id(),
             ]);
+            return $request->input('group-a');
             if ($request->has('group-a') && is_array($request->input('group-a')) && count($request->input('group-a')) > 0) {
                 foreach ($request->input('group-a') as $coTravellerData) {
                     $coTraveller = new TravellerDetails();
@@ -143,9 +131,10 @@ class BookingController extends Controller
                     $coTraveller->save();
                 }
             }
+            return  $coTraveller;
             // check if b_details is not empty
-            if ($request->has('b_details')) {
-                $bDetailData = $request->input('b_details');
+            if ($request->has('group-b')) {
+                $bDetailData = $request->input('group-b');
                 $bDetail = new BookingDetails();
                 $bDetail->hotel_id = $bDetailData['hotel_id'];
                 $bDetail->room_type_id = $bDetailData['room_type_id'];
@@ -157,16 +146,19 @@ class BookingController extends Controller
                 $bDetail->number_of_rooms = $bDetailData['no_of_rooms'];
                 $bDetail->save();
             }
-    
+
             return back()->with('success', 'Booking Added Successfully');
         }
         catch(\Exception $e)
         {
-            dd($e->getMessage());
+            Log::error('Validation failed: ' . $request->url(), [
+                'errors' => $validator->errors(),
+            ]);
+            return back()->with('error', $e->getMessage());
         }
-        
+
     }
-    
+
     public function blisting()
     {
         // $bookings = DB::table('booking_masters as bm')
@@ -182,10 +174,10 @@ class BookingController extends Controller
         //                 ->select('first_name', 'last_name', 'gender','ticket_number')
         //                     ->where('booking_id', $booking->booking_id)
         //                     ->get();
-                    
+
         //                 return $booking;
         //             });
-                    
+
         $bookings = DB::table('booking_masters as bm')
             ->select('bm.id as booking_id', 'bm.booking_date','bm.primary_traveller','bm.total_passengers', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots','s.name as staff_name')
             ->leftJoin('tour_packages as tp', 'bm.package_id', '=', 'tp.id')
@@ -198,15 +190,15 @@ class BookingController extends Controller
             ->orderBy('bm.booking_date', 'asc')
             ->limit(12)
             ->get();
-        
-        
+
+
         return view('pages.booking.bookingList',compact('bookings'));
-        
+
     }
 
     public function generateBookingVoucher($bookingId)
-    { 
-       
+    {
+
         // collect all details related to booking
         $bookingMaster = BookingMaster::find($bookingId);
         $packageInfo = TourPackage::find($bookingMaster->package_id);
@@ -250,10 +242,10 @@ class BookingController extends Controller
                 'food' => DB::table('h_food_types')->select('id','food_type_name')->whereIn('id', json_decode($hotel->food_type_id, true, 512, JSON_NUMERIC_CHECK))->get(),
                 'view' => DB::table('h_view_types')->select('id','view_type_name')->whereIn('id', json_decode($hotel->room_view_id, true, 512, JSON_NUMERIC_CHECK))->get(),
             ];
-            
+
         }
         return view('pages.voucher.voucher',compact('bookingMaster','packageInfo','additionalPassengers','packageAirline'));
-        
+
     }
 
 }

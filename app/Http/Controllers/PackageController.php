@@ -212,31 +212,40 @@ class PackageController extends Controller
 
     public function getFilteredPackage(Request $request)
     {  
-       
-        $tourPackagesQuery = DB::table('tour_packages as tp')
-        ->select(
-            'tp.package_name',
-            'tp.departure_destination',
-            'tpa.airline_id',
-            'ap.name as airline_name',
-            'tph.hotel_id',
-            'h.hotel_name',
+        $tourPackagesQuery  = DB::table('tour_packages as tp')
+                ->select('tp.package_name','tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots',
+                DB::raw('(SELECT SUM(total_passengers) FROM booking_masters WHERE package_id = tp.id) as total_booking'))
+                ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+                ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+                ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+                ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+                ->where('tp.tour_start_date', '>=', DB::raw('CURDATE()'))
+                ->orderBy('tp.tour_start_date', 'asc');
+                
+        // $tourPackagesQuery = DB::table('tour_packages as tp')
+        // ->select(
+        //     'tp.package_name',
+        //     'tp.departure_destination',
+        //     'tpa.airline_id',
+        //     'ap.name as airline_name',
+        //     'tph.hotel_id',
+        //     'h.hotel_name',
           
-        )
-        ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
-        ->join('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
-        ->leftjoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
-        ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
-        ->orderBy('tp.departure_destination')
-        ->orderBy('tph.hotel_id')
-        ->orderBy('tpa.airline_id')
-        ->orderBy('tp.tour_start_date', 'asc');
+        // )
+        // ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+        // ->join('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+        // ->leftjoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+        // ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+        // ->orderBy('tp.departure_destination')
+        // ->orderBy('tph.hotel_id')
+        // ->orderBy('tpa.airline_id')
+        // ->orderBy('tp.tour_start_date', 'asc');
        
         
         
         if ($request['departure_destination']) {
             
-            $tourPackagesQuery->where('tp.departure_destination', '=','Dubai');
+            $tourPackagesQuery->where('tp.departure_destination', '=', $request['departure_destination']);
             
         }
       

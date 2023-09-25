@@ -201,67 +201,82 @@
                                     <p><strong class="font-size-18 mb-2">Hotel Name:
                                             {{ $hotelInfo[0]['hotel_name'] }}</strong><br>
                                         Hotel Address: {{ $hotelInfo[0]['hotel_address'] }}</p>
-                                    <input type="hidden" name="b_details[hotel_id]" value="{{ $hotelInfo[0]['id'] }}">
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="primary_traveller">Room Type
-                                            </label>
-                                            <select id="room_type" name="b_details[room_type_id]" class="form-select">
-                                                @foreach ($hotelInfo[0]['rooms'] as $room)
-                                                    <option value="{{ $room->id }}">{{ $room->room_type_name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                    <div class="repeater">
+                                        <div data-repeater-list="group-b" class="border border-primary p-3" id="hotel-repeater-item-1">
+                                            <div data-repeater-item class="row">
+                                                <input type="hidden" name="b_details[hotel_id]" value="{{ $hotelInfo[0]['id'] }}">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">Room Type
+                                                        </label>
+                                                        <select id="room_type" name="b_details[room_type_id]" class="form-select">
+                                                            @foreach ($hotelInfo[0]['rooms'] as $room)
+                                                                <option value="{{ $room->id }}">{{ $room->room_type_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">View Type
+                                                        </label>
+                                                        <select id="view_type" name="b_details[view_type_id]" class="form-select">
+                                                            @foreach ($hotelInfo[0]['view'] as $view)
+                                                                <option value="{{ $view->id }}">{{ $view->view_type_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">Food Type
+                                                        </label>
+                                                        <select id="food_type" name="b_details[food_type_id]" class="form-select">
+                                                            @foreach ($hotelInfo[0]['food'] as $food)
+                                                                <option value="{{ $food->id }}">{{ $food->food_type_name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">Number of Rooms
+                                                        </label>
+                                                        <input id="no_of_rooms" name="b_details[no_of_rooms]" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">Check In Date
+                                                        </label>
+                                                        <input class="form-control" type="date" 
+                                                            value={{ date_format(date_create($package->tour_start_date), 'Y-m-d') }}
+                                                            id="check_in_date" name="b_details[check_in_date]">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">Check Out Date
+                                                        </label>
+                                                        <input class="form-control" type="date"
+                                                            value={{ date_format(date_create($package->tour_end_date), 'Y-m-d') }}
+                                                            id="check_out_date" name="b_details[check_out_date]">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-2 mt-1">
+                                                    <label class="form-label" for="gender">Action</label>
+                                                    <div class="d-flex">
+                                                        <input data-repeater-delete type="button" class="btn btn-primary"
+                                                            value="Delete" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="primary_traveller">View Type
-                                            </label>
-                                            <select id="view_type" name="b_details[view_type_id]" class="form-select">
-                                                @foreach ($hotelInfo[0]['view'] as $view)
-                                                    <option value="{{ $view->id }}">{{ $view->view_type_name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="primary_traveller">Food Type
-                                            </label>
-                                            <select id="food_type" name="b_details[food_type_id]" class="form-select">
-                                                @foreach ($hotelInfo[0]['food'] as $food)
-                                                    <option value="{{ $food->id }}">{{ $food->food_type_name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="primary_traveller">Number of Rooms
-                                            </label>
-                                            <input id="no_of_rooms" name="b_details[no_of_rooms]" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="primary_traveller">Check In Date
-                                            </label>
-                                            <input class="form-control" type="date" 
-                                                value={{ date_format(date_create($package->tour_start_date), 'Y-m-d') }}
-                                                id="check_in_date" name="b_details[check_in_date]">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="primary_traveller">Check Out Date
-                                            </label>
-                                            <input class="form-control" type="date"
-                                                value={{ date_format(date_create($package->tour_end_date), 'Y-m-d') }}
-                                                id="check_out_date" name="b_details[check_out_date]">
-                                        </div>
+                                        <input data-repeater-create type="button" class="btn btn-success ms-2"
+                                                            value="Add" />
                                     </div>
 
                                 </div>
@@ -301,4 +316,16 @@
             <!-- Plugins js -->
             <script src="{{ URL::asset('/assets/libs/jquery-repeater/jquery-repeater.min.js') }}"></script>
             <script src="{{ URL::asset('/assets/js/pages/form-repeater.int.js') }}"></script>
+            <script>
+                $(document).ready(function () {
+                    var hotelRepeaterItem = 1;
+                    $('button[data-repeater-create]').click(function () {
+                        hotelRepeaterItem++;
+                        var hotelRepeater = $('#hotel-repeater-item-1').clone().attr('id', 'hotel-repeater-item-' + hotelRepeaterItem);
+                        hotelRepeater.find('input, textarea').val('');
+                        hotelRepeater.find('input[name="b_details[hotel_id]"]').val('{{ $hotelInfo[0]['id'] }}');
+                        $(this).closest('.border').find('[data-repeater-list="group-b"]').append(hotelRepeater);
+                    });
+                });
+            </script>
         @endsection

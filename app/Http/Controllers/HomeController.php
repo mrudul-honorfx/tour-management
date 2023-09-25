@@ -56,7 +56,6 @@ class HomeController extends Controller
                         ->orderBy('tp.departure_destination')
                         ->orderBy('tph.hotel_id')
                         ->orderBy('tpa.airline_id')
-                        ->orderBy('tp.tour_start_date', 'asc')
                         ->get();
                 // dd($tourPackages);
         

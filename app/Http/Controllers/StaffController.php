@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\PermissionCategory;
+use App\Models\PermissionMapping;
+
 use App\Models\Permission;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
@@ -321,40 +323,64 @@ class StaffController extends Controller
     public function RolePermissions($role_id)
     {
         
-       /*  $category = PermissionCategory::all(); 
-
-        $permissions = DB::table('permissions as p')
-        ->select('p.*', DB::raw('CASE WHEN pm.permission_id IS NOT NULL THEN 1 ELSE 0 END as selected'))
-        ->leftJoin('permission_mappings as pm', function ($join) {
-            $join->on('p.permission_id', '=', 'pm.permission_id')
-                ->where('pm.role_id', '=', $role_id);
-        })
-        ->get(); */
+       
         $categories = PermissionCategory::all();
 
-        // Use map to fetch permissions for each category and map them by category_id
-        $permissionsByCategory = $categories->map(function ($category) use ($role_id) {
-            // Fetch permissions for the current category
-            $permissions = DB::table('permissions as p')
-                ->select('p.*', DB::raw('CASE WHEN pm.permission_id IS NOT NULL THEN 1 ELSE 0 END as selected'))
-                ->leftJoin('permission_mappings as pm', function ($join) use ($category, $role_id) {
-                    $join->on('p.id', '=', 'pm.permission_id')
-                        ->where('pm.role_id', '=', $role_id)
-                        ->where('p.category_id', '=', $category->id);
-                })
-                ->get();
+// Use map to fetch permissions for each category and map them by category_id
+                $permissionsByCategory = $categories->map(function ($category) use ($role_id) {
+                    // Fetch permissions for the current category
+                    $permissions = DB::table('permissions as p')
+                        ->select('p.*', DB::raw('CASE WHEN pm.permission_id IS NOT NULL THEN 1 ELSE 0 END as selected'))
+                        ->leftJoin('permission_mappings as pm', function ($join) use ($category, $role_id) {
+                            $join->on('p.id', '=', 'pm.permission_id')
+                                ->where('pm.role_id', '=', $role_id)
+                                ->where('p.category_id', '=', $category->id);
+                        })
+                        ->leftJoin('permission_categories as pc', 'p.category_id', '=', 'pc.id')
+                        ->where('p.category_id', '=', $category->id) // Filter permissions by category
+                        ->get();
 
-            // Return permissions with additional selected property
-            return [
-                'category_id' => $category->id,
-                'permissions' => $permissions,
-            ];
-        });
+                    // Return permissions with additional selected property
+                    return [
+                        'category_id' => $category->id,
+                        'permissions' => $permissions,
+                        'category_name' => $category->category_name,
+                    ];
+                });
 
-    return($permissionsByCategory);
+                     return($permissionsByCategory);
      
             
-    }
+       }
+       public function updateRolePermission(Request $request)
+       {
+   
+        if ($request->has('selected_permissions') && $request->role_id) {
+            // Delete existing permissions for the role
+            PermissionMapping::where('role_id', $request->role_id)->delete();
+        
+            // Parse selected permissions from the input array
+            $selectedPermissions = $request->input('selected_permissions');
+        
+            // Loop through the selected permissions and store them in the database
+            foreach ($selectedPermissions as $permissionIds) {
+                $permissionIdsArray = explode(',', $permissionIds);
+                foreach ($permissionIdsArray as $permissionId) {
+                    // Store $permissionId in the database along with $roleId
+                    
+                     $newPermission = new PermissionMapping();
+                     $newPermission->role_id = $request->role_id;
+                     $newPermission->permission_id = $permissionId;
+                    $newPermission->save();
+                }
+            }
+        
+            // Additional logic if needed after storing permissions
+        }
+        $roles = Role::all(); 
+        return view('pages.permission.permission_mapping',compact('roles')); 
+   
+       }
 
 
 }

@@ -150,6 +150,7 @@ Route::group(['prefix' => 'permission'], function(){
     Route::get('/permission_list', [App\Http\Controllers\StaffController::class, 'permissionList']);
     Route::get('/role-permission/{cat_id}', [App\Http\Controllers\StaffController::class, 'RolePermissions']);
     Route::get('/permissions/{cat_id}', [App\Http\Controllers\StaffController::class, 'permissions']);
+    Route::post('updateRolePermission', [App\Http\Controllers\StaffController::class, 'updateRolePermission'])->name('updateRolePermission');
 
     Route::get('/permission_mapping', [App\Http\Controllers\StaffController::class, 'permissionMapping']);
     

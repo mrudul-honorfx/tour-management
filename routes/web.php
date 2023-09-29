@@ -124,6 +124,44 @@ Route::group(['prefix' => 'hotel'], function(){
 
 });
 ###############################################################################################################################################
+##################################### STAFF CRUD  ####################################################################################
+
+Route::group(['prefix' => 'staff'], function(){
+    Route::get('/staff_list', [App\Http\Controllers\StaffController::class, 'StaffList']);
+    Route::post('addStaff', [App\Http\Controllers\StaffController::class, 'addStaff'])->name('addStaff.store');
+    Route::post('updateStaffUser', [App\Http\Controllers\StaffController::class, 'updateStaffUser'])->name('updateStaffUser');
+    Route::delete('deleteStaffUser/{id}', [App\Http\Controllers\StaffController::class, 'deleteStaffUser'])->name('deleteStaffUser'); 
+
+});
+###############################################################################################################################################
+##################################### ROLES CRUD  ####################################################################################
+
+Route::group(['prefix' => 'staff'], function(){
+    Route::get('/role', [App\Http\Controllers\StaffController::class, 'RoleList']);
+    Route::post('addRole', [App\Http\Controllers\StaffController::class, 'addRole'])->name('addRole.store');
+    Route::post('updateRoles', [App\Http\Controllers\StaffController::class, 'updateRoles'])->name('updateRoles');
+    Route::delete('deleteRole/{id}', [App\Http\Controllers\StaffController::class, 'deleteRole'])->name('deleteRole'); 
+   
+});
+###############################################################################################################################################
+##################################### PERMISSION CATEGORY CRUD  ####################################################################################
+
+Route::group(['prefix' => 'permission'], function(){
+    Route::get('/permission_list', [App\Http\Controllers\StaffController::class, 'permissionList']);
+    Route::get('/role-permission/{cat_id}', [App\Http\Controllers\StaffController::class, 'RolePermissions']);
+    Route::get('/permissions/{cat_id}', [App\Http\Controllers\StaffController::class, 'permissions']);
+
+    Route::get('/permission_mapping', [App\Http\Controllers\StaffController::class, 'permissionMapping']);
+    
+    Route::post('addPermission', [App\Http\Controllers\StaffController::class, 'addPermission'])->name('permissions.store');
+
+    Route::post('addPcategory', [App\Http\Controllers\StaffController::class, 'addPcategory'])->name('pCategory.store');
+    Route::post('updatePcategory', [App\Http\Controllers\StaffController::class, 'updatePcategory'])->name('updatePcategory');
+    Route::delete('deletePcategory/{id}', [App\Http\Controllers\StaffController::class, 'deletePcategory'])->name('deletePcategory'); 
+   
+
+});
+###############################################################################################################################################
 
 
 

@@ -229,20 +229,20 @@
                                 </div>
                             </div>
                         </div>
-        <div class="col-9">
-            <div class="card">
-                
-                <div class="card-body">
-                    <button type="button" class="btn btn-primary mt-3 float-end" id="addFoodItemButton" style="display: none;" data-bs-toggle="modal" data-bs-target="#addFoodItemModal">
-                        Add Food Item
-                    </button>
-                    <div id="food-items-table">
-                      
+                <div class="col-9">
+                    <div class="card">
+                        
+                        <div class="card-body">
+                            <button type="button" class="btn btn-primary mt-3 float-end" id="addFoodItemButton" style="display: none;" data-bs-toggle="modal" data-bs-target="#addFoodItemModal">
+                                Add Food Item
+                            </button>
+                            <div id="food-items-table">
+                            
+                            </div>
+                            
+                        </div>
                     </div>
-                    
                 </div>
-            </div>
-        </div>
     </div>
                 </div>
             </div>

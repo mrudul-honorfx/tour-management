@@ -150,9 +150,13 @@
                         <span>Staff</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ url('/hotel/hotel_list') }}"><i class="uil-book-medical"></i>Staff Groups</a></li>
-                        <li><a href="{{ url('/hotel/hotel_room_type') }}"><i class="uil-home"></i>Staff List</a></li>
-                        <li><a href="{{ url('/hotel/hotel_food_type') }}"><i class="mdi mdi-food"></i>Permissions</a></li>
+                        <li><a href="{{ url('/staff/role') }}"><i class="mdi mdi-account-convert
+                            "></i>Roles</a></li>
+                        <li><a href="{{ url('/staff/staff_list') }}"><i class="mdi mdi-account-multiple-plus"></i>Staff List</a></li>
+                       
+                        <li><a href="{{ url('/permission/permission_list') }}"><i class="mdi mdi-account-settings"></i>Permissions</a></li>  
+                        <li><a href="{{ url('/permission/permission_mapping') }}"><i class="mdi mdi-account-network
+                            "></i>Permission Mapping</a></li>  
                     </ul>
                 </li>
 

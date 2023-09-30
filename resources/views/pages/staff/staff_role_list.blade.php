@@ -31,6 +31,15 @@
                         </div>
                     @endif
                 <div class="card-body">
+                 
+                    @if(auth()->user()->permissions()->contains('permission', 'Add Package'))
+                    <!-- Display items or perform actions here -->
+                    <p>{{ auth()->user()->permissions() }}</p>
+                    @else
+                        <!-- Display alternative content or perform other actions if the user doesn't have the permission -->
+                        <p>User does not have the 'add package' permission.</p>
+                    @endif 
+                          
                     <h4 class="card-title mb-3">Add Staff Roles</h4>
                    
                     <form class="needs-validation " novalidate action="{{ route('addRole.store') }}" method="POST" enctype="multipart/form-data">
@@ -51,8 +60,7 @@
                             
                             
                         
-                        
-                        <button class="btn btn-primary" type="submit">Add Roles</button>
+                    <button class="btn btn-primary" type="submit">Add Roles</button>
                     </form>
                    
                 </div>

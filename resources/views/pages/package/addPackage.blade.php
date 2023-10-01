@@ -90,7 +90,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturername">Start Date</label>
-                                            <input class="form-control" type="datetime-local" value="2019-08-19T13:45:00"
+                                            <input class="form-control" type="datetime-local" value="<?php echo date('Y-m-d'); ?>"
                                                 id="tour_start_date" name="tour_start_date">
                                         </div>
                                     </div>
@@ -98,7 +98,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturername">End Date</label>
-                                            <input class="form-control" type="datetime-local" value="2019-08-19T13:45:00"
+                                            <input class="form-control" type="datetime-local" value="<?php echo date('Y-m-d'); ?>"
                                                 id="tour_end_date" name="tour_end_date">
                                         </div>
                                     </div>
@@ -117,8 +117,8 @@
                     </div>
 
                     <div class="card">
-                        <a href="#addproduct-billinginfo-collapse" class="text-dark" data-bs-toggle="collapse"
-                            aria-expanded="true" aria-controls="addproduct-billinginfo-collapse">
+                        <a href="#addpackage-airline-collapse" class="text-dark" data-bs-toggle="collapse"
+                            aria-expanded="true" aria-controls="addpackage-airline-collapse">
                             <div class="p-4">
 
                                 <div class="d-flex align-items-center">
@@ -142,7 +142,7 @@
                             </div>
                         </a>
                         {{-- 'tour_package_id', 'airline_id', 'flight_number', 'departure_date_time', 'arrival_date_time', 'departure_destination', 'arrival_destination', 'available_seats', 'luggage_capacity', 'check_in_luggage' --}}
-                        <div id="addproduct-billinginfo-collapse" class="collapse show"
+                        <div id="addpackage-airline-collapse" class="collapse show"
                             data-bs-parent="#addproduct-accordion">
 
                             <div id="airlineFormset">

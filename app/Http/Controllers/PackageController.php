@@ -13,6 +13,7 @@ use App\Models\AirlineProviders;
 use App\Models\AirportLocations;
 use App\Models\TourPackageHotel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PackageController extends Controller
 {
@@ -77,45 +78,53 @@ class PackageController extends Controller
 
     public function createTourPackage(Request $request)
     {
-        // Validate required inputs and return if there is error
-        $request->validate([
-            'tour_start_date' => 'required',
-            'tour_end_date' => 'required',
-            'departure_destination' => 'required',
-            'arrival_destination' => 'required',
-            'total_slots' => 'required',
-        ]);
+        try
+        {
+            // Validate required inputs and return if there is error
+            $request->validate([
+                'tour_start_date' => 'required',
+                'tour_end_date' => 'required',
+                'departure_destination' => 'required',
+                'arrival_destination' => 'required',
+                'total_slots' => 'required',
+            ]);
 
-        // Create a new tour package
+            // Create a new tour package
 
-        $package = TourPackage::create([
-            'tour_start_date' => $request->tour_start_date,
-            'tour_end_date' => $request->tour_end_date,
-            'departure_destination' => $request->departure_destination,
-            'arrival_destination' => $request->arrival_destination,
-            'total_slots' => $request->total_slots,
-        ]);
+            $package = TourPackage::create([
+                'tour_start_date' => $request->tour_start_date,
+                'tour_end_date' => $request->tour_end_date,
+                'departure_destination' => $request->departure_destination,
+                'arrival_destination' => $request->arrival_destination,
+                'total_slots' => $request->total_slots,
+            ]);
 
-        // Store the airline information of the package
-        $package->tourPackageAirlines()->createMany($request->airline);
+            // Store the airline information of the package
+            $package->tourPackageAirlines()->createMany($request->airline);
 
-        $data = [
-            'hotel_id' => $request->input('hotel_id'),
-            'tour_package_id' => $package->id,
-            'room_type_id' => json_encode($request->input('room_type')),
-            'food_type_id' => json_encode($request->input('food_type')),
-            'room_view_id' => json_encode($request->input('room_view_id')),
-            'available_rooms' => 10, // You need to specify how you want to set this value
-        ];
-    
-        // Create a new TourPackageHotel instance and save it to the database
-        $tourPackageHotel = TourPackageHotel::create($data);
+            $data = [
+                'hotel_id' => $request->input('hotel_id'),
+                'tour_package_id' => $package->id,
+                'room_type_id' => json_encode($request->input('room_type')),
+                'food_type_id' => json_encode($request->input('food_type')),
+                'room_view_id' => json_encode($request->input('room_view_id')),
+                'available_rooms' => 10, // You need to specify how you want to set this value
+            ];
+        
+            // Create a new TourPackageHotel instance and save it to the database
+            $tourPackageHotel = TourPackageHotel::create($data);
 
-        // // Store the transfer information of the package
-        // $package->tourPackageTransfers()->createMany($request->transfers);
+            // // Store the transfer information of the package
+            // $package->tourPackageTransfers()->createMany($request->transfers);
 
-        // Return the package information
-        return back()->with('success', 'Package Added Successfully');
+            // Return the package information
+            return back()->with('success', 'Package Added Successfully');
+        } 
+        catch(\Exception $e)
+        {
+            Log::error($e->getMessage());
+            return back()->with('error', 'Something went wrong. Please try again later.');
+        }
        
     }
 
@@ -213,7 +222,7 @@ class PackageController extends Controller
     public function getFilteredPackage(Request $request)
     {  
         $tourPackagesQuery  = DB::table('tour_packages as tp')
-                ->select('tp.package_name','tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots',
+                ->select('tp.package_name','tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name','tp.total_slots', 
                 DB::raw('(SELECT SUM(total_passengers) FROM booking_masters WHERE package_id = tp.id) as total_booking'))
                 ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
                 ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')

@@ -20,7 +20,7 @@ class TravellerDetails extends Model
         'booking_id',
         'first_name',
         'last_name',
-        'gender',
+        'agecat',
         'ticket_number'
     ];
 

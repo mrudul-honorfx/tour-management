@@ -35,7 +35,7 @@
                 <div class="card-body">
                     <h3 class="card-title"><strong>{{ $package->departure_destination }} -
                             {{ $package->arrival_destination }} - {{ $packageAirline[0]->airline_name }} -
-                            {{ $hotelInfo[0]['hotel_name'] }}</strong></h3>
+                            {{ $hotelInfo[0]['hotel_name'] ?? '' }}</strong></h3>
                     <p class="card-text">
                         Total Days: {{ $numberOfDays }} <br>
                         Total Slots: {{ $package->total_slots }} <br>
@@ -92,6 +92,7 @@
                                 @csrf
                                 <div class="row pt-4">
                                     <div class="col-lg-4">
+                                        <input type="hidden" name="package_id" value="{{ $package->id }}">
                                         <div class="mb-3">
                                             <label class="form-label" for="primary_traveller">Primary Traveller Name</label>
                                             <input id="p_traveller" name="p_traveller" type="text" class="form-control"
@@ -136,7 +137,7 @@
 
                                         <div class="mb-3">
                                             <label class="form-label" for="manufacturername">Return Date</label>
-                                            <input class="form-control" type="date" disabled
+                                            <input class="form-control" type="date" 
                                                 value={{ date_format(date_create($package->tour_end_date), 'Y-m-d') }}
                                                 id="return_date" name="return_date">
                                         </div>
@@ -169,11 +170,12 @@
 
                                         <div class="mb-3 col-lg-2">
 
-                                            <label class="form-label" for="gender">Gender</label>
-                                            <select name="gender" id="gender" class="form-select">
+                                            <label class="form-label" for="gender">Age Category</label>
+                                            <select name="agecat" id="agecat" class="form-select">
                                                 <option value="">Select</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
+                                                <option value="adult">Adult</option>
+                                                <option value="child">Child</option>
+                                                <option value="infant">Infant</option>
 
                                             </select>
 
@@ -194,6 +196,8 @@
                                 </div>
 
                                 <hr class="my-2 ">
+                                @if (!empty($hotelInfo))
+
                                 <div class="row pt-4">
                                     <div class="flex-grow-1 overflow-hidden mb-2">
                                         <h5 class="font-size-16 mb-1 my-2">Hotel Preferences</h5>
@@ -280,7 +284,7 @@
                                     </div>
 
                                 </div>
-
+                                @endif
 
                                 <hr class="my-2 ">
                                 <div class="row pt-4">
@@ -292,11 +296,63 @@
                                         @component('common-components.airticket', ['packageAirline' => $packageAirline])
                                         @endcomponent
                                     </div>
-
-
-
                                 </div>
 
+                                <hr class="my-2 ">
+                                <div class="row pt-4">
+                                    <div class="flex-grow-1 overflow-hidden mb-2">
+                                        <h5 class="font-size-16 mb-1 my-2">Transportation</h5>
+                                    </div>
+                                    <div class="repeater">
+                                        <div data-repeater-list="group-c" class="border border-primary p-3" id="hotel-repeater-item-1">
+                                            <div data-repeater-item class="row">
+                                                <input type="hidden" name="b_details[hotel_id]" value="{{ $hotelInfo[0]['id'] }}">
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">Vehicle Type
+                                                        </label>
+                                                        <select id="vehicle_type" name="trans_details[vehicle_type_id]" class="form-select">
+                                                            @foreach($vehicleTypes as $vehicle)
+                                                                <option value="{{ $vehicle->vehicleType }}">{{ $vehicle->vehicleType }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">Pickup Point
+                                                        </label>
+                                                        <input type="text" id="subject" name="pickup_location"
+                                                            class="form-control" placeholder="Pickup Location" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">Drop Off Point
+                                                        </label>
+                                                        <input type="text" id="subject" name="drop_off_location"
+                                                            class="form-control" placeholder="Drop Off Location" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="primary_traveller">Pickup Point
+                                                        </label>
+                                                        <input class="form-control" type="datetime-local" value="<?php echo date('Y-m-d\TH:i'); ?>"
+                                                                    id="pickup_time" name="pickup_time">
+                                                        
+                                                    </div>
+                                                </div>
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                        <input data-repeater-create type="button" class="btn btn-success ms-2"
+                                                            value="Add" />
+                                    </div>
+
+                                </div>
                                 <hr class="my-2 ">
                                 <div class="col-lg-2 mt-4">
                                     <input type="submit" class="btn btn-primary" value="Submit Booking" />
@@ -316,7 +372,7 @@
             <!-- Plugins js -->
             <script src="{{ URL::asset('/assets/libs/jquery-repeater/jquery-repeater.min.js') }}"></script>
             <script src="{{ URL::asset('/assets/js/pages/form-repeater.int.js') }}"></script>
-            <script>
+            {{-- <script>
                 $(document).ready(function () {
                     var hotelRepeaterItem = 1;
                     $('button[data-repeater-create]').click(function () {
@@ -327,5 +383,5 @@
                         $(this).closest('.border').find('[data-repeater-list="group-b"]').append(hotelRepeater);
                     });
                 });
-            </script>
+            </script> --}}
         @endsection

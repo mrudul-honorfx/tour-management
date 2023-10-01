@@ -134,11 +134,11 @@
                                     </div>
                                     <div>
                                         <span>Room:</span> <br>
-                                        <b class="tm_primary_color">3</b>
+                                        <b class="tm_primary_color">Classic City View</b>
                                     </div>
                                     <div>
                                         <span>Food:</span> <br>
-                                        <b class="tm_primary_color">1</b>
+                                        <b class="tm_primary_color">All Inclusive</b>
                                     </div>
                                     <div>
                                         <span>View:</span> <br>
@@ -148,6 +148,44 @@
                             </div>
                         </div>
                     </section>
+                    <section style="page-break-inside: avoid;"> 
+                        <h2 class="tm_f16 tm_section_heading tm_border_color tm_mb15"><span class="tm_gray_bg">Transportation
+                                Information</span></h2>
+
+                        <div class="tm_table tm_style1 tm_mb30">
+                            <div class="tm_round_border">
+                                <div class="tm_table_responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th class="tm_gray_bg tm_primary_color">Vehicle Type</th>
+                                                
+                                                <th class="tm_gray_bg tm_primary_color tm_border_left">Pickup Point
+                                                </th>
+                                                <th class="tm_gray_bg tm_primary_color tm_border_left">Drop Point
+                                                </th>
+                                                <th class="tm_gray_bg tm_primary_color tm_border_left">Pickup Time
+                                                </th>
+                                                <th class="tm_gray_bg tm_primary_color tm_border_left">Drop Time
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><b class="tm_primary_color">Sedan</td>
+                                                <td class="tm_border_left"><b class="tm_primary_color">Airport Terminal A</td>
+                                                <td class="tm_border_left"><b class="tm_primary_color">Hotel ABC</td>
+                                                <td class="tm_border_left"><b class="tm_primary_color">21 September<br>04:00 PM</td>
+                                                <td class="tm_border_left"><b class="tm_primary_color">21 September<br>05:00 PM</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+
                     <section style="page-break-inside: avoid;"> 
                         <h2 class="tm_f16 tm_section_heading tm_border_color tm_mb15"><span class="tm_gray_bg">Passenger
                                 Information</span></h2>
@@ -168,15 +206,9 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><b class="tm_primary_color">Passenger Name:</b> Jhon Doe</td>
-                                                <td class="tm_border_left"><b class="tm_primary_color">Payment
-                                                        Gatway:</b>
-                                                    American Express</td>
-                                                <td class="tm_border_left"><b class="tm_primary_color">Passenger
-                                                        Name:</b> Jhon Doe</td>
-                                                <td class="tm_border_left"><b class="tm_primary_color">Payment
-                                                        Gatway:</b>
-                                                    American Express</td>
+                                                <td>Mrudul</td>
+                                                <td class="tm_border_left">Male</td>
+                                                <td class="tm_border_left">TR31221AE</td>
                                             </tr>
 
                                         </tbody>
@@ -186,8 +218,29 @@
                         </div>
 
                     </section>
+
+                    
                     <section style="page-break-inside: avoid;"> 
-                        <p class="tm_m0 tm_text_center tm_primary_color">Thank you for purchasing the ticket, have a
+                        <h5 class="tm_f16 tm_section_heading tm_border_color tm_mb15"><span class="tm_gray_bg">Terms & Conditions</span></h5>
+                        <div class="tm_table tm_style1 tm_mb30">
+                            <p> - Upon receiving this program, the client will acknowledge and agree to the terms and conditions contained therein.</p>
+                            <p> - Be present at the airport at least 3 hours before the flight time and adhere to the weight conditions specified by the airlines. Any amendment, delay or cancellation of the flight schedule is the responsibility of the flight airline.</p>
+                            <p> - In the event of modification or cancellation of the travel ticket, an amount is calculated for the value of the modification or cancellation that is determined by the airline, and in some cases the ticket is not subject to modification or return according to the sys Airlines.</p>
+                            <p> - Some low-cost airlines (Wizaire - Arabia - Flydubai. Etc.) The ticket cannot be canceled and the amount paid will be refunded. It is possible to make an amendment 24 hours before the flight time with a fee. Additional and according to the type of ticket subject to the conditions of the airline.</p>
+                            <p> - It is not possible to cancel reservations in the aforementioned hotel or amend the dates of entry and exit, according to the conditions.</p>
+                            <p> - Any modification in the room type before or after travel is according to the available availability and is subject to the approval of the hotel or the company through which the reservation was made and will incur additional fee.</p>
+                            <p> - The check-in time for the hotel, in check, is 4:00 pm, and the check-out time for the hotel is 12:00 noon, according to the approved system in hotels.</p>
+                            <p> - The double room, according to the hotel system, consists of a king-size bed or two separate single beds, and the triple room consists of two beds and the third bed is an extra bed (bed sofa).</p>
+                            <p> - The possibility of adjoining the rooms next to each other or between them a door due to the hotel management and according to the availability in the hotel. A copy of the client's passport. Determine the room at any floor when the customer receives the room in the hotel, and it cannot be determined before the customer reaches the requirements of filling out the hotel and Kaaba forms, etc. It may be a partial or full view or a side view, and it varies according to the location of each room, suite, in the hotel, Al Haram, Al Masjid Al Nabawi, Al Masjid Al Aqsa, etc. The type of city view differs. The size of the rooms or suites varies acc.</p>
+                            <p> - Precautionary conditions and procedures are applied at all stages of the trip, starting from the airport – the plane – the hotel – transportation – or the destination of the trip, and the customer is directly responsible for implementing them.</p>
+                            <p> - Clearly reviewing travel procedures during the Covid 19 period before confirming reservations by the customer and any amendment or A change in travel procedures or entry into a country that the company Al-Khalidiyah Holidays and Tourism has no responsibility for it, and assistance can be provided according to the available capabilities.</p>
+                            <p> - The customer is responsible for the travel requirements for the intended destination (PCR swab, Covid-19 vaccine or other travel requirements) in case the swab result is positive and it is not possible.</p>
+                            <p> - The signature of the second party.</p>
+                            <p> - The customer's travel is subject to the cancellation of the program, including flights, hotels, transportation, etc., to the terms and conditions and the possibility of cancellation.</p>
+                        </div>
+                        <p class="tm_m0 tm_text_center tm_primary_color">
+                            
+                            Thank you for purchasing the ticket, have a
                             safe
                             journey 🙂</p>
                     </section>

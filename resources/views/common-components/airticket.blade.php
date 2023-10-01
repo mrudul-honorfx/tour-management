@@ -61,7 +61,7 @@
                         <div class="flight-card__action text-center">
                             <img src="{{ asset('/assets/images/airlines/' . Illuminate\Support\Str::lower($airline->code) . '.png') }}" alt="" height="50" class="logo m-auto">
                             <p class="flight-card__city pt-2 font-size-16"><strong>{{$airline->flight_number}}</strong><br>
-                                <strong>{{$airline->pnr}}</strong></p>
+                               </p>
                         </div>
                         <!-- /.flight-card__action -->
                     </article>

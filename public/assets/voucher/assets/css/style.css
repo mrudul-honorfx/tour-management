@@ -2659,4 +2659,9 @@ display: flex;
     font-size: 150px;
     padding: 27px 15px 27px 15px;
   }
+  .tm_table.tm_style1.tm_mb30 p{
+    font-size:10px;
+    line-height:12px;
+    margin-bottom:5px;
+}
 }/*# sourceMappingURL=style.css.map */

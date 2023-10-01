@@ -23,7 +23,7 @@ class TourPackageAirline extends Model
         */
 
     protected $fillable = [
-        'tour_package_id', 'airline_id', 'flight_number', 'departure_date_time', 'arrival_date_time', 'departure_destination', 'arrival_destination', 'available_seats', 'luggage_capacity', 'check_in_luggage','pnr'
+        'tour_package_id', 'airline_id', 'flight_number', 'departure_date_time', 'arrival_date_time', 'departure_destination', 'arrival_destination', 'available_seats', 'luggage_capacity', 'check_in_luggage'
     ];
 
     public function tourPackage()

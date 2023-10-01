@@ -17,6 +17,24 @@ File: Main Js File
         $("#side-menu").metisMenu();
     }
 
+    function approveBooking(bookingID)
+    {
+        $.ajax({
+            url: '/admin/booking/approve',
+            type: 'POST',
+            data: {
+                bookingID: bookingID
+            },
+            success: function (data) {
+                if (data.status == 'success') {
+                    alert('Booking Approved');
+                    location.reload();
+                } else {
+                    alert('Booking Not Approved');
+                }
+            }
+        });
+    }
     function initLeftMenuCollapse() {
         var currentSIdebarSize = document.body.getAttribute('data-sidebar-size');
         $(window).on('load', function () {

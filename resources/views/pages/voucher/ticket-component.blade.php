@@ -24,33 +24,33 @@
         </div>
         <div class="card-body">
           <div class="row mt-n3">
-            <div class="col-sm-4 mt-3"> <span>Date:</span>
+            <div class="col-sm-3 mt-3"> <span>Date:</span>
               <p class="font-weight-600 mb-0">{{$formattedStartDate}}</p>
             </div>
-            <div class="col-sm-4 mt-3"> <span>Departure Time:</span>
+            <div class="col-sm-3 mt-3"> <span>Departure Time:</span>
               <p class="font-weight-600 mb-0">{{ $formattedStartTime}}</p>
             </div>
-            <div class="col-sm-4 mt-3"> <span>Airline:</span>
+            <div class="col-sm-3 mt-3"> <span>Airline:</span>
               <p class="font-weight-600 mb-0">{{$airline->airline_name}}</p>
             </div>
-            <div class="col-sm-4 mt-3"> <span>Confirm Code:</span>
+            <div class="col-sm-3 mt-3"> <span>Confirm Code:</span>
               <p class="font-weight-600 mb-0">{{$airline->pnr}}</p>
             </div>
-            <div class="col-sm-4 mt-3"> <span>Departure:</span>
+            <div class="col-sm-3 mt-3"> <span>Departure:</span>
               <p class="font-weight-600 mb-0">{{$airline->departure_destination_name}}</p>
             </div>
-            <div class="col-sm-4 mt-3"> <span>Arrival</span>
+            <div class="col-sm-3 mt-3"> <span>Arrival</span>
               <p class="font-weight-600 mb-0">{{$airline->arrival_destination_name}}</p>
             </div>
-            <div class="col-sm-4 mt-3"> <span>Arrival Date</span>
+            <div class="col-sm-3 mt-3"> <span>Arrival Date</span>
                 <p class="font-weight-600 mb-0">{{$formattedEndDate}}</p>
             </div>
-            <div class="col-sm-4 mt-3"> <span>Arrival Time</span>
+            <div class="col-sm-3 mt-3"> <span>Arrival Time</span>
                 <p class="font-weight-600 mb-0">{{$formattedEndTime}}</p>
             </div>
-            <div class="col-sm-4 mt-3"> <span>Duration</span>
+            {{-- <div class="col-sm-3 mt-3"> <span>Duration</span>
                 <p class="font-weight-600 mb-0">{{$hours}}Hr {{$minutes}}m</p>
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>
@@ -96,10 +96,10 @@
     margin-right: -15px;
     margin-left: -15px;
 }
-.col-sm-4 {
-    -ms-flex: 0 0 33.333333%;
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
+.col-sm-3 {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
     position: relative;
     width: 100%;
     padding-right: 15px;

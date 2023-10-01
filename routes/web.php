@@ -18,10 +18,23 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+// enable the auth middleware for all routes
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::group(['prefix' => 'booking'], function(){
+        Route::get('/new/{packageId}', [App\Http\Controllers\BookingController::class, 'addbooking'])->name('addbooking');
+        Route::post('/submitBooking', [App\Http\Controllers\BookingController::class, 'createBooking'])->name('submitBooking');
+        Route::get('/blisting', [App\Http\Controllers\BookingController::class, 'blisting'])->name('blisting');
+        Route::get('/generateBookingVoucher/{id}', [App\Http\Controllers\BookingController::class, 'generateBookingVoucher'])->name('generateBookingVoucher');
+    });
+    
+});
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'root']);
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'root']);
 
-
+Route::get('/getVoucher',[App\Http\Controllers\VoucherController::class, 'getVoucher'])->name('getVoucher');
 
 Route::get('/filterView', [App\Http\Controllers\HomeController::class, 'getPackageByFilters'])->name('filterView');
 
@@ -163,7 +176,13 @@ Route::group(['prefix' => 'permission'], function(){
 
 });
 ###############################################################################################################################################
+// admin route group for managing booking ajax requests
 
+Route::group(['prefix' => 'admin'],function(){
+    Route::post('/booking/approve',[App\Http\Controllers\BookingController::class, 'approveBooking'])->name('approveBooking');
+    Route::post('/booking/reject',[App\Http\Controllers\BookingController::class, 'rejectBooking'])->name('rejectBooking');
+
+});
 
 
 

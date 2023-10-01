@@ -18,7 +18,7 @@ class TourPackageTransfer extends Model
             6. drop off time
         */
     protected $fillable = [
-        'tour_package_id', 'vehicle_type', 'pickup_location', 'pickup_time', 'drop_off_location', 'drop_off_time'
+        'booking_master_id', 'vehicle_type', 'pickup_location', 'pickup_time', 'drop_off_location', 'assistant_name', 'assistant_contact_number'
     ];
 
     public function tourPackage()

@@ -13,33 +13,54 @@
     <h4>Upcomming Packages</h4>
    
     <div class="row">
-        @foreach($tourPackages as $index => $package)
-            <div class="col-md-12 col-xl-12">
-                <div class="card justify-center">
-                    <div class="card-body">
-                        
-                        <div>
-                            <h5 class="mb-1 mt-1">{{$package->package_name}}</h5>
-                            <p>{{$package->airline_name}} Airlines - {{$package->hotel_name}} - {{$package->departure_destination}}</p>
-                           
-                        </div>
-                        
-                        <div class="float-end  mt-3">
-{{--                             <a href="package/list/{{$package->departure_destination}}/{{$package->airline_id}}/{{$package->hotel_id}}" type="button" class="btn btn-outline-primary waves-effect waves-light">Add Booking</a>
- --}}                    <form action="{{ route('filtered-packages') }}" method="POST">
-    @csrf
-    <input type="hidden" name="departure_destination" value="{{ $package->departure_destination }}">
-    <input type="hidden" name="airline_id" value="{{ $package->airline_id }}">
-    <input type="hidden" name="hotel_id" value="{{ $package->hotel_id }}">
-    <button type="submit" class="btn btn-outline-primary waves-effect waves-light">Add Booking</button>
-</form>
-    
-                          </div>
-    
-                    </div>
+        <div class="col-xl-12">
+        
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Package Name</th>
+                                <th>Airline</th>
+                                <th>Hotel</th>
+                                <th>Departure-Destination</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($tourPackages as $index => $package)
+                            <tr>
+                                <td>
+                                    <h5>{{$package->package_name}}</h5>
+                                   
+                                </td>
+                                <td>
+                                    <p>{{$package->airline_name}}</p>
+                                </td>
+                                <td>
+                                    <p>{{$package->hotel_name}}</p>
+                                </td>
+                                <td>
+                                    <p>{{$package->departure_destination}}</p>
+                                </td>
+                                <td class="text-end">
+                                    <form action="{{ route('filtered-packages') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="departure_destination" value="{{ $package->departure_destination }}">
+                                        <input type="hidden" name="airline_id" value="{{ $package->airline_id }}">
+                                        <input type="hidden" name="hotel_id" value="{{ $package->hotel_id }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">Add Booking</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            </div> 
-        @endforeach   
+            </div>
+        
+        <div class="col-xl-12">
+        
     </div>
     {{-- <div class="col-md-6 col-xl-3">
         <div class="card">

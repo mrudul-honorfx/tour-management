@@ -123,8 +123,7 @@ jobs:
         envs: GITHUB_SHA,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH
         script: |
           ${{ matrix.server.beforeHooks }}
-          yes | php ${RELEASE_PATH}/artisan migrate:refresh
-          yes | php ${RELEASE_PATH}/artisan db:seed
+          
           
             
 

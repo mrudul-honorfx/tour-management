@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankDetails;
 use Validator;
 use Carbon\Carbon;
 use App\Models\Hotel;
@@ -132,11 +133,10 @@ class BookingController extends Controller
                         $coTraveller->last_name = $coTravellerData['lastname'];
                         $coTraveller->ticket_number = $coTravellerData['ticketnumber'];
                         $coTraveller->agecat = $coTravellerData['agecat'];
+                        $coTraveller->ticket_class = $coTravellerData['ticket_class'];
                         $coTraveller->booking_id = $master->id; // Associate with the booking
                         $coTraveller->save();
                     }
-                    
-                   
                 }
             }
             // check if b_details is not !empty
@@ -278,6 +278,7 @@ class BookingController extends Controller
         $packageHotel = TourPackageHotel::where('tour_package_id', '=', $bookingMaster->package_id)->get();
         $vehicleTypes = VehicleType::all();
         $hotelRoomType = DB::table('h_room_types')->where('id','')->get();
+        $bankDetails = BankDetails::where('status', '=', 1)->get();
         // create new array to store the hotel information
         $hotelInfo = array();
         $bTransferData = TourPackageTransfer::where('booking_master_id', '=', $bookingId)->get();
@@ -305,7 +306,7 @@ class BookingController extends Controller
         }
 
 
-        $pdf = Pdf::loadView('pages.pdf.voucher', array('bookingMaster' => $bookingMaster,'packageInfo'=>$packageInfo,'additionalPassengers'=>$additionalPassengers,'packageAirline'=>$packageAirline,'hotelInfo'=>$hotelInfo,'bookingDetails'=>$bookingDetails,'vehicleTypes'=>$vehicleTypes,'bTransferData'=>$bTransferData));
+        $pdf = Pdf::loadView('pages.pdf.voucher', array('bookingMaster' => $bookingMaster,'packageInfo'=>$packageInfo,'additionalPassengers'=>$additionalPassengers,'packageAirline'=>$packageAirline,'hotelInfo'=>$hotelInfo,'bookingDetails'=>$bookingDetails,'vehicleTypes'=>$vehicleTypes,'bTransferData'=>$bTransferData,'bankDetails'=>$bankDetails));
         return $pdf->download('voucher.pdf');
     }
 
@@ -344,6 +345,7 @@ class BookingController extends Controller
         $packageHotel = TourPackageHotel::where('tour_package_id', '=', $bookingMaster->package_id)->get();
         $vehicleTypes = VehicleType::all();
         $hotelRoomType = DB::table('h_room_types')->where('id','')->get();
+        $bankDetails = BankDetails::where('status', '=', 1)->get();
         // create new array to store the hotel information
         $hotelInfo = array();
         $bTransferData = TourPackageTransfer::where('booking_master_id', '=', $bookingId)->get();
@@ -369,7 +371,7 @@ class BookingController extends Controller
             
 
         }
-        return view('pages.pdf.voucher',compact('bookingMaster','packageInfo','additionalPassengers','packageAirline','hotelInfo','bookingDetails','vehicleTypes','bTransferData'));
+        return view('pages.pdf.voucher',compact('bookingMaster','packageInfo','additionalPassengers','packageAirline','hotelInfo','bookingDetails','vehicleTypes','bTransferData','bankDetails'));
 
     }
     public function approveBooking($bookingId)
@@ -488,6 +490,59 @@ class BookingController extends Controller
         return view('pages.booking.bookingDetails',compact('bookingBasicDetails','bookingMaster','packageInfo','additionalPassengers','packageAirline','hotelInfo','bookingDetails','vehicleTypes','bTransferData'));
         // get the booking details from the booking id
     
+    }
+    public function getTravellerInformation($bookingId)
+    {
+        // check if the details are available
+        $travellerDetails = TravellerDetails::select('id','salutation','first_name','last_name')->where('booking_id', '=', $bookingId)->get();
+        if($travellerDetails->count() > 0)
+        {
+            return response()->json(['success' => true, 'data' => $travellerDetails],200);
+        }
+        else
+        {
+            return response()->json(['success' => false, 'message' => 'No traveller details found'],200);
+        }
+      
+    }
+    // function to add ticket infomration
+    public function addTicketInfomation(Request $request)
+    {
+        $rules = [
+            'ticket_number' => 'required|nullable|array',
+            'traveler_id' => 'required|array',
+        ];
+      
+        $validator = Validator::make($request->all(), $rules);
+
+        try{
+            // for each request traveller_id check if ticket is given if so update the ticket number
+            foreach($request->input('id') as $index => $travelerId)
+            {
+                if(!empty($request->input('ticket_number')[$index]))
+                {
+                    $traveller = TravellerDetails::find($travelerId);
+                    $traveller->ticket_number = $request->input('ticket_number')[$index];
+                    $traveller->save();
+                }
+            }
+
+            flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 3000)
+                ->addSuccess('Ticket information has been added successfully');
+
+            // redirect to named route blisting
+            return redirect()->route('blisting');
+        }
+        catch(\Exception $e)
+        {
+            Log::error('Validation failed: ' . $request->url(), [
+                'errors' => $validator->errors(),
+                'other' => $e->getMessage(),
+            ]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()],200);
+        }
     }
 
 }

@@ -22,7 +22,8 @@ class TravellerDetails extends Model
         'first_name',
         'last_name',
         'agecat',
-        'ticket_number'
+        'ticket_number',
+        'ticket_class'
     ];
 
     public function bookingMaster()

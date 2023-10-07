@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankDetails;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
-
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -137,5 +138,6 @@ class HomeController extends Controller
     {
         return view('form-repeater');
     }
-    
+
+   
 }

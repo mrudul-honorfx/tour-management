@@ -163,7 +163,7 @@
                                 </div>
                                 <div data-repeater-list="group-a" class="border border-primary p-3">
                                     <div data-repeater-item class="row">
-                                        <div class="mb-3 col-lg-3">
+                                        <div class="mb-3 col-lg-4">
                                             <label class="form-label" for="name">First Name:</label>
                                             <div class="row">
                                                 <div class="col-4 pe-0">
@@ -181,19 +181,19 @@
                                             
                                         </div>
 
-                                        <div class="mb-3 col-lg-3">
+                                        <div class="mb-3 col-lg-4">
                                             <label class="form-label" for="email">Last Name:</label>
                                             <input type="text" id="email" name="lastname" class="form-control"
                                                 placeholder="Enter your last name" />
                                         </div>
 
-                                        <div class="mb-3 col-lg-2">
+                                        <div class="mb-3 col-lg-4">
                                             <label class="form-label" for="subject">Ticket Number:</label>
                                             <input type="text" id="subject" name="ticketnumber"
                                                 class="form-control" placeholder="Enter your ticket number" />
                                         </div>
 
-                                        <div class="mb-3 col-lg-2">
+                                        <div class="mb-3 col-lg-4">
 
                                             <label class="form-label" for="gender">Age Category</label>
                                             <select name="agecat" id="agecat" class="form-select">
@@ -206,7 +206,20 @@
 
                                         </div>
 
-                                        <div class="col-lg-2 mt-1">
+                                        <div class="mb-3 col-lg-4">
+
+                                            <label class="form-label" for="ticket_class">Ticket Class</label>
+                                            <select name="ticket_class" id="ticket_class" class="form-select">
+                                                <option value="">Select</option>
+                                                {{-- options for various flight ticket class --}}
+                                                <option value="economy">Economy</option>
+                                                <option value="premium_economy">Premium Economy</option>
+                                                <option value="business">Business</option>
+                                                <option value="first_class">First Class</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-4 mt-1">
                                             <label class="form-label" for="gender">Action</label>
                                             <div class="d-flex">
                                                 <input data-repeater-delete type="button" class="btn btn-primary"

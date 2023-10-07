@@ -150,6 +150,18 @@
                         <li><a href="{{ url('/permission/permission_mapping') }}"><i class="mdi mdi-account-network
                             "></i>Permission Mapping</a></li>  
                     </ul>
+                    
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="uil-store"></i>
+                        <span>Bank</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ url('/bank/bankDetails') }}"><i class="mdi mdi-account-convert
+                            "></i>Bank Details</a></li>
+                    </ul>
+                    
                 </li>
                 @endif
                 @if(auth()->user()->role->permissions->contains('permission', 'permission_admin') || auth()->user()->role->id == 2)

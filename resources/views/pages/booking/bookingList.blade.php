@@ -86,7 +86,7 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="{{ route('getBookingDetails', $booking->booking_id) }}">View Details</a>
-                                                    <a class="dropdown-item" href="{{ route('generateBookingVoucher', $booking->booking_id) }}">Add Ticket Information</a>
+                                                    <a class="dropdown-item" href="" onclick="openTicketModal(event,{{$booking->booking_id}})">Add Ticket Information</a>
                                                 </div>
                                             </div>
                                     </td>
@@ -100,25 +100,67 @@
             </div>
         </div>
     </div>
-    <div class="modal fade bs-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true" id="voucherModal">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myExtraLargeModalLabel">Extra large modal</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-                <div class="modal-body">
+    <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="ticketDetailModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <form id="ticketDetailModal" method="POST" action={{route('addTicketInfomation')}}>
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Ticket Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row gx-3 gy-2 align-items-center justify-content-between" id="ticket-form">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                            <button type="submit" class="btn btn-primary waves-effect waves-light w-md">Submit</button>
                     
-                </div>
-            </div><!-- /.modal-content -->
+                    </div>
+                </div><!-- /.modal-content -->
+             </form>
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
     
 @endsection
 @section('script-bottom')
-<script>
 
+<script src="{{URL::asset('assets/js/pages/modal.init.js')}}"></script>
+<script>
+function openTicketModal(event,booking_id)
+{
+    event.preventDefault();
+    console.log(booking_id);
+    // get the details of travellers from the booking id /getTravellerDetails/{id} endpoint
+    $.ajax({
+        url: '/booking/getTravellerDetails/'+booking_id,
+        type: 'GET',
+        dataType: 'json',
+        success: function(response)
+        {
+            console.log(response);
+            var html = '';
+            $.each(response.data, function(key, value){
+                html += '<div class="col-6">';
+                html += '<input type="hidden" name="id['+key+']" value="'+value.id+'">';
+                html += '<label class="visually-hidden" for="specificSizeInputName">Traveller Name</label>';
+                html += '<input type="text" class="form-control" disabled id="specificSizeInputName" placeholder="'+value.salutation+' '+value.first_name+' '+ value.last_name +'">';
+                html += '</div>';
+                html += '<div class="col-6">';
+                html += '<label class="visually-hidden" for="specificSizeInputGroupUsername">Ticket Number</label>';
+                html += '<input type="text" class="form-control" name="ticket_number['+key+']" id="specificSizeInputGroupUsername" placeholder="Enter Ticket Number">';
+                html += '</div>';
+            });
+            console.log()
+            $('#ticketDetailModal').find('#ticket-form').html(html);
+            $('#ticketDetailModal').modal('show');
+        }
+    });
+    $('#ticketDetailModal').modal('show');
+}
 </script>
 @endsection
 

@@ -159,7 +159,7 @@ jobs:
             ln -s -f ${BASE_PATH}/.env $RELEASE_PATH
             sudo ln -s -f $STORAGE_PATH $RELEASE_PATH
             sudo ln -s -n -f $RELEASE_PATH $ACTIVE_RELEASE_PATH
-            sudo systemctl reload apache2
+            sudo systemctl reload nginx
             
       - name: Remove Artifacts
         uses: geekyeggo/delete-artifact@v2

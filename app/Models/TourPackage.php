@@ -11,7 +11,7 @@ class TourPackage extends Model
     // fillable fields are tour start date, tour end date, tour start destination, tour total slots where the field names have _ instead of spaces
     
     protected $fillable = [
-        'id', 'tour_start_date', 'tour_end_date', 'departure_destination', 'arrival_destination','total_slots'
+        'id','package_name' ,'tour_start_date', 'tour_end_date', 'departure_destination', 'arrival_destination','total_slots'
     ];
 
     public function tourPackageHotels()

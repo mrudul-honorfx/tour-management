@@ -18,6 +18,7 @@ class TravellerDetails extends Model
     protected $table = 'traveller_details';
     protected $fillable = [
         'booking_id',
+        'salutation',
         'first_name',
         'last_name',
         'agecat',

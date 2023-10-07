@@ -80,6 +80,7 @@ class PackageController extends Controller
     {
         try
         {
+        
             // Validate required inputs and return if there is error
             $request->validate([
                 'tour_start_date' => 'required',
@@ -92,6 +93,7 @@ class PackageController extends Controller
             // Create a new tour package
 
             $package = TourPackage::create([
+                'package_name' => $request->package_name,
                 'tour_start_date' => $request->tour_start_date,
                 'tour_end_date' => $request->tour_end_date,
                 'departure_destination' => $request->departure_destination,
@@ -100,8 +102,9 @@ class PackageController extends Controller
             ]);
 
             // Store the airline information of the package
-            $package->tourPackageAirlines()->createMany($request->airline);
+            $package->tourPackageAirlines()->createMany($request->input('group-a'));
 
+            
             $data = [
                 'hotel_id' => $request->input('hotel_id'),
                 'tour_package_id' => $package->id,
@@ -114,16 +117,25 @@ class PackageController extends Controller
             // Create a new TourPackageHotel instance and save it to the database
             $tourPackageHotel = TourPackageHotel::create($data);
 
-            // // Store the transfer information of the package
-            // $package->tourPackageTransfers()->createMany($request->transfers);
+            
+            flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 3000)
+                ->addSuccess('Booking has created successfully');
 
-            // Return the package information
-            return back()->with('success', 'Package Added Successfully');
+
+
+            return redirect()->route('package.plisting');
+           
         } 
         catch(\Exception $e)
         {
             Log::error($e->getMessage());
-            return back()->with('error', 'Something went wrong. Please try again later.');
+            flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 3000)
+                ->addError('Something went wrong. Please try again later.');
+            return back();
         }
        
     }
@@ -148,7 +160,8 @@ class PackageController extends Controller
     public function getPackageList(Request $request)
     {
         $tourPackages = DB::table('tour_packages as tp')
-        ->select('tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots')
+        ->select('tp.id as package_id','tp.package_name', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots',
+        DB::raw('(SELECT SUM(total_passengers) FROM booking_masters WHERE package_id = tp.id) as total_booking'))
         ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
         ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
         ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
@@ -156,6 +169,7 @@ class PackageController extends Controller
         ->where('tp.tour_start_date', '>=', DB::raw('CURDATE()'))
         ->orderBy('tp.tour_start_date', 'asc')
         ->limit(12)
+        ->distinct('tp.id')
         ->get();
 
         $airportLocations = AirportLocations::all();
@@ -229,7 +243,8 @@ class PackageController extends Controller
                 ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
                 ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
                 ->where('tp.tour_start_date', '>=', DB::raw('CURDATE()'))
-                ->orderBy('tp.tour_start_date', 'asc');
+                ->orderBy('tp.tour_start_date', 'asc')
+                ->distinct('tp.id');
                 
         // $tourPackagesQuery = DB::table('tour_packages as tp')
         // ->select(

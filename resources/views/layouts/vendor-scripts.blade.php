@@ -11,5 +11,6 @@
 
  <!-- App js -->
  <script src="{{ URL::asset('/assets/js/app.min.js')}}"></script>
+ <script src="{{ URL::asset('/assets/js/custom.js')}}"></script>
  
  @yield('script-bottom')

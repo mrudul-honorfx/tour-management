@@ -93,10 +93,23 @@
                                 <div class="row pt-4">
                                     <div class="col-lg-4">
                                         <input type="hidden" name="package_id" value="{{ $package->id }}">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="primary_traveller">Primary Traveller Name</label>
-                                            <input id="p_traveller" name="p_traveller" type="text" class="form-control"
+                                        <label class="form-label" for="primary_traveller">Primary Traveller Name</label>
+                                        <div class="mb-3 row">
+                                            
+                                            <div class="col-lg-3 pe-0">
+                                                <select class="form-select" id="prefix">
+                                                    <option selected>Mr.</option>
+                                                    <option>Mrs.</option>
+                                                    <option>Ms.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-9 ps-0">
+                                                <input id="traveller"  type="text" class="form-control"
                                                 placeholder="Ram">
+                                                <input id="p_traveller" name="p_traveller" type="hidden" >
+                                            </div>
+                                            
+                                            
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
@@ -152,8 +165,20 @@
                                     <div data-repeater-item class="row">
                                         <div class="mb-3 col-lg-3">
                                             <label class="form-label" for="name">First Name:</label>
-                                            <input type="text" id="name" name="firstname" class="form-control"
-                                                placeholder="Enter your first name" />
+                                            <div class="row">
+                                                <div class="col-4 pe-0">
+                                                    <select class="form-select" id="prefix" name='prefix'>
+                                                        <option value="Mr"selected>Mr.</option>
+                                                        <option value="Mrs">Mrs.</option>
+                                                        <option value="Ms">Ms.</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-8 ps-0">
+                                                    <input type="text" id="name" name="firstname" class="form-control"
+                                                    placeholder="Enter your first name" />
+                                                </div>
+                                            </div>
+                                            
                                         </div>
 
                                         <div class="mb-3 col-lg-3">
@@ -185,9 +210,9 @@
                                             <label class="form-label" for="gender">Action</label>
                                             <div class="d-flex">
                                                 <input data-repeater-delete type="button" class="btn btn-primary"
-                                                    value="Delete" />
+                                                    value="-" />
                                                 <input data-repeater-create type="button" class="btn btn-success ms-2"
-                                                    value="Add" />
+                                                    value="+" />
                                             </div>
                                         </div>
 
@@ -291,7 +316,6 @@
                                     <div class="flex-grow-1 overflow-hidden mb-2">
                                         <h5 class="font-size-16 mb-1 my-2">Airline Information</h5>
                                     </div>
-
                                     <div>
                                         @component('common-components.airticket', ['packageAirline' => $packageAirline])
                                         @endcomponent
@@ -384,4 +408,29 @@
                     });
                 });
             </script> --}}
+            <script>
+                //jquery function to get the value of the prefix and traveller, join them and set it to p_traveller
+                $(document).ready(function () {
+                    $('#prefix').change(function () {
+                        var prefix = $('#prefix').val();
+                        var traveller = $('#traveller').val();
+                        var p_traveller = prefix + " " + traveller;
+                        $('#p_traveller').val(p_traveller);
+                    });
+                    $('#traveller').keyup(function () {
+                        var prefix = $('#prefix').val();
+                        var traveller = $('#traveller').val();
+                        var p_traveller = prefix + " " + traveller;
+                        $('#p_traveller').val(p_traveller);
+                    });
+                });
+                // set the initial value of the p_traveller as the default selected value of prefix
+                $(document).ready(function () {
+                    var prefix = $('#prefix').val();
+                    var traveller = $('#traveller').val();
+                    var p_traveller = prefix + " " + traveller;
+                    $('#p_traveller').val(p_traveller);
+                });
+            </script>
         @endsection
+

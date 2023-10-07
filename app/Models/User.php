@@ -61,4 +61,9 @@ class User extends Authenticatable
 
         return $userPermissions;
     }
+    public function hasPermission($permission)
+    {
+        // Check if the user has the permission based on their role
+        return $this->role->permissions->contains('name', $permission);
+    }
 }

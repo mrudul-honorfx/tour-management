@@ -1,0 +1,13 @@
+[
+    {
+        "name": "tour_app",
+        "ip": "75.101.209.28",
+        "username": "ubuntu",
+        "key": "",
+        "port": "22",
+        "beforeHooks": "",
+        "afterHooks": "",
+        "path": "/var/www/api"
+
+    }
+]

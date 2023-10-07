@@ -50,7 +50,7 @@ function sortSegment($array)
 
     $result = array();
     
-    $commonFields=['code','check_in_luggage','luggage_capacity','arrival_destination_code','departure_destination_code','flight_number'];
+    $commonFields=['code','check_in_luggage','luggage_capacity','arrival_destination_code','departure_destination_code','flight_number','airline_name'];
 
     foreach ($array as $item) {
         $key = 'iata_code';
@@ -119,4 +119,18 @@ function fligtTimeFormator($ufTime)
     <p class="text-md font-medium text-grey max-w-[80%]">'.$dateFormatted.'</p>';
    
     return $response;
+}
+
+// function to check if the user has a permission assigned to him
+
+function hasPermission($permission)
+{
+    $user = auth()->user();
+    if ($user->hasRole('super-admin')) {
+        return true;
+    }
+    if ($user->hasPermissionTo($permission)) {
+        return true;
+    }
+    return false;
 }

@@ -36,7 +36,8 @@ class HomeController extends Controller
 
     public function root()
     {
-
+        
+        $user = auth()->user();
         $tourPackages = DB::table('tour_packages as tp')
                         ->select(
                             'tp.package_name',
@@ -51,29 +52,14 @@ class HomeController extends Controller
                         ->join('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
                         ->leftjoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
                         ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
-                       // ->where('tp.tour_start_date', '>=', now()->toDateString())
+                       ->where('tp.tour_start_date', '>=', now()->toDateString())
                         ->groupBy('tp.package_name', 'tp.departure_destination', 'tpa.airline_id', 'ap.name', 'tph.hotel_id', 'h.hotel_name')
                         ->orderBy('tp.departure_destination')
                         ->orderBy('tph.hotel_id')
                         ->orderBy('tpa.airline_id')
+                        ->distinct('tp.id')
                         ->get();
-                // dd($tourPackages);
-        
-       
-        // $tourPackages = DB::table('tour_packages as tp')
-        //     ->select('tp.id as package_id', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots',
-        //     DB::raw('(SELECT SUM(total_passengers) FROM booking_masters WHERE package_id = tp.id) as total_booking'))
-        //     ->leftJoin('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
-        //     ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
-        //     ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
-        //     ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
-        //     ->where('tp.tour_start_date', '>=', DB::raw('CURDATE()'))
-        //     ->orderBy('tp.tour_start_date', 'asc')
-        //     ->limit(12)
-        //     ->get();
-
-        
-
+               
         $latestBooking = DB::table('booking_masters as bm')
             ->select('bm.id as booking_id', 'bm.booking_date','bm.primary_traveller','bm.total_passengers', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots','s.name as staff_name')
             ->leftJoin('tour_packages as tp', 'bm.package_id', '=', 'tp.id')
@@ -82,12 +68,36 @@ class HomeController extends Controller
             ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
             ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
             ->leftJoin('users as s', 'bm.staff_id', '=', 's.id')
-            ->where('bm.booking_date', '>=', DB::raw('CURDATE()'))
+            ->where('bm.booking_date', '<=', DB::raw('CURDATE()'))
             ->orderBy('bm.booking_date', 'asc')
-            ->limit(12)
-            ->get();
+            ->distinct('bm.id')
+            ->limit(12);
+        
+        $stats = [
+        // get some stats for the dashboard 
+        'totalBookings' => $user->role_id === 4 ? DB::table('booking_masters')->where('staff_id',$user->id)->count() : DB::table('booking_masters')->count(),
+        'totalBookingsMonth'=> $user->role_id === 4 ? DB::table('booking_masters')->where('staff_id',$user->id)->whereMonth('booking_date', '=', date('m'))->count() : DB::table('booking_masters')->whereMonth('booking_date', '=', date('m'))->count(),
+        
+        'totalPackages' => DB::table('tour_packages')->count(),
+        'totalActivePackages' => DB::table('tour_packages')->where('tour_start_date', '>=', now()->toDateString())->count(),
+        // total bookings in the current month
+        'totalBookingsByMonth' => $user->role_id === 4 ? DB::table('booking_masters')->where('staff_id',$user->id)->whereMonth('booking_date', '=', date('m'))->count() : DB::table('booking_masters')->whereMonth('booking_date', '=', date('m'))->count(),
+        'totalBookingsLastMonth'=> $user->role_id === 4 ? DB::table('booking_masters')->where('staff_id',$user->id)->whereMonth('booking_date', '=', date('m', strtotime('-1 month')))->count() : DB::table('booking_masters')->whereMonth('booking_date', '=', date('m', strtotime('-1 month')))->count(),
+        // booking on hold
+        'totalBookingsOnHold' => $user->role_id === 4 ? DB::table('booking_masters')->where('staff_id',$user->id)->where('booking_status', '=', '1')->count():DB::table('booking_masters')->where('booking_status', '=', '1')->count(),
+        'totalRejectedBookings'=> $user->role_id === 4 ? DB::table('booking_masters')->where('staff_id',$user->id)->where('booking_status', '=', '0')->count():DB::table('booking_masters')->where('booking_status', '=', '0')->count(),
+        ];
 
-        return view('index',compact('tourPackages', 'latestBooking'));
+            // Check if the user's role is staff
+     // Check if the user's role is staff
+     if ($user->role_id === 4) {
+        // Add a condition to fetch only the bookings made by the logged-in staff
+        $latestBooking->where('bm.staff_id', '=', $user->id);
+    }
+
+    $latestBooking = $latestBooking->limit(12)->get();
+
+        return view('index',compact('tourPackages', 'latestBooking','stats'));
     }
     
 
@@ -105,7 +115,6 @@ class HomeController extends Controller
             ->orderBy('tph.hotel_id')
             ->orderBy('tpa.airline_id')
             ->get();
-        
 
         return $tourPackages;
     

@@ -15,6 +15,6 @@ class Permission extends Model
 
     public function mappings()
     {
-        return $this->hasMany(PermissionMapping::class);
+        return $this->belongsToMany(Role::class, 'permission_mappings', 'permission_id', 'role_id');
     }
 }

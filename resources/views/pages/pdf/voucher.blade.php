@@ -219,7 +219,7 @@
                       </div>
                       <div class="w-1/2 text-right py-1">
                         <p class="font-medium text-l text-grey">Check-out</p>
-                        <p class="font-bold text-xl text-primary py-1">{{getDayDate($hotel['check_in_date'])}}<span class="text-md pl-1 font-regular text-grey">{{getYearOnly($hotel['check_in_date'])}}</span></p>
+                        <p class="font-bold text-xl text-primary py-1">{{getDayDate($hotel['check_out_date'])}}<span class="text-md pl-1 font-regular text-grey">{{getYearOnly($hotel['check_in_date'])}}</span></p>
                         <p class="text-md font-normal">After 02:00 PM</p>
                       </div>
                       <div class="w-full text-center border-t border-gray border-opacity-20 py-1">
@@ -577,6 +577,8 @@
   // get the invoice number from the :data-invoice attribute
  
   function generatePDF() {
+    //scroll to top
+    window.scrollTo(0, 0);
     var invoiceId = this.getAttribute('data-invoice');
     console.log(this);
     // Choose the element that your content will be rendered to.
@@ -591,6 +593,8 @@
     // Choose the element and save the PDF for your user.
     html2pdf().set(opt).from(element).save();
 
+    // rediret to previous page after the download is done
+    // window.location.href = '/bookings/'+invoiceId;
 
   }
 

@@ -17,6 +17,15 @@ File: Main Js File
         $("#side-menu").metisMenu();
     }
 
+    // function to show bootstrap modal with the data passed inside it
     
+    $(function() {
 
+        function showVoucherModal() {
+        
+            $('#voucherModal').modal('show');
+        }
+    });
+
+    
 })(jQuery)

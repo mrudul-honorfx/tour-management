@@ -6,18 +6,19 @@ use Validator;
 use Carbon\Carbon;
 use App\Models\Hotel;
 use App\Models\TourPackage;
+use App\Models\VehicleType;
 use Illuminate\Http\Request;
 use App\Models\BookingMaster;
 use Ramsey\Uuid\Type\Integer;
 use App\Models\BookingDetails;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\TourPackageHotel;
 use App\Models\TravellerDetails;
 use App\Models\TourPackageAirline;
-use App\Models\TourPackageTransfer;
-use App\Models\VehicleType;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use App\Models\TourPackageTransfer;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -90,7 +91,7 @@ class BookingController extends Controller
 
     public function createBooking(Request $request)
     {
-       
+    //    dd($request->all());
 
         $rules = [
             'p_traveller' => 'required',
@@ -121,17 +122,24 @@ class BookingController extends Controller
             ]);
             
             if ($request->has('group-a') && is_array($request->input('group-a')) && count($request->input('group-a')) > 0) {
+                
                 foreach ($request->input('group-a') as $coTravellerData) {
-                    $coTraveller = new TravellerDetails();
-                    $coTraveller->first_name = $coTravellerData['firstname'];
-                    $coTraveller->last_name = $coTravellerData['lastname'];
-                    $coTraveller->ticket_number = $coTravellerData['ticketnumber'];
-                    $coTraveller->agecat = $coTravellerData['agecat'];
-                    $coTraveller->booking_id = $master->id; // Associate with the booking
-                    $coTraveller->save();
+                    // check  if name prefix, first name, last name, ticket number and age category is not empty
+                    if (!empty($coTravellerData['prefix']) || !empty($coTravellerData['firstname']) || !empty($coTravellerData['lastname']) || !empty($coTravellerData['agecat'])) {
+                        $coTraveller = new TravellerDetails();
+                        $coTraveller->salutation = $coTravellerData['prefix'];
+                        $coTraveller->first_name = $coTravellerData['firstname'];
+                        $coTraveller->last_name = $coTravellerData['lastname'];
+                        $coTraveller->ticket_number = $coTravellerData['ticketnumber'];
+                        $coTraveller->agecat = $coTravellerData['agecat'];
+                        $coTraveller->booking_id = $master->id; // Associate with the booking
+                        $coTraveller->save();
+                    }
+                    
+                   
                 }
             }
-            // check if b_details is not empty
+            // check if b_details is not !empty
             if ($request->has('group-b') && is_array($request->input('group-b')) && count($request->input('group-b')) > 0) {
                 
                 foreach ($request->input('group-b') as $bDetailData)
@@ -156,7 +164,7 @@ class BookingController extends Controller
                 {
                     $bDetail = new TourPackageTransfer();
                     $bDetail->booking_master_id = $master->id;
-                    $bDetail->vehicle_type = $bTransferData['vehicle_type'];
+                    $bDetail->vehicle_type = $bTransferData['vehicle_type_id'];
                     $bDetail->pickup_location = $bTransferData['pickup_location'];
                     $bDetail->pickup_time = $bTransferData['pickup_time'];
                     $bDetail->drop_off_location = $bTransferData['drop_off_location'];
@@ -165,51 +173,142 @@ class BookingController extends Controller
                 
             }
 
-            return back()->with('success', 'Booking Added Successfully');
+            flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 3000)
+                ->addSuccess('Booking has created successfully');
+
+            return redirect()->route('blisting');
+
+            // return response()->json(['success' => true, 'message' => 'Booking has created successfully']);
         }
         catch(\Exception $e)
         {
             Log::error('Validation failed: ' . $request->url(), [
                 'errors' => $validator->errors(),
+                'other' => $e->getMessage(),
             ]);
             return back()->with('error', $e->getMessage());
+            // return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
 
     }
 
-    public function blisting()
+    public function blisting($id = null)
     {
-        // $bookings = DB::table('booking_masters as bm')
-        //             ->select('bm.id as booking_id','bm.booking_date','bm.primary_traveller','bm.primary_traveller_contact_number',
-        //              'bm.primary_traveller_email', 'bm.total_passengers', 'bm.departure_date','bm.return_date','bm.departure_date',
-        //              'h.hotel_name', 'h.address')
-        //             ->leftJoin('booking_details as bd', 'bd.booking_id', '=', 'bm.id')
-        //             ->leftJoin('hotels as h', 'bd.hotel_id', '=', 'h.id')
-        //             ->orderBy('bm.departure_date', 'asc')
-        //             ->get();
-        //             $bookings = $bookings->map(function ($booking) {
-        //                 $booking->traveller_details = DB::table('traveller_details')
-        //                 ->select('first_name', 'last_name', 'gender','ticket_number')
-        //                     ->where('booking_id', $booking->booking_id)
-        //                     ->get();
+       
+        if(!$id)
+        {
+            $bookings = DB::table('booking_masters as bm')
+                ->select('bm.id as booking_id', 'bm.booking_date','bm.primary_traveller','bm.total_passengers','bm.booking_status as status', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots','s.name as staff_name')
+                ->leftJoin('tour_packages as tp', 'bm.package_id', '=', 'tp.id')
+                ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+                ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+                ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+                ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+                ->leftJoin('users as s', 'bm.staff_id', '=', 's.id')
+                ->orderBy('bm.id', 'desc')
+                ->distinct() // Add this line to remove duplicates
+                ->get();
+        }
+        else
+        {
+            try
+            {
+                $bookings = DB::table('booking_masters as bm')
+                ->select('bm.id as booking_id', 'bm.booking_date','bm.primary_traveller','bm.total_passengers','bm.booking_status as status', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots','s.name as staff_name')
+                ->leftJoin('tour_packages as tp', 'bm.package_id', '=', 'tp.id')
+                ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+                ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+                ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+                ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+                ->leftJoin('users as s', 'bm.staff_id', '=', 's.id')
+                ->where('tp.id','=',$id)
+                ->orderBy('bm.id', 'desc')
+                ->distinct() // Add this line to remove duplicates
+                ->get();
 
-        //                 return $booking;
-        //             });
-
-        $bookings = DB::table('booking_masters as bm')
-            ->select('bm.id as booking_id', 'bm.booking_date','bm.primary_traveller','bm.total_passengers','bm.booking_status as status', 'tp.tour_start_date', 'tp.tour_end_date', 'tp.departure_destination', 'tp.arrival_destination', 'ap.name as airline_name', 'h.hotel_name', 'tp.total_slots','s.name as staff_name')
-            ->leftJoin('tour_packages as tp', 'bm.package_id', '=', 'tp.id')
-            ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
-            ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
-            ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
-            ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
-            ->leftJoin('users as s', 'bm.staff_id', '=', 's.id')
-            ->orderBy('bm.id', 'desc')
-            ->limit(12)
-            ->get();
+            }catch(\Exception $e)
+            {
+                flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 3000)
+                ->addError('Something went wrong');
+                return redirect()->back();
+            }
+        }
+        
+        
+        
 
         return view('pages.booking.bookingList',compact('bookings'));
     }
+
+
+    public function downloadInvoice($bookingId)
+    {
+        // collect all details related to booking
+        $bookingMaster = BookingMaster::find($bookingId);
+        $packageInfo = TourPackage::find($bookingMaster->package_id);
+        $additionalPassengers = TravellerDetails::where('booking_id', '=', $bookingId)->get();
+        $bookingDetails = BookingDetails::where('booking_id', '=', $bookingId)->first();
+        $packageAirline = DB::table('tour_package_airlines AS tpa')
+                                ->select([
+                                    'tpa.airline_id AS airline_id',
+                                    'ap.name AS airline_name',
+                                    'ap.iata_code AS code',
+                                    'tpa.flight_number AS flight_number',
+                                    'tpa.departure_date_time AS departure_date_time',
+                                    'tpa.arrival_date_time AS arrival_date_time',
+                                    'dd.airport_name AS departure_destination_name',
+                                    'dd.country AS departure_destination_country',
+                                    'ad.airport_name AS arrival_destination_name',
+                                    'ad.country AS arrival_destination_country',
+                                    'ad.iata_code AS arrival_destination_code',
+                                    'dd.iata_code AS departure_destination_code',
+                                    'tpa.luggage_capacity AS luggage_capacity',
+                                    'tpa.check_in_luggage AS check_in_luggage'
+                                ])
+                                ->join('airline_providers AS ap', 'tpa.airline_id', '=', 'ap.id')
+                                ->join('airport_locations AS dd', 'tpa.departure_destination', '=', 'dd.id')
+                                ->join('airport_locations AS ad', 'tpa.arrival_destination', '=', 'ad.id')
+                                ->where('tpa.tour_package_id', '=', $bookingMaster->package_id)
+                                ->orderBy('tpa.id')
+                                ->get();
+        $packageHotel = TourPackageHotel::where('tour_package_id', '=', $bookingMaster->package_id)->get();
+        $vehicleTypes = VehicleType::all();
+        $hotelRoomType = DB::table('h_room_types')->where('id','')->get();
+        // create new array to store the hotel information
+        $hotelInfo = array();
+        $bTransferData = TourPackageTransfer::where('booking_master_id', '=', $bookingId)->get();
+        foreach($packageHotel as $index => $hotel)
+        {
+            // fetch the hotel information from the hotel id
+            $hotelMain = Hotel::find($hotel->hotel_id);
+
+            $hotelInfo[$index] = [
+                'id' => $hotel->hotel_id,
+                'hotel_name' => $hotelMain->hotel_name,
+                'hotel_address' => $hotelMain->address,
+                'rating'=>$hotelMain->rating,
+                'no_of_rooms'=>$bookingDetails->no_of_rooms,
+                'check_in_date' => DB::table('booking_details')->where('booking_id', '=', $bookingId)->where('hotel_id','=', $hotel->hotel_id)->value('check_in_date'),
+                'check_out_date' => DB::table('booking_details')->where('booking_id', '=', $bookingId)->where('hotel_id','=', $hotel->hotel_id)->value('check_out_date'),
+                'rooms' => DB::table('h_room_types')->select('id','room_type_name')->whereIn('id', explode(',', $bookingDetails->room_type_id))->get(),
+                'food' => DB::table('h_food_types')->select('id','food_type_name')->whereIn('id', explode(',', $bookingDetails->food_type_id))->get(),
+                'view' => DB::table('h_view_types')->select('id','view_type_name')->whereIn('id', explode(',', $bookingDetails->room_view_id))->get(),
+            ];
+
+            // convert hotelInfo array to object collection
+            
+
+        }
+
+
+        $pdf = Pdf::loadView('pages.pdf.voucher', array('bookingMaster' => $bookingMaster,'packageInfo'=>$packageInfo,'additionalPassengers'=>$additionalPassengers,'packageAirline'=>$packageAirline,'hotelInfo'=>$hotelInfo,'bookingDetails'=>$bookingDetails,'vehicleTypes'=>$vehicleTypes,'bTransferData'=>$bTransferData));
+        return $pdf->download('voucher.pdf');
+    }
+
 
     public function generateBookingVoucher($bookingId)
     {
@@ -273,19 +372,122 @@ class BookingController extends Controller
         return view('pages.pdf.voucher',compact('bookingMaster','packageInfo','additionalPassengers','packageAirline','hotelInfo','bookingDetails','vehicleTypes','bTransferData'));
 
     }
-    public function approveBooking(Request $request)
+    public function approveBooking($bookingId)
     {
-        $booking = BookingMaster::find($request->bookingId);
+        $booking = BookingMaster::find($bookingId);
         $booking->booking_status = 2;
         $booking->save();
-        return response()->json(['success' => 'Booking Approved Successfully']);
+        flash()
+            ->option('position', 'top-right')
+            ->option('timeout', 3000)
+            ->addSuccess('Booking has been approved');
+        // redirect to booking list page
+        return redirect()->back();
     }
-    public function rejectBooking(Request $request)
+    public function rejectBooking($bookingId)
     {
-        $booking = BookingMaster::find($request->bookingId);
+        $booking = BookingMaster::find($bookingId);
         $booking->booking_status = 0;
         $booking->save();
-        return response()->json(['success' => 'Booking Approved Successfully']);
+        flash()
+            ->option('position', 'top-right')
+            ->option('timeout', 3000)
+            ->addSuccess('Booking has been rejected');
+
+        return redirect()->back();
+    }
+
+    // function to get the booking details
+    public function getBookingDetails($bookingId)
+    {
+        $bookingBasicDetails = DB::table('booking_masters as bm')
+                            ->select([
+                                'bm.id as booking_id',
+                                'bm.booking_date',
+                                'bm.primary_traveller',
+                                'bm.primary_traveller_contact_number',
+                                'bm.primary_traveller_email',
+                                'bm.total_passengers',
+                                'bm.departure_date',
+                                'bm.return_date',
+                                'bm.booking_status as status',
+                                'tp.package_name',
+                                'tp.tour_start_date',
+                                'tp.tour_end_date',
+                                'tp.departure_destination',
+                                'tp.arrival_destination',
+                                'ap.name as airline_name',
+                                'h.hotel_name',
+                                'tp.total_slots',
+                                's.name as staff_name'
+                            ])
+                            ->leftJoin('tour_packages as tp', 'bm.package_id', '=', 'tp.id')
+                            ->join('tour_package_airlines as tpa', 'tp.id', '=', 'tpa.tour_package_id')
+                            ->leftJoin('airline_providers as ap', 'tpa.airline_id', '=', 'ap.id')
+                            ->leftJoin('tour_package_hotels as tph', 'tp.id', '=', 'tph.tour_package_id')
+                            ->leftJoin('hotels as h', 'tph.hotel_id', '=', 'h.id')
+                            ->leftJoin('users as s', 'bm.staff_id', '=', 's.id')
+                            ->where('bm.id', '=', $bookingId)
+                            ->first();
+        // collect all details related to booking
+        $bookingMaster = BookingMaster::find($bookingId);
+        $packageInfo = TourPackage::find($bookingMaster->package_id);
+        $additionalPassengers = TravellerDetails::where('booking_id', '=', $bookingId)->get();
+        $bookingDetails = BookingDetails::where('booking_id', '=', $bookingId)->first();
+        $packageAirline = DB::table('tour_package_airlines AS tpa')
+                                ->select([
+                                    'tpa.airline_id AS airline_id',
+                                    'ap.name AS airline_name',
+                                    'ap.iata_code AS code',
+                                    'tpa.flight_number AS flight_number',
+                                    'tpa.departure_date_time AS departure_date_time',
+                                    'tpa.arrival_date_time AS arrival_date_time',
+                                    'dd.airport_name AS departure_destination_name',
+                                    'dd.country AS departure_destination_country',
+                                    'ad.airport_name AS arrival_destination_name',
+                                    'ad.country AS arrival_destination_country',
+                                    'ad.iata_code AS arrival_destination_code',
+                                    'dd.iata_code AS departure_destination_code',
+                                    'tpa.luggage_capacity AS luggage_capacity',
+                                    'tpa.check_in_luggage AS check_in_luggage'
+                                ])
+                                ->join('airline_providers AS ap', 'tpa.airline_id', '=', 'ap.id')
+                                ->join('airport_locations AS dd', 'tpa.departure_destination', '=', 'dd.id')
+                                ->join('airport_locations AS ad', 'tpa.arrival_destination', '=', 'ad.id')
+                                ->where('tpa.tour_package_id', '=', $bookingMaster->package_id)
+                                ->orderBy('tpa.id')
+                                ->get();
+        $packageHotel = TourPackageHotel::where('tour_package_id', '=', $bookingMaster->package_id)->get();
+        $vehicleTypes = VehicleType::all();
+        $hotelRoomType = DB::table('h_room_types')->where('id','')->get();
+        // create new array to store the hotel information
+        $hotelInfo = array();
+        $bTransferData = TourPackageTransfer::where('booking_master_id', '=', $bookingId)->get();
+        foreach($packageHotel as $index => $hotel)
+        {
+            // fetch the hotel information from the hotel id
+            $hotelMain = Hotel::find($hotel->hotel_id);
+
+            $hotelInfo[$index] = [
+                'id' => $hotel->hotel_id,
+                'hotel_name' => $hotelMain->hotel_name,
+                'hotel_address' => $hotelMain->address,
+                'rating'=>$hotelMain->rating,
+                'no_of_rooms'=>$bookingDetails->no_of_rooms,
+                'check_in_date' => DB::table('booking_details')->where('booking_id', '=', $bookingId)->where('hotel_id','=', $hotel->hotel_id)->value('check_in_date'),
+                'check_out_date' => DB::table('booking_details')->where('booking_id', '=', $bookingId)->where('hotel_id','=', $hotel->hotel_id)->value('check_out_date'),
+                'rooms' => DB::table('h_room_types')->select('id','room_type_name')->whereIn('id', explode(',', $bookingDetails->room_type_id))->get(),
+                'food' => DB::table('h_food_types')->select('id','food_type_name')->whereIn('id', explode(',', $bookingDetails->food_type_id))->get(),
+                'view' => DB::table('h_view_types')->select('id','view_type_name')->whereIn('id', explode(',', $bookingDetails->room_view_id))->get(),
+            ];
+
+            // convert hotelInfo array to object collection
+            
+
+        }
+        return view('pages.booking.bookingDetails',compact('bookingBasicDetails','bookingMaster','packageInfo','additionalPassengers','packageAirline','hotelInfo','bookingDetails','vehicleTypes','bTransferData'));
+        // get the booking details from the booking id
+    
     }
 
 }

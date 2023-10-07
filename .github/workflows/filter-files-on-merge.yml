@@ -1,0 +1,30 @@
+name: Skip File Changes on Merge
+
+on:
+  pull_request:
+    types:
+      - synchronize
+      - opened
+      - reopened
+      - ready_for_review
+      
+jobs:
+  skip_file_changes:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Skip prohibited file changes
+      run: |
+        changed_files=$(git diff --name-only HEAD^)
+        
+        prohibited_files=("web.php")
+        
+        for file in ${prohibited_files[@]}; do
+          if echo "$changed_files" | grep -q "$file"; then
+            echo "Skipping changes to $file."
+            git checkout HEAD^ -- "$file"
+          fi
+        done

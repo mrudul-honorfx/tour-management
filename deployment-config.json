@@ -7,7 +7,7 @@
         "port": "22",
         "beforeHooks": "",
         "afterHooks": "",
-        "path": "/var/www/api"
+        "path": "/var/www/app"
 
     }
 ]

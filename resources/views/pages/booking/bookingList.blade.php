@@ -70,7 +70,7 @@
                                         @if($booking->status == '1')
                                         <p class="label bg-primary text-white text-center p-1 rounded-md">ON HOLD</p>
                                         @elseif($booking->status == '2')
-                                        <p class="label bg-grey text-white text-center p-1 rounded-md">ISSUED</p>
+                                        <p class="label bg-grey text-white text-center p-1 rounded-md">CONFIRMED</p>
                                         @elseif($booking->status == '0')
                                         <p class="label bg-orange text-white text-center p-1 rounded-md">CANCELLED</p>
                                         @endif
@@ -78,7 +78,7 @@
                                     <td class="button-group">
                                             <a href="{{ route('approveBooking', $booking->booking_id) }}"class="btn bborder border-primary order btn-sm waves-effect waves-light"><img src="{{ URL::asset('/assets/images/icons/tick.svg') }}" alt="" srcset="" style="width:15px;height:15px"></a>
                                             <a href="{{ route('rejectBooking', $booking->booking_id) }}"class="btn bborder border-primary order btn-sm waves-effect waves-light"><img src="{{ URL::asset('/assets/images/icons/cross.svg') }}" alt="" srcset="" style="width:15px;height:15px"></a>
-                                            <a href="{{ route('generateBookingVoucher', $booking->booking_id)}}"class="btn bborder border-primary order btn-sm waves-effect waves-light" ><img src="{{ URL::asset('/assets/images/icons/download.svg') }}" alt="" srcset="" style="width:15px;height:15px"></a>
+                                            <a target="_blank" href="{{ route('generateBookingVoucher', $booking->booking_id)}}"class="btn bborder border-primary order btn-sm waves-effect waves-light" ><img src="{{ URL::asset('/assets/images/icons/download.svg') }}" alt="" srcset="" style="width:15px;height:15px"></a>
                                             
                                             <div class="dropdown">
                                                 <button class="btn border-primary btn-sm dropdown-toggle waves-effect waves-light" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

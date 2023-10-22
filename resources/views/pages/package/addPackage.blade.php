@@ -68,7 +68,7 @@
                                 @endif
                                 @csrf
                                 <div class="row">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label class="form-label" for="productname">Package Name</label>
                                             <input id="package_name" required name="package_name" type="text"
@@ -76,6 +76,13 @@
                                             <div class="invalid-feedback">
                                                 Please provide a package name
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="productname" >Package Name (Arabic)</label>
+                                            <input id="package_name_ar"  name="package_name_ar" dir="rtl" type="text"
+                                                class="form-control" placeholder="باقة مكة">
                                         </div>
                                     </div>
         
@@ -257,7 +264,7 @@
                                                     <div class="col-lg-6">
                 
                                                         <div class="mb-3">
-                                                            <label for="departure-time" class="form-label">Luggage Capacity (in KG)</label>
+                                                            <label for="departure-time" class="form-label">Carry-on luggage Capacity (in KG)</label>
                 
                                                             <input class="form-control" type="number" placeholder="10"
                                                                 id="luggage_capacity" required name="luggage_capacity">
@@ -266,7 +273,7 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
-                                                            <label for="departure-time" class="form-label">Check In Baggage (in KG)</label>
+                                                            <label for="departure-time" class="form-label">Carry-on luggage (in KG)</label>
                 
                                                             <input class="form-control" type="number" placeholder="10"
                                                                 id="check_in_luggage" required name="check_in_luggage">
@@ -365,7 +372,7 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="mb-3">
-                                                <label class="form-label" for="metatitle">Food Offerings</label>       
+                                                <label class="form-label" for="metatitle">Meal Type</label>       
                                                 <select required name="food_type[]" id="food_type"
                                                     class="form-select" multiple multiselect-select-all="true" multiselect-search="true" >
                                                     @foreach ($foodTypeList as $index => $foodType)

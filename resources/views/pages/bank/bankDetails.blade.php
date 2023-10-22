@@ -123,7 +123,6 @@
             });
         }
         function deleteBankDetail(id) {
-            console.log(id);
             $.ajax({
                 url: '/bank/deleteBankStatus',
                 type: 'POST',

@@ -91,12 +91,13 @@ class BankDetailsController extends Controller
      {
         try
         {
+            
             $request->validate([
                 'bank_id' => 'required',
             ]);
 
             $bankDetails = BankDetails::find($request->bank_id);
-
+            
             $bankDetails->delete();
 
             flash()

@@ -99,6 +99,7 @@ class PackageController extends Controller
                 'departure_destination' => $request->departure_destination,
                 'arrival_destination' => $request->arrival_destination,
                 'total_slots' => $request->total_slots,
+                'package_name_ar'=>$request->package_name_ar,
             ]);
 
             // Store the airline information of the package

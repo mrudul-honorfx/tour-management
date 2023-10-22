@@ -93,7 +93,7 @@
                                 <div class="row pt-4">
                                     <div class="col-lg-4">
                                         <input type="hidden" name="package_id" value="{{ $package->id }}">
-                                        <label class="form-label" for="primary_traveller">Primary Traveller Name</label>
+                                        <label class="form-label" for="primary_traveller">Lead Guest Name</label>
                                         <div class="mb-3 row">
                                             
                                             <div class="col-lg-3 pe-0">
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="mb-3">
-                                            <label class="form-label" for="productname">Primary Traveller Email</label>
+                                            <label class="form-label" for="productname">Lead Guest Email</label>
                                             <input id="arrival_destination" name="email" type="email"
                                                 class="form-control" placeholder="ram@gmail.com">
                                         </div>
@@ -122,7 +122,7 @@
                                     <div class="col-lg-4">
 
                                         <div class="mb-3">
-                                            <label class="form-label" for="primary_traveller">Primary Traveller Contact
+                                            <label class="form-label" for="primary_traveller">Lead Guest Contact
                                                 No:</label>
                                             <input id="p_traveller" name="contact_no" type="text" class="form-control"
                                                 placeholder="Enter Contact Number">
@@ -195,7 +195,7 @@
 
                                         <div class="mb-3 col-lg-4">
 
-                                            <label class="form-label" for="gender">Age Category</label>
+                                            <label class="form-label" for="gender">PAX Type</label>
                                             <select name="agecat" id="agecat" class="form-select">
                                                 <option value="">Select</option>
                                                 <option value="adult">Adult</option>

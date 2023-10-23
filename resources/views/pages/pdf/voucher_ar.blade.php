@@ -134,9 +134,12 @@
                             <div class="flex items-center justify-between bg-grey text-white px-3 py-2">
                                 <h3 class="text-lg font-normal uppercase">Trip Overview</h3>
                                 <div class="flex">
-                                   @if($packageInfo->package_name)
+                                    @if ($packageInfo->package_name_ar)
+                                    <p>{{ $packageInfo->package_name_ar }}<span class="px-1">|<span></p>
+                                    @elseif($packageInfo->package_name)
                                         <p>{{ $packageInfo->package_name }}<span class="px-1">|<span></p>
-                                            
+                                            @else
+                                            <p><span class="px-1">|<span></p>
                                     @endif
                                     @if ($packageInfo->departure_destination)
                                         <p>{{ $packageInfo->departure_destination }}<span class="px-1">-<span></p>

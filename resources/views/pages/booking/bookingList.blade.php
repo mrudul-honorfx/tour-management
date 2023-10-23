@@ -86,6 +86,8 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="{{ route('getBookingDetails', $booking->booking_id) }}">View Details</a>
+                                                    <a class="dropdown-item" target="_blank" href="{{ route('generateBookingVoucher', ['id' => $booking->booking_id, 'ar' => "ar" ])}}">Download In Arabic</a>
+
                                                     <a class="dropdown-item" href="" onclick="openTicketModal(event,{{$booking->booking_id}})">Add Ticket Information</a>
                                                 </div>
                                             </div>

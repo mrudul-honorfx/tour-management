@@ -311,9 +311,8 @@ class BookingController extends Controller
     }
 
 
-    public function generateBookingVoucher($bookingId)
+    public function generateBookingVoucher(Request $request,$bookingId,$ar=null)
     {
-
         // collect all details related to booking
         $bookingMaster = BookingMaster::find($bookingId);
         $packageInfo = TourPackage::find($bookingMaster->package_id);
@@ -371,7 +370,17 @@ class BookingController extends Controller
             
 
         }
-        return view('pages.pdf.voucher',compact('bookingMaster','packageInfo','additionalPassengers','packageAirline','hotelInfo','bookingDetails','vehicleTypes','bTransferData','bankDetails'));
+        
+      if($request->ar == 'ar')
+        {
+           
+            return view('pages.pdf.voucher_ar',compact('bookingMaster','packageInfo','additionalPassengers','packageAirline','hotelInfo','bookingDetails','vehicleTypes','bTransferData','bankDetails'));
+  
+        }
+        else{
+            return view('pages.pdf.voucher',compact('bookingMaster','packageInfo','additionalPassengers','packageAirline','hotelInfo','bookingDetails','vehicleTypes','bTransferData','bankDetails'));
+
+        }
 
     }
     public function approveBooking($bookingId)

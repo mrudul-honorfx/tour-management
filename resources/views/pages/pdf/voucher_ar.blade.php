@@ -132,7 +132,7 @@
                     <div class="border border-grey bg-dropgrey pb-3 mr-1 border-opacity-20">
                         <div>
                             <div class="flex items-center justify-between bg-grey text-white px-3 py-2">
-                                <h3 class="text-lg font-normal uppercase">Trip Overview</h3>
+                                <h3 class="text-lg font-normal uppercase" dir="rtl">تفاصيل الرحلة</h3>
                                 <div class="flex">
                                     @if ($packageInfo->package_name_ar)
                                     <p>{{ $packageInfo->package_name_ar }}<span class="px-1">|<span></p>
@@ -157,28 +157,28 @@
                                 <div class="flex items-center">
                                     <img src="{{ URL::asset('/assets/images/voucher/usericon.png') }}" alt=""
                                         srcset="" class="p-2 h-auto" style="max-width:30px; width:100%;">
-                                    <p class="text-md font-normal">Lead Guest <br> <span
+                                    <p class="text-md font-normal" dir="rtl">اسم العميل الرئيسي<br> <span
                                             class="text-lg font-bold text-primary">{{ $bookingMaster->primary_traveller }}</span>
                                     </p>
                                 </div>
                                 <div class="flex items-center">
                                     <img src="{{ URL::asset('/assets/images/voucher/user.png') }}" alt=""
                                         srcset="" class="p-2 h-auto" style="max-width:30px; width:100%;">
-                                    <p class="text-md font-normal">Number of Guest<br> <span
+                                    <p class="text-md font-normal" dir="rtl">عدد العملاء<br> <span
                                             class="text-lg font-bold text-primary">{{ $bookingMaster->total_passengers }}</span>
                                     </p>
                                 </div>
                                 <div class="flex items-center">
                                     <img src="{{ URL::asset('/assets/images/voucher/contact.png') }}" alt=""
                                         srcset="" class="p-2 h-auto" style="max-width:30px; width:100%;">
-                                    <p class="text-md font-normal">Contact Number <br> <span
+                                    <p class="text-md font-normal" dir="rtl">رقم هاتف للتواصل<br> <span
                                             class="text-lg font-md text-grey">{{ $bookingMaster->primary_traveller_contact_number }}</span>
                                     </p>
                                 </div>
                                 <div class="flex items-center">
                                     <img src="{{ URL::asset('/assets/images/voucher/mail.png') }}" alt=""
                                         srcset="" class="p-2 h-auto" style="max-width:30px; width:100%;">
-                                    <p class="text-md font-normal">Email ID <br> <span
+                                    <p class="text-md font-normal" dir="rtl">البريد الإلكتروني<br> <span
                                             class="text-lg font-md text-grey">{{ $bookingMaster->primary_traveller_email }}</span>
                                     </p>
                                 </div>
@@ -221,7 +221,7 @@
                         <div>
                             <div class="w-full ">
                                 <div class="flex items-center justify-between bg-grey  text-white px-3 py-2">
-                                    <h3 class="text-lg font-normal uppercase">Hotel Information</h3>
+                                    <h3 class="text-lg font-normal uppercase" dir="rtl">بيانات الفندق</h3>
                                 </div>
                             </div>
 
@@ -264,7 +264,7 @@
                                             <div
                                                 class="border-gray border-opacity-20 container m-2 p-3 flex flex-wrap">
                                                 <div class="w-1/2 text-left">
-                                                    <p class="font-medium text-l text-grey">Check-in</p>
+                                                    <p class="font-medium text-l text-grey" dir="rtl">الدخول</p>
                                                     <p class="font-bold text-xl text-primary py-1">
                                                         {{ getDayDate($hotel['check_in_date']) }}<span
                                                             class="text-md pl-1 font-regular text-grey">{{ getYearOnly($hotel['check_in_date']) }}</span>
@@ -272,7 +272,7 @@
                                                     <p class="text-md font-normal">After 02:00 PM</p>
                                                 </div>
                                                 <div class="w-1/2 text-right py-1">
-                                                    <p class="font-medium text-l text-grey">Check-out</p>
+                                                    <p class="font-medium text-l text-grey" dir="rtl">المغادرة</p>
                                                     <p class="font-bold text-xl text-primary py-1">
                                                         {{ getDayDate($hotel['check_out_date']) }}<span
                                                             class="text-md pl-1 font-regular text-grey">{{ getYearOnly($hotel['check_in_date']) }}</span>
@@ -294,7 +294,7 @@
                                         <div class="mx-3 my-2">
                                             <div class="grid grid-cols-4 gap-3">
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-bold">Room Type</p>
+                                                    <p class="text-md font-bold" dir="rtl">نوع الغرفة</p>
                                                     <ul class="list-none">
                                                         @foreach ($hotel['rooms'] as $room)
                                                             <li class="font-medium text-md">
@@ -303,7 +303,7 @@
                                                     </ul>
                                                 </div>
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-bold">Meal Type</p>
+                                                    <p class="text-md font-bold" dir="rtl">نظام الوجبات</p>
                                                     <ul class="list-none">
                                                         @foreach ($hotel['food'] as $food)
                                                             <li class="font-medium text-md">
@@ -312,7 +312,7 @@
                                                     </ul>
                                                 </div>
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-bold">View</p>
+                                                    <p class="text-md font-bold" dir="rtl">الإطلالة</p>
                                                     <ul class="list-none">
                                                         @foreach ($hotel['view'] as $view)
                                                             <li class="font-medium text-md">
@@ -321,7 +321,7 @@
                                                     </ul>
                                                 </div>
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-bold">Total Rooms</p>
+                                                    <p class="text-md font-bold" dir="rtl">إجمالي الغرف</p>
                                                     <p class="font-medium text-md">
                                                         {{ $bookingDetails->number_of_rooms }}</p>
                                                 </div>
@@ -346,7 +346,7 @@
                         <div>
                             <div class="w-full ">
                                 <div class="flex items-center justify-between bg-grey text-white px-3 py-2">
-                                    <h3 class="text-lg font-normal uppercase">AIRLINE INFORMATION</h3>
+                                    <h3 class="text-lg font-normal uppercase" dir="rtl">بيانات خط الطيران</h3>
                                 </div>
                             </div>
                         </div>
@@ -378,7 +378,7 @@
                                                         <div class="">
                                                             <div class="grid grid-cols-4 py-2">
                                                                 <div class="flex flex-col text-left">
-                                                                    <p class="text-md font-bold uppercase">departure
+                                                                    <p class="text-md font-bold uppercase" dir="rtl">الاقلاع
                                                                     </p>
                                                                     <p class="text-lg font-bold text-primary">
                                                                         {{ $ticketItem['departure_destination_code'] }}
@@ -389,12 +389,11 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex flex-col text-left">
-                                                                    <p class="text-md font-bold uppercase">Departure
-                                                                        Time</p>
+                                                                    <p class="text-md font-bold uppercase" dir="rtl">موعد الاقلاع</p>
                                                                     {!! fligtTimeFormator($ticketItem['departure_date_time']) !!}
                                                                 </div>
                                                                 <div class="flex flex-col text-left">
-                                                                    <p class="text-md font-bold uppercase">arrival</p>
+                                                                    <p class="text-md font-bold uppercase" dir="rtl">الوصول</p>
                                                                     <p class="text-lg font-bold text-primary">
                                                                         {{ $ticketItem['arrival_destination_code'] }}
                                                                     </p>
@@ -404,7 +403,7 @@
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex flex-col text-left">
-                                                                    <p class="text-md font-bold uppercase">Arrival Time
+                                                                    <p class="text-md font-bold uppercase" dir="rtl">موعد الوصول
                                                                     </p>
                                                                     {!! fligtTimeFormator($ticketItem['arrival_date_time']) !!}
                                                                 </div>
@@ -417,20 +416,20 @@
                                         <div class="">
                                             <div class="grid grid-cols-4 py-2">
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-bold uppercase">PNR</p>
-                                                    <p class="text-lg font-bold text-primary ">HDK5639</p>
+                                                    <p class="text-md font-bold uppercase" dir="rtl">رقم الحجز</p>
+                                                    <p class="text-lg font-bold text-primary " >HDK5639</p>
                                                 </div>
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-bold uppercase">CLASS</p>
-                                                    <p class="text-lg font-bold text-primary ">ECONOMY</p>
+                                                    <p class="text-md font-bold uppercase" dir="rtl">درجة الحجز</p>
+                                                    <p class="text-lg font-bold text-primary " >ECONOMY</p>
                                                 </div>
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-bold uppercase">Cabbin Luggage</p>
+                                                    <p class="text-md font-bold uppercase" dir="rtl">أمتعة المقصورة</p>
                                                     <p class="text-lg font-bold text-primary">
                                                         {{ $segments['luggage_capacity'] }} KG</p>
                                                 </div>
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-bold uppercase">Check-in Luggage</p>
+                                                    <p class="text-md font-bold uppercase" dir="rtl">الأمتعة المسجلة</p>
                                                     <p class="text-lg font-bold text-primary">
                                                         {{ $segments['check_in_luggage'] }} KG</p>
                                                 </div>
@@ -459,7 +458,7 @@
                         <div>
                             <div class="w-full ">
                                 <div class="flex items-center justify-between bg-grey text-white px-3 py-2">
-                                    <h3 class="text-lg font-normal uppercase">Transportation Details</h3>
+                                    <h3 class="text-lg font-normal uppercase" dir="rtl">تفاصيل النقل</h3>
                                 </div>
                             </div>
                             <div class="flex flex-wrap h-full container">
@@ -471,28 +470,28 @@
                                         <div class="mx-3 my-2">
                                             <div class="grid grid-cols-4 gap-3">
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-md pb-1.5 uppercase">Vehicle Type</p>
+                                                    <p class="text-md font-md pb-1.5 uppercase" dir="rtl">نوع المركبة</p>
                                                     <p class="text-lg font-bold text-grey max-w-[80%]">
                                                         {{ $transfer['vehicle_type'] }}</p>
                                                 </div>
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-md pb-1.5 uppercase">Pickup Point</p>
+                                                    <p class="text-md font-md pb-1.5 uppercase" dir="rtl">نقطة الالتقاء</p>
                                                     <p class="text-lg font-bold text-grey max-w-[80%]">
                                                         {{ $transfer['pickup_location'] }}</p>
                                                 </div>
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-md pb-1.5 uppercase">Drop off point</p>
+                                                    <p class="text-md font-md pb-1.5 uppercase" dir="rtl">نقطة الإنزال</p>
                                                     <p class="text-lg font-bold text-grey">
                                                         {{ $transfer['drop_off_location'] }}</p>
                                                 </div>
                                                 <div class="flex flex-col text-left">
-                                                    <p class="text-md font-md pb-1.5 uppercase">Est. Pickup Time</p>
+                                                    <p class="text-md font-md pb-1.5 uppercase" dir="rtl">موعد الالتقاء</p>
                                                     <p class="text-lg font-bold text-grey">
                                                         {{ $transfer['pickup_time'] }}</p>
                                                 </div>
                                                 @if (!empty($transfer['assistant_name']))
                                                     <div class="flex flex-col text-left">
-                                                        <p class="text-md font-md pb-1.5 uppercase">Assistant Info</p>
+                                                        <p class="text-md font-md pb-1.5 uppercase" >Assistant Info</p>
                                                         <p class="text-lg font-bold text-grey max-w-[80%]">
                                                             {{ $transfer['assistant_name'] }}</p>
                                                         <p class="text-md font-bold text-grey max-w-[80%]">
@@ -520,7 +519,7 @@
                     <div>
                         <div class="w-full ">
                             <div class="flex items-center justify-between bg-grey text-white px-3 py-2">
-                                <h3 class="text-lg font-normal uppercase">Passenger Information</h3>
+                                <h3 class="text-lg font-normal uppercase" dir="rtl">معلومات المسافر</h3>
                             </div>
                         </div>
                         <div class="flex flex-wrap h-full container m-2">
@@ -531,13 +530,13 @@
                                             <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                                                 <tr>
                                                     <th class="p-2 whitespace-nowrap">
-                                                        <div class="font-semibold text-left">Full Name</div>
+                                                        <div class="font-semibold text-left" dir="rtl">الاسم بالكامل</div>
                                                     </th>
                                                     <th class="p-2 whitespace-nowrap">
-                                                        <div class="font-semibold text-left">Age Category</div>
+                                                        <div class="font-semibold text-left" dir="rtl">الفئة العمرية</div>
                                                     </th>
                                                     <th class="p-2 whitespace-nowrap">
-                                                        <div class="font-semibold text-left">Ticket Number</div>
+                                                        <div class="font-semibold text-left" dir="rtl">رقم التذكرة</div>
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -593,7 +592,7 @@
                     <div>
                         <div class="w-full ">
                             <div class="flex items-center justify-between bg-grey text-white px-3 py-2">
-                                <h3 class="text-lg font-normal uppercase">Bank Information</h3>
+                                <h3 class="text-lg font-normal uppercase" dir="rtl">معلومات البنك</h3>
                             </div>
                         </div>
                         <div class="flex flex-wrap h-full container m-2">
@@ -628,7 +627,7 @@
                     <div>
                         <div class="w-full ">
                             <div class="flex items-center justify-between bg-grey text-white px-3 py-2">
-                                <h3 class="text-lg font-normal uppercase">Terms and Conditions</h3>
+                                <h3 class="text-lg font-normal uppercase" dir="rtl">الشروط والأحكام</h3>
                             </div>
                         </div>
                         <div class="flex flex-wrap h-full container m-2">

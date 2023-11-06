@@ -632,59 +632,19 @@
                         </div>
                         <div class="flex flex-wrap h-full container m-2">
                             <div class="w-full px-3">
-                                <ul class="list-disc	list-outside text-sm text-justify">
-                                    <li>Upon receiving this program, the client will acknowledge and agree to the terms
-                                        and conditions contained therein.</li>
-                                    <li>Be present at the airport at least 3 hours before the flight time and adhere to
-                                        the weight conditions specified by the airlines. Any amendment, delay or
-                                        cancellation of the flight schedule is the responsibility of the flight airline.
-                                    </li>
-                                    <li>In the event of modification or cancellation of the travel ticket, an amount is
-                                        calculated for the value of the modification or cancellation that is determined
-                                        by the airline, and in some cases the ticket is not subject to modification or
-                                        return according to the sys Airlines.</li>
-                                    <li>Some low-cost airlines (Wizaire - Arabia - Flydubai. Etc.) The ticket cannot be
-                                        canceled and the amount paid will be refunded. It is possible to make an
-                                        amendment 24 hours before the flight time with a fee. Additional and according
-                                        to the type of ticket subject to the conditions of the airline.</li>
-                                    <li>It is not possible to cancel reservations in the aforementioned hotel or amend
-                                        the dates of entry and exit, according to the conditions.</li>
-                                    <li>Any modification in the room type before or after travel is according to the
-                                        available availability and is subject to the approval of the hotel or the
-                                        company through which the reservation was made and will incur additional fee.
-                                    </li>
-                                    <li>The check-in time for the hotel, in check, is 4:00 pm, and the check-out time
-                                        for the hotel is 12:00 noon, according to the approved system in hotels.</li>
-                                    <li>The double room, according to the hotel system, consists of a king-size bed or
-                                        two separate single beds, and the triple room consists of two beds and the third
-                                        bed is an extra bed (bed sofa).</li>
-                                    <li>The possibility of adjoining the rooms next to each other or between them a door
-                                        due to the hotel management and according to the availability in the hotel. A
-                                        copy of the client's passport. Determine the room at any floor when the customer
-                                        receives the room in the hotel, and it cannot be determined before the customer
-                                        reaches the requirements of filling out the hotel and Kaaba forms, etc. It may
-                                        be a partial or full view or a side view, and it varies according to the
-                                        location of each room, suite, in the hotel, Al Haram, Al Masjid Al Nabawi, AI
-                                        Masjid Al Aqsa, etc. The type of city view differs. The size of the rooms or
-                                        suites varies acc.</li>
-                                    <li>Precautionary conditions and procedures are applied at all stages of the trip,
-                                        starting from the airport - the plane - the hotel - transportation - or the
-                                        destination of the trip, and the customer is directly responsible for
-                                        implementing them.</li>
-                                    <li>Clearly reviewing travel procedures during the Covid 19 period before confirming
-                                        reservations by the customer and any amendment or A change in travel procedures
-                                        or entry into a country that the company Al-Khalidiyah Holidays and Tourism has
-                                        no responsibility for it, and assistance can be provided according to the
-                                        available capabilities.</li>
-                                    <li>The customer is responsible for the travel requirements for the intended
-                                        destination (PC swab, Covid-19 vaccine or other travel requirements) in case the
-                                        swab result is positive and it is not possible.</li>
-                                    <li>The customer's travel is subject to the cancellation of the program, including
-                                        flights, hotels, transportation, etc., to the terms and conditions and the
-                                        possibility of cancellation.</li>
-                                </ul>
-                            </div>
-                        </div>
+                                <ul class="list-disc list-outside text-sm text-justify">
+                                    <li>عند استلام هذا البرنامج ، سيقر العميل ويوافق على الشروط والأحكام الواردة فيه.</li>
+                                    <li>كن حاضرًا في المطار قبل 3 ساعات على الأقل من وقت الرحلة والالتزام بشروط الوزن المحددة من قبل شركات الطيران. أي تعديل أو تأخير أو إلغاء لجدول رحلة الطيران يعد مسؤولية شركة الطيران.</li>
+                                    <li>في حال تعديل أو إلغاء تذكرة السفر، يُحسب مبلغ لقيمة التعديل أو الإلغاء يحدده الخطوط الجوية، وفي بعض الحالات قد لا تخضع التذكرة للتعديل أو الاسترجاع وفقًا لنظام الخطوط الجوية.</li>
+                                    <li>بعض شركات الطيران ذات التكلفة المنخفضة (ويز إير - العربية - فلاي دبي، إلخ) لا يمكن إلغاء التذكرة وسيتم استرجاع المبلغ المدفوع. يمكن إجراء تعديل قبل 24 ساعة من وقت الرحلة مع رسوم إضافية وفقًا لنوع التذكرة وشرط الشركة الجوية.</li>
+                                    <li>لا يمكن إلغاء الحجوزات في الفندق المذكور أعلاه أو تعديل تواريخ الوصول والمغادرة، وفقًا للشروط.</li>
+                                    <li>أي تعديل في نوع الغرفة قبل أو بعد السفر يكون وفقًا للتوفر المتاح ويخضع لموافقة الفندق أو الشركة التي تمت من خلالها الحجز وسيتم فرض رسوم إضافية.</li>
+                                    <li>وقت تسجيل الوصول للفندق، في تاريخ الوصول، هو الساعة 4:00 مساءً، ووقت تسجيل المغادرة من الفندق هو الساعة 12:00 ظهرًا، وفقًا للنظام المعتمد في الفنادق.</li>
+                                    <li>الغرفة المزدوجة، وفقًا لنظام الفندق، تتألف من سرير بحجم كبير أو سريرين منفصلين، والغرفة الثلاثية تتألف من سريرين والسرير الثالث هو سرير إضافي (أريكة سرير).</li>
+                                    <li>إمكانية ربط الغرف المجاورة ببعضها البعض أو وضع باب بينهما يعتمد على إدارة الفندق وفقًا للتوفر في الفندق. نسخة من جواز السفر للعميل. تحديد الغرفة في أي طابق عندما يستلم العميل الغرفة في الفندق، ولا يمكن تحديدها قبل وصول العميل والمتطلبات الخاصة بملء نماذج الفندق والكعبة، إلخ. قد تكون إطلالة جزئية أو كاملة أو جانبية، وتتفاوت وفقًا لموقع كل غرفة أو جناح في الفندق، المسجد الحرام، المسجد النبوي الشريف، المسجد الأقصى، إلخ. يختلف نوع إطلالة المدينة.</li>
+                                    <li>تُطبق الشروط والإجراءات الاحترازية في جميع مراحل الرحلة، بدءًا من المطار - الطائرة - الفندق - وسائل النقل - أو وجهة الرحلة، والعميل مسؤول مباشرة عن تنفيذها.</li>
+                                    <li>استعراض إجراءات السفر بوضوح خلال فترة كوفيد 19 قبل تأكيد الحجز من قبل العميل، وأي تعديل أو تغيير في إجراءات السفر أو دخول البلد الذي ليس لشركة الخالدية للعطلات والسياحة أي مسؤولية عنه، ويمكن تقديم المساعدة وفقًا للإمكان
+                        
                     </div>
                 </div>
                 <img src="{{ URL::asset('/assets/images/voucher/seal.png') }}" alt="" srcset=""

@@ -158,7 +158,7 @@ Route::middleware(['auth'])->group(function ()
     Route::group(['prefix' => 'reports'], function ()
     {
         Route::get('/hotelReport', [App\Http\Controllers\ReportController::class, 'viewHotelReport'])->name('viewHotelReport');
-        Route::post('/hotelReport', [App\Http\Controllers\ReportController::class, 'generateHotelReport'])->name('generateHotelReport');
+        Route::post('/generateHotelReport', [App\Http\Controllers\ReportController::class, 'generateHotelReport'])->name('generateHotelReport');
     });
 
     Route::group(['prefix' => 'bank'], function ()

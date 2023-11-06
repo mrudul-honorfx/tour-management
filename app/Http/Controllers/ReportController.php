@@ -28,6 +28,48 @@ class ReportController extends Controller
         $hotelId = $request->hotel_id;
         $startDate = $request->start_date;
         $endDate = $request->end_date;
+        $results = DB::table('tour_package_hotels as tph')
+            ->leftJoin('tour_packages as tpk', 'tpk.id', '=', 'tph.tour_package_id')
+            ->leftJoin('booking_masters as bm', 'bm.package_id', '=', 'tph.tour_package_id')
+            ->select('tph.tour_package_id', 'tpk.package_name', 'tpk.package_name_ar', 'tpk.arrival_destination', 'tpk.total_slots', 'bm.id as booking_id',
+            'tpk.arrival_destination', 'bm.booking_date', 'bm.primary_traveller', 'bm.primary_traveller_contact_number', 'bm.total_passengers', 
+            'bm.booking_status', 'tph.food_type_id', 'tph.room_view_id', 'tph.room_type_id')
+            ->where('tph.hotel_id', $request->hotel_id)
+            ->where('tpk.tour_start_date', '>=', $request->start_date)
+            ->where('tpk.tour_end_date', '>=', $request->end_date)
+            ->get();
+
+foreach ($results as $result) {
+    $roomTypeIds = json_decode($result->room_type_id, true);
+    $food_type_ids= json_decode($result->food_type_id, true);
+    $room_view_ids = json_decode($result->room_type_id, true);
+
+    $roomTypes = DB::table('h_room_types')
+                    ->select('room_type_code','room_type_name')
+                    ->whereIn('id', $roomTypeIds)
+                    ->get();
+    $foodTypes =  DB::table('h_food_types')
+                    ->select('food_type_name','description')
+                    ->whereIn('id', $food_type_ids)
+                    ->get(); 
+    $viewTypes =  DB::table('h_view_types')
+                    ->select('view_type_name','description')
+                    ->whereIn('id', $room_view_ids)
+                    ->get();                              
+    $bookingId = $result->booking_id;
+
+    $PassangerDetails =  DB::table('traveller_details as td')
+                    ->select('td.*')
+                    ->where('booking_id', $bookingId)
+                    ->get(); 
+    // Add room_types array to the result object
+    $result->room_types = $roomTypes;
+    $result->food_types = $foodTypes;
+    $result->view_types = $viewTypes;
+    $result->passanger_details = $PassangerDetails;
+
+}
+return $results;
         // get the name of hotel from the database
         $hotelName = DB::table('hotels')->where('id', $hotelId)->pluck('hotel_name')->first();
         // convert the hotel name to _ separated string

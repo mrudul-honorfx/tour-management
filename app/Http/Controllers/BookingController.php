@@ -80,7 +80,7 @@ class BookingController extends Controller
             // find number of slots available for the package
             $bookedSlots = BookingMaster::where('id', '=', $packageId)->where('booking_status', '=', 1)->sum('total_passengers');
             $availableSlots = $package->total_slots - $bookedSlots;
-            return view('pages.booking.addbooking', compact('package','packageAirline','hotelInfo','availableSlots','availableSlots','vehicleTypes'));
+            return view('pages.booking.addBooking', compact('package','packageAirline','hotelInfo','availableSlots','availableSlots','vehicleTypes'));
 
         } catch (\Exception $e) {
             dd($e->getMessage());

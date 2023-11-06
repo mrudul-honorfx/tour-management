@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function ()
         Route::get('/new/{packageId}', [App\Http\Controllers\BookingController::class, 'addbooking'])->name('addbooking');
         Route::post('/submitBooking', [App\Http\Controllers\BookingController::class, 'createBooking'])->name('submitBooking');
         Route::get('/blisting', [App\Http\Controllers\BookingController::class, 'blisting'])->name('blisting');
-        Route::get('/generateBookingVoucher/{id}', [App\Http\Controllers\BookingController::class, 'generateBookingVoucher'])->name('generateBookingVoucher');
+        Route::get('/generateBookingVoucher/{id}/{ar?}', [App\Http\Controllers\BookingController::class, 'generateBookingVoucher'])->name('generateBookingVoucher');
     });
     Route::get('/', [App\Http\Controllers\HomeController::class, 'root']);
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'root']);

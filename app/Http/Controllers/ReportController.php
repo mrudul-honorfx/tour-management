@@ -69,7 +69,7 @@ foreach ($results as $result) {
     $result->passanger_details = $PassangerDetails;
 
 }
-return $results;
+dd($results);
         // get the name of hotel from the database
         $hotelName = DB::table('hotels')->where('id', $hotelId)->pluck('hotel_name')->first();
         // convert the hotel name to _ separated string
